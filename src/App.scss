@@ -1,7 +1,36 @@
+@import url(./shared/styles/fonts/font.scss); 
+@import url(./shared/styles/root.scss); 
+
+
 *,
 *::after,
 *::before {
     font-family: "Roboto";
     margin: 0;
     padding: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-overflow: none;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+main {
+	flex: 1 0 auto;
+}
+
+.App {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
 }

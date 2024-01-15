@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.scss";
-import "@/shared/config/fonts/font.scss";
 import { Router } from "./app/Router";
 
 function App() {

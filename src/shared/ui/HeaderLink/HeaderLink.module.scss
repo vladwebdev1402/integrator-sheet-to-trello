@@ -1,0 +1,12 @@
+.link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white-70);
+    text-transform: uppercase;
+    letter-spacing: 1.25px;
+    transition: .3s;
+}
+
+.link_active {
+    color: var(--white-100);
+}

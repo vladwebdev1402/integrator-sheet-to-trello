@@ -1,9 +1,14 @@
+import { Footer, Header } from "@/widgets";
 import React from "react";
 import { Outlet } from "react-router-dom";
 const Root = () => {
   return (
     <>
-      <Outlet />
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
     </>
   );
 };
