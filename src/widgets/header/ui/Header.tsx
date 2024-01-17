@@ -25,7 +25,7 @@ const Header = () => {
               <HeaderLink to={routerPaths.google} name="google" />
             </li>
             <li>
-              <HeaderLink to={routerPaths.profile} name="Профиль" />
+              <HeaderLink to={routerPaths.profile} name="profile" />
             </li>
           </ul>
         </nav>

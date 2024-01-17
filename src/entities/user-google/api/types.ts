@@ -5,6 +5,7 @@ export interface IResponseGetToken {
     id_token: string;
     scope: string;
     token_type: string;
+    refresh_token: string;
   };
 }
 

@@ -34,6 +34,7 @@ const AuthGoogleSlice = createSlice({
     builder.addCase(authGoogleWithCode.fulfilled, (state, action) => {
       state.isLoading = false;
       TokenService.setToken(action.payload.access_token);
+      TokenService.setRefreshToken(action.payload.refresh_token);
       state.isAuth = true;
     });
 
