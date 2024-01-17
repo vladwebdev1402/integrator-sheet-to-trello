@@ -6,7 +6,7 @@ import {
   getGoogleUserInfo,
   logoutGoogle,
 } from "./model/actionCreator";
-import { IUser } from "./model/types";
+import { IGoogleUser } from "./model/types";
 
 export {
   GoogleProfile,
@@ -17,4 +17,4 @@ export {
   logoutGoogle,
 };
 
-export type { IUser };
+export type { IGoogleUser };

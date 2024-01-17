@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {combineReducers} from "@reduxjs/toolkit"
 import { AuthGoogleReducer } from "@/entities/user-google";
+import { AuthTrelloReducer } from "@/entities/user-trello";
 const reducers = combineReducers({
-  AuthGoogleReducer
+  AuthGoogleReducer,
+  AuthTrelloReducer,
 })
 
 export const rootStore = configureStore({

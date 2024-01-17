@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IUser } from "./types";
+import { IGoogleUser } from "./types";
 import { authGoogleWithCode, getGoogleUserInfo, logoutGoogle } from "./actionCreator";
 
 import { TokenService } from "@/shared/api";
@@ -8,7 +8,7 @@ interface IState {
   isLoading: boolean;
   isAuth: boolean;
   error: string;
-  user: IUser | null;
+  user: IGoogleUser | null;
 }
 
 const initialState: IState = {
@@ -19,7 +19,7 @@ const initialState: IState = {
 };
 
 const AuthGoogleSlice = createSlice({
-  name: "AuthSlice",
+  name: "AuthGoogleSlice",
   initialState,
   reducers: {
     checkGoogleAuth: (state) => {

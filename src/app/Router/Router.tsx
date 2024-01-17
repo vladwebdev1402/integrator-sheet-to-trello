@@ -10,6 +10,7 @@ import Root from "./Root";
 import { MainPage, ProfilePage } from "@/pages";
 import { routerPaths, useAppDispatch, useAppSelector } from "@/shared";
 import { checkGoogleAuth, getGoogleUserInfo } from "@/entities/user-google";
+import { checkTrelloAuth, getTrelloUserInfo } from "@/entities/user-trello";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,14 +23,24 @@ const router = createBrowserRouter(
 
 const Router = () => {
   const dispatch = useAppDispatch();
-  const isAuth = useAppSelector((state) => state.AuthGoogleReducer.isAuth);
+  const { isAuth: isGoogleAuth } = useAppSelector(
+    (state) => state.AuthGoogleReducer
+  );
+  const { isAuth: isTrelloAuth } = useAppSelector(
+    (state) => state.AuthTrelloReducer
+  );
   useEffect(() => {
     dispatch(checkGoogleAuth());
+    dispatch(checkTrelloAuth());
   }, [dispatch]);
 
   useEffect(() => {
-    if (isAuth) dispatch(getGoogleUserInfo());
-  }, [isAuth, dispatch]);
+    if (isGoogleAuth) dispatch(getGoogleUserInfo());
+  }, [isGoogleAuth, dispatch]);
+
+  useEffect(() => {
+    if (isTrelloAuth) dispatch(getTrelloUserInfo());
+  }, [isTrelloAuth, dispatch]);
 
   return <RouterProvider router={router} />;
 };

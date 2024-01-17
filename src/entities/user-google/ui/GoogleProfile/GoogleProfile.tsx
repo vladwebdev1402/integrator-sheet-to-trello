@@ -19,16 +19,16 @@ const GoogleProfile: FC<Props> = ({ AuthByGoogle, Logout }) => {
     <ProfileContainer title="Google Account">
       <ProfileAvatar src={!!user ? user.avatar : ""} />
       <ProfileElement title={user !== null ? "Name" : ""}>
-        {user !== null ? user.username : "You not authorized"}
+        {user !== null ? user.username : "You not authorized in Google"}
       </ProfileElement>
       <ProfileElement
-        isVisible={user === null}
+        isVisible={!!user}
         className={st.profile__gmail}
         title={"Gmail"}
       >
         {user !== null ? user.gmail : ""}
       </ProfileElement>
-      <ProfileElement title={""}>
+      <ProfileElement title={""} className={st.btn}>
         {user === null && <AuthByGoogle />}
         {user !== null && <Logout />}
       </ProfileElement>
