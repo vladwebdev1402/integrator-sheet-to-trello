@@ -5,9 +5,9 @@ import {
   ProfileAvatar,
   ProfileContainer,
   ProfileElement,
+  ProfileError,
   useAppSelector,
 } from "@/shared";
-import ProfileError from "@/shared/ui/Profile/ProfileError";
 
 interface Props {
   AuthByTrello: FC;
