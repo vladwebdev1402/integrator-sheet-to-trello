@@ -33,10 +33,12 @@ const AuthTrelloSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getTrelloUserInfo.pending, (state, action) => {
       state.isLoading = true;
+      state.error = "";
     });
 
     builder.addCase(getTrelloUserInfo.fulfilled, (state, action) => {
       state.isLoading = false;
+      state.error = "";
       const { avatarUrl, bio, fullName, id, idBoards } = action.payload;
       state.user = {
         id,
@@ -45,6 +47,11 @@ const AuthTrelloSlice = createSlice({
         boards: idBoards,
         bio,
       };
+    });
+
+    builder.addCase(getTrelloUserInfo.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload || "There is no internet connection";
     });
 
     builder.addCase(logoutTrello.pending, (state, action) => {
@@ -56,6 +63,11 @@ const AuthTrelloSlice = createSlice({
       state.user = null;
       state.isLoading = false;
       TokenService.removeTrelloToken();
+    });
+    builder.addCase(logoutTrello.rejected, (state, action) => {
+      state.isLoading = false;
+      TokenService.removeTrelloToken();
+      state.error = action.payload || "There is no internet connection";
     });
   },
 });

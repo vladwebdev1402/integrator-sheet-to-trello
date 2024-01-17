@@ -7,6 +7,7 @@ import {
   ProfileElement,
   useAppSelector,
 } from "@/shared";
+import ProfileError from "@/shared/ui/Profile/ProfileError";
 
 interface Props {
   AuthByTrello: FC;
@@ -14,7 +15,7 @@ interface Props {
 }
 
 const TrelloProfile: FC<Props> = ({ AuthByTrello, Logout }) => {
-  const { user } = useAppSelector((state) => state.AuthTrelloReducer);
+  const { user, error } = useAppSelector((state) => state.AuthTrelloReducer);
 
   return (
     <ProfileContainer title="Trello Account">
@@ -32,6 +33,7 @@ const TrelloProfile: FC<Props> = ({ AuthByTrello, Logout }) => {
         {user === null && <AuthByTrello />}
         {user !== null && <Logout />}
       </ProfileElement>
+      <ProfileError error={error} />
     </ProfileContainer>
   );
 };
