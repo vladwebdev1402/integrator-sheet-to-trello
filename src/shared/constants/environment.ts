@@ -8,7 +8,7 @@ export const environment = {
         response_type:"code",
         include_granted_scopes:"true",
         access_type: "offline",
-        scope: ["https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"]
+        scope: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
     },
     clientSecret: "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",
   };

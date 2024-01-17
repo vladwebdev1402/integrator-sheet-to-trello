@@ -4,9 +4,7 @@ import { environment } from "../constants";
 
 const customAxios = axios.create();
 
-const refresh_url = `https://oauth2.googleapis.com/token?client_id=${environment.authQuery.client_id}
-                      &grant_type=refresh_token
-                      &refresh_token=${TokenService.getRefreshToken()}`;
+const refresh_url = `https://oauth2.googleapis.com/token?client_id=${environment.authQuery.client_id}&client_secret=${environment.clientSecret}&grant_type=refresh_token&refresh_token=${TokenService.getRefreshToken()}`;
 
 customAxios.interceptors.request.use(
   (req) => {
