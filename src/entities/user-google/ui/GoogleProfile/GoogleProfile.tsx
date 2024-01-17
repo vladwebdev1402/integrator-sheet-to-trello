@@ -6,6 +6,7 @@ import {
   ProfileElement,
   useAppSelector,
 } from "@/shared";
+import ProfileError from "@/shared/ui/Profile/ProfileError";
 
 interface Props {
   AuthByGoogle: FC;
@@ -13,7 +14,7 @@ interface Props {
 }
 
 const GoogleProfile: FC<Props> = ({ AuthByGoogle, Logout }) => {
-  const { user } = useAppSelector((state) => state.AuthGoogleReducer);
+  const { user, error } = useAppSelector((state) => state.AuthGoogleReducer);
 
   return (
     <ProfileContainer title="Google Account">
@@ -32,6 +33,7 @@ const GoogleProfile: FC<Props> = ({ AuthByGoogle, Logout }) => {
         {user === null && <AuthByGoogle />}
         {user !== null && <Logout />}
       </ProfileElement>
+      <ProfileError error={error} />
     </ProfileContainer>
   );
 };

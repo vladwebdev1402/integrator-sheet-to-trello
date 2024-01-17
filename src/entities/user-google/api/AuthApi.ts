@@ -4,6 +4,7 @@ import { IResponseGetToken, IResponseUserInfo } from "./types";
 import { BaseAPI, TokenService } from "@/shared/api";
 
 export class AuthApi {
+  
   static getToken = async (code: string) => {
     const response = await axios.post<any, IResponseGetToken>(
       authApiRoutes.getToken + `&code=${code}`,

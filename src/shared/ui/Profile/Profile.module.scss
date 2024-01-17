@@ -33,6 +33,12 @@
   margin-top: 6px;
 }
 
+.profile__error {
+  margin-top: 8px;
+  color: var(--red);
+  font-weight: 500;
+}
+
 
 @media (max-width: 768px) {
   .profile {

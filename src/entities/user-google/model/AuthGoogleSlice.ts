@@ -29,6 +29,7 @@ const AuthGoogleSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(authGoogleWithCode.pending, (state, payload) => {
       state.isLoading = true;
+      state.error = "";
     });
 
     builder.addCase(authGoogleWithCode.fulfilled, (state, action) => {
@@ -36,14 +37,22 @@ const AuthGoogleSlice = createSlice({
       TokenService.setToken(action.payload.access_token);
       TokenService.setRefreshToken(action.payload.refresh_token);
       state.isAuth = true;
+      state.error = "";
+    });
+
+    builder.addCase(authGoogleWithCode.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload || "There is no internet connection"
     });
 
     builder.addCase(getGoogleUserInfo.pending, (state, action) => {
       state.isLoading = true;
+      state.error = "";
     });
 
     builder.addCase(getGoogleUserInfo.fulfilled, (state, action) => {
       state.isLoading = false;
+      state.error = "";
       state.user = {
         avatar: action.payload.picture,
         username: action.payload.name,
@@ -51,19 +60,29 @@ const AuthGoogleSlice = createSlice({
       };
     });
 
-    builder.addCase(getGoogleUserInfo.rejected, (state) => {
+    builder.addCase(getGoogleUserInfo.rejected, (state, action) => {
       state.isLoading = false;
-    })
+      state.isAuth = false;
+      TokenService.removeToken();
+      state.error = action.payload || "There is no internet connection";
+      state.user = null;
+    });
 
     builder.addCase(logoutGoogle.pending, (state, action) => {
       state.isLoading = true;
+      state.error = "";
     });
 
     builder.addCase(logoutGoogle.fulfilled, (state) => {
       state.isLoading = false;
+      state.error = "";
       TokenService.removeToken();
       state.isAuth = false;
       state.user = null;
+    });
+    builder.addCase(logoutGoogle.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload || "There is no internet connection";
     });
   },
 });
