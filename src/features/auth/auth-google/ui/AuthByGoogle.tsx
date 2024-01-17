@@ -23,7 +23,7 @@ const AuthByGoogle = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const code = queryParams.get("code");
-
+  const trelloToken = window.location.hash.split("=").at(-1);
   const AuthClick = () => {
     window.location.href = `${environment.authUrl}?${createSearchParams(
       environment.authQuery
@@ -35,10 +35,19 @@ const AuthByGoogle = () => {
   }, [code, dispatch]);
 
   useEffect(() => {
+    queryParams.delete("scope");
+    queryParams.delete("code");
+    queryParams.delete("state");
+    queryParams.delete("prompt");
+    queryParams.delete("authuser");
+    if (trelloToken) queryParams.set("trelloToken", trelloToken);
     if (isAuth) {
-      navigate(routerPaths.profile);
+      navigate({
+        pathname: routerPaths.profile,
+        search: createSearchParams(queryParams).toString(),
+      });
     }
-  }, [isAuth, dispatch, navigate]);
+  }, [isAuth, dispatch, navigate, queryParams, trelloToken]);
 
   return (
     <LoadingButton

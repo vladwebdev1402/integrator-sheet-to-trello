@@ -1,7 +1,11 @@
 import React, { FC } from "react";
 import st from "./GoogleProfile.module.scss";
-import { useAppSelector } from "@/shared";
-import { Avatar } from "@mui/material";
+import {
+  ProfileAvatar,
+  ProfileContainer,
+  ProfileElement,
+  useAppSelector,
+} from "@/shared";
 
 interface Props {
   AuthByGoogle: FC;
@@ -12,27 +16,23 @@ const GoogleProfile: FC<Props> = ({ AuthByGoogle, Logout }) => {
   const { user } = useAppSelector((state) => state.AuthGoogleReducer);
 
   return (
-    <div className={`container ${st.profile}`}>
-      <Avatar
-        src={!!user ? user.avatar : ""}
-        sx={{ width: "140px", height: "140px" }}
-      />
-      <div className={st.profile__body}>
-        <div className={st.profile__item}>
-          {user !== null ? user.username : "You not authorized"}
-        </div>
-        {user !== null && (
-          <div className={`${st.profile__item} ${st.profile__gmail}`}>
-            {user.gmail}
-          </div>
-        )}
-
-        <div className={st.profile__item}>
-          {user === null && <AuthByGoogle />}
-          {user !== null && <Logout />}
-        </div>
-      </div>
-    </div>
+    <ProfileContainer title="Google Account">
+      <ProfileAvatar src={!!user ? user.avatar : ""} />
+      <ProfileElement title={user !== null ? "Name" : ""}>
+        {user !== null ? user.username : "You not authorized"}
+      </ProfileElement>
+      <ProfileElement
+        isVisible={user === null}
+        className={st.profile__gmail}
+        title={"Gmail"}
+      >
+        {user !== null ? user.gmail : ""}
+      </ProfileElement>
+      <ProfileElement title={""}>
+        {user === null && <AuthByGoogle />}
+        {user !== null && <Logout />}
+      </ProfileElement>
+    </ProfileContainer>
   );
 };
 

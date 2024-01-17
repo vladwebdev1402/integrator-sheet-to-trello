@@ -11,6 +11,11 @@ export const environment = {
         scope: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
     },
     clientSecret: "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",
+    trello: {
+        trelloApiKey: "cd355537e30d91af66737b3ab50093f6",
+        trelloName: "Integrator Sheets to Trello",
+    },
+    
   };
 
 

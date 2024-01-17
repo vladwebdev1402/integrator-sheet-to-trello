@@ -1,0 +1,12 @@
+.profiles {
+    margin-top: 100px;
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .profiles {
+        margin-top: 50px;
+    }
+}
