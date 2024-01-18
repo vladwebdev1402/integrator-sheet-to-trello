@@ -1,12 +1,13 @@
 import React, { FC } from "react";
 import st from "./GoogleProfile.module.scss";
+
+import { useAppSelector } from "@/shared/hooks";
 import {
   ProfileAvatar,
   ProfileContainer,
   ProfileElement,
-  useAppSelector,
-} from "@/shared";
-import ProfileError from "@/shared/ui/Profile/ProfileError";
+  ProfileError,
+} from "@/shared/ui";
 
 interface Props {
   AuthByGoogle: FC;

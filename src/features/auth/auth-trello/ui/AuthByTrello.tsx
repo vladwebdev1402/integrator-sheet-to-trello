@@ -8,13 +8,8 @@ import {
 } from "react-router-dom";
 
 import { saveTrelloToken } from "@/entities/user-trello";
-
-import {
-  environment,
-  routerPaths,
-  useAppDispatch,
-  useAppSelector,
-} from "@/shared";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks";
+import { environment, routerPaths } from "@/shared/constants";
 
 const AuthByTrello = () => {
   const dispatch = useAppDispatch();

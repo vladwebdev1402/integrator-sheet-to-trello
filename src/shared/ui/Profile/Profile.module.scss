@@ -5,11 +5,12 @@
 .profile__title {
   font-size: 25px;
   font-weight: 500;
-  color: #1e1e1e;
+  color: var(--dark);
+  text-align: center;
 }
 
 .profile__body {
-  margin-top: 32px;
+  margin-top: 8px;
 }
 
 .profile__element {

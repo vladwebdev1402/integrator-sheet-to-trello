@@ -18,3 +18,20 @@
   display: flex;
   gap: 48px;
 }
+
+.footer__users {
+  display: flex;
+  gap: 40px;
+  color: var(--white-100);
+  font-size: 14px;
+}
+
+.footer__account {
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.footer__username {
+  font-weight: 300;
+  margin-top: 8px;
+}
