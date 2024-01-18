@@ -4,18 +4,19 @@ import {
   FetchBaseQueryError,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
-import { TokenService } from "../api";
 import axios from "axios";
+
+import { TokenService } from "../api";
 import { environment } from "../constants";
 
-const refresh_url = `https://oauth2.googleapis.com/token?client_id=${
+const refresh_url = (token: string) => `https://oauth2.googleapis.com/token?client_id=${
   environment.authQuery.client_id
 }&client_secret=${
   environment.clientSecret
-}&grant_type=refresh_token&refresh_token=${TokenService.getRefreshToken()}`;
+}&grant_type=refresh_token&refresh_token=${token}`;
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://sheets.googleapis.com",
+  baseUrl: "",
   prepareHeaders: (headers) => {
     headers.set(`Authorization`, `Bearer ${TokenService.getToken()}`);
     return headers;
@@ -32,7 +33,7 @@ export const baseGoogleQuery: BaseQueryFn<
   if (result.error && result.error.status === 401) {
     try {
       const res = await axios.post<any, { data: { access_token: string } }>(
-        refresh_url
+        refresh_url(TokenService.getRefreshToken())
       );
       TokenService.setToken(res.data.access_token);
       result = await baseQuery(args, api, extraOptions);

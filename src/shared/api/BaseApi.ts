@@ -4,7 +4,7 @@ import { environment } from "../constants";
 
 const customAxios = axios.create();
 
-const refresh_url = `https://oauth2.googleapis.com/token?client_id=${environment.authQuery.client_id}&client_secret=${environment.clientSecret}&grant_type=refresh_token&refresh_token=${TokenService.getRefreshToken()}`;
+const refresh_url = (token: string) => `https://oauth2.googleapis.com/token?client_id=${environment.authQuery.client_id}&client_secret=${environment.clientSecret}&grant_type=refresh_token&refresh_token=${token}`;
 
 customAxios.interceptors.request.use(
   (req) => {
@@ -23,7 +23,7 @@ customAxios.interceptors.response.use(
       const {response} = error;
       if (response && response.status === 401) {
         const originalRequest = error.config!;
-        const res = await axios.post<any, {data: {access_token: string}}>(refresh_url);
+        const res = await axios.post<any, {data: {access_token: string}}>(refresh_url(TokenService.getRefreshToken()));
         TokenService.setToken(res.data.access_token);
         return customAxios.request(originalRequest);
       }
