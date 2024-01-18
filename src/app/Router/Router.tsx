@@ -12,12 +12,14 @@ import { getGoogleUserInfo } from "@/entities/user-google";
 import { getTrelloUserInfo } from "@/entities/user-trello";
 import { routerPaths } from "@/shared/constants";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks";
+import { SheetsListPage } from "@/pages/SheetsListPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path={routerPaths.main} element={<Root />}>
       <Route index element={<MainPage />} />
       <Route path={routerPaths.profile} element={<ProfilePage />} />
+      <Route path={routerPaths.google} element={<SheetsListPage />} />
     </Route>
   )
 );
