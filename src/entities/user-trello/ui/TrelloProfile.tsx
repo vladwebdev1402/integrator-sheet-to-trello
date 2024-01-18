@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import st from "./TrelloProfile.module.scss";
 
+import { useAppSelector } from "@/shared/hooks";
 import {
   ProfileAvatar,
   ProfileContainer,
   ProfileElement,
   ProfileError,
-  useAppSelector,
-} from "@/shared";
+} from "@/shared/ui";
 
 interface Props {
   AuthByTrello: FC;

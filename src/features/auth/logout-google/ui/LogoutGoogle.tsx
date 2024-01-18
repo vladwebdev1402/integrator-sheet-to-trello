@@ -1,14 +1,14 @@
 import React from "react";
 import { LoadingButton } from "@mui/lab";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { useAppDispatch, useAppSelector } from "@/shared";
 import { logoutGoogle } from "@/entities/user-google";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks";
 const LogoutGoogle = () => {
   const { isLoading } = useAppSelector((state) => state.AuthGoogleReducer);
   const dispatch = useAppDispatch();
 
   const logoutBtnClick = () => {
-    dispatch(logoutGoogle());
+    dispatch(logoutGoogle(null));
   };
 
   return (

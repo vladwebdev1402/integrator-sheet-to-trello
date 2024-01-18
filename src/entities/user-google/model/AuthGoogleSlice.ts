@@ -13,7 +13,7 @@ interface IState {
 
 const initialState: IState = {
   isLoading: false,
-  isAuth: false,
+  isAuth: TokenService.checkToken(),
   error: "",
   user: null,
 };
@@ -21,11 +21,7 @@ const initialState: IState = {
 const AuthGoogleSlice = createSlice({
   name: "AuthGoogleSlice",
   initialState,
-  reducers: {
-    checkGoogleAuth: (state) => {
-      state.isAuth = TokenService.checkToken();
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(authGoogleWithCode.pending, (state, payload) => {
       state.isLoading = true;
@@ -89,4 +85,3 @@ const AuthGoogleSlice = createSlice({
 
 export default AuthGoogleSlice.reducer;
 
-export const { checkGoogleAuth } = AuthGoogleSlice.actions;

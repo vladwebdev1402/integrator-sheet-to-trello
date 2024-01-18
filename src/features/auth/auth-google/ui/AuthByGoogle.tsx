@@ -7,13 +7,9 @@ import {
 } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 
-import {
-  environment,
-  routerPaths,
-  useAppDispatch,
-  useAppSelector,
-} from "@/shared";
 import { authGoogleWithCode } from "@/entities/user-google";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks";
+import { environment, routerPaths } from "@/shared/constants";
 
 const AuthByGoogle = () => {
   const { isLoading, isAuth } = useAppSelector(

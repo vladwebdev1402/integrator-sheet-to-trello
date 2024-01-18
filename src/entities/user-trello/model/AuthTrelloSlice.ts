@@ -14,7 +14,7 @@ const initialState: IState = {
   isLoading: false,
   error: "",
   user: null,
-  isAuth: false,
+  isAuth: TokenService.checkTrelloToken(),
 };
 
 const AuthTrelloSlice = createSlice({
@@ -24,10 +24,6 @@ const AuthTrelloSlice = createSlice({
     saveTrelloToken: (state, action: PayloadAction<string>) => {
       state.isAuth = true;
       TokenService.setTrelloToken(action.payload);
-    },
-
-    checkTrelloAuth: (state) => {
-      state.isAuth = TokenService.checkTrelloToken();
     },
   },
   extraReducers: (builder) => {
@@ -74,4 +70,4 @@ const AuthTrelloSlice = createSlice({
 
 export default AuthTrelloSlice.reducer;
 
-export const { saveTrelloToken, checkTrelloAuth } = AuthTrelloSlice.actions;
+export const { saveTrelloToken } = AuthTrelloSlice.actions;
