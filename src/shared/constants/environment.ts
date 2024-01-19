@@ -10,7 +10,7 @@ export const environment = {
     include_granted_scopes: "true",
     access_type: "offline",
     scope:
-      "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.readonly",
   },
   clientSecret: "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",
   trelloAuthUrl: "https://trello.com/1/authorize?",

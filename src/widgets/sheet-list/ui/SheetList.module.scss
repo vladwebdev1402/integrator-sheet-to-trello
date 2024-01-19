@@ -1,0 +1,11 @@
+
+.list__body {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.list__notFound {
+    display: block;
+}
