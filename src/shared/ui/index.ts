@@ -5,6 +5,7 @@ import ProfileContainer from "./Profile/ProfileContainer";
 import ProfileElement from "./Profile/ProfileElement";
 import ProfileError from "./Profile/ProfileError";
 import SearchField from "./SearchField/SearchField";
+import ItemsContainer from "./ItemsContainer/ItemsContainer";
 
 export {
   HeaderLink,
@@ -14,4 +15,5 @@ export {
   ProfileElement,
   ProfileError,
   SearchField,
+  ItemsContainer
 };
