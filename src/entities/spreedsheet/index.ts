@@ -1,3 +1,3 @@
 import Spreadsheet from "./ui/Spreadsheet";
-import { SpreadSheetService, useGetSheetByIdQuery } from "./service/service";
-export { Spreadsheet, SpreadSheetService, useGetSheetByIdQuery };
+import { SpreadSheetService, useGetSpreadSheetByIdQuery, useGetSheetByNameQuery } from "./service/service";
+export { Spreadsheet, SpreadSheetService, useGetSpreadSheetByIdQuery, useGetSheetByNameQuery };

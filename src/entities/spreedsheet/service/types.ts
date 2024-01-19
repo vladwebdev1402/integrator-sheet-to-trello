@@ -11,3 +11,8 @@ export interface IResponseGetSpreadsheet {
   }[];
   spreadsheetUrl: string;
 }
+
+export interface IResponseGetSheet {
+  range: string;
+  values?: string[][];
+}

@@ -3,15 +3,13 @@ import { useParams } from "react-router-dom";
 import { Typography, Box } from "@mui/material";
 
 import st from "./SheetDetailPage.module.scss";
-import { useGetSheetByIdQuery } from "@/entities/spreedsheet";
-import { ButtonBack } from "@/shared/ui";
 import { SheetList } from "@/widgets/sheet-list";
+import { useGetSpreadSheetByIdQuery } from "@/entities/spreedsheet";
+import { ButtonBack } from "@/shared/ui";
 import Skeletons from "./Skeletons";
 const SheetDetailPage = () => {
   const params = useParams<{ id: string }>();
-  const { data, isLoading, error } = useGetSheetByIdQuery(
-    params?.id ?? "no-id"
-  );
+  const { data, isLoading } = useGetSpreadSheetByIdQuery(params?.id ?? "no-id");
 
   return (
     <div className={`container ${st.sheet}`}>
@@ -29,10 +27,11 @@ const SheetDetailPage = () => {
       )}
       <Box sx={{ marginTop: "48px" }}>
         {data &&
-          data.sheets.map(({ properties: sheet }) => (
+          data.sheets.map(({ properties: sheet }, idx) => (
             <SheetList
               title={sheet.title}
               sheetId={sheet.sheetId}
+              expanded={idx === 0}
               key={sheet.sheetId}
             />
           ))}
