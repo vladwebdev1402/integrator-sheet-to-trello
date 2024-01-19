@@ -1,7 +1,7 @@
 import React from "react";
 import st from "./SheetsListPage.module.scss";
 
-import { SheetsList } from "@/widgets/sheet-list";
+import { SheetsList } from "@/widgets/list-of-sheet";
 
 const SheetsListPage = () => {
   return (

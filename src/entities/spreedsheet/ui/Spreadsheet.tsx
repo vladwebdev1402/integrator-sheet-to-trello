@@ -4,14 +4,22 @@ import st from "./Spreadsheet.module.scss";
 
 import { ISpreedsheet } from "@/shared/types/ISpredsheets";
 import { SheetIcon } from "@/shared/assets";
+import { useNavigate } from "react-router-dom";
+import { routerPaths } from "@/shared/constants";
 
 interface Props {
   sheet: ISpreedsheet;
 }
 const Spreadsheet: FC<Props> = ({ sheet }) => {
+  const navigate = useNavigate();
+
+  const spreadsheetClick = () => {
+    navigate(routerPaths.navigateSheetDetail(sheet.id));
+  };
+
   return (
     <Card>
-      <CardActionArea sx={{ height: "100%" }}>
+      <CardActionArea sx={{ height: "100%" }} onClick={spreadsheetClick}>
         <CardContent sx={{ height: "100%" }}>
           <SheetIcon className={st.sheet__icon} />
           <Typography

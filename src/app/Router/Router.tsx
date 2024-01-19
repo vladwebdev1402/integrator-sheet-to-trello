@@ -13,6 +13,7 @@ import { getTrelloUserInfo } from "@/entities/user-trello";
 import { routerPaths } from "@/shared/constants";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks";
 import { SheetsListPage } from "@/pages/SheetsListPage";
+import { SheetDetailPage } from "@/pages/SheetDetailPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,6 +21,7 @@ const router = createBrowserRouter(
       <Route index element={<MainPage />} />
       <Route path={routerPaths.profile} element={<ProfilePage />} />
       <Route path={routerPaths.google} element={<SheetsListPage />} />
+      <Route path={routerPaths.sheetDetail} element={<SheetDetailPage />} />
     </Route>
   )
 );

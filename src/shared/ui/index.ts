@@ -6,6 +6,7 @@ import ProfileElement from "./Profile/ProfileElement";
 import ProfileError from "./Profile/ProfileError";
 import SearchField from "./SearchField/SearchField";
 import ItemsContainer from "./ItemsContainer/ItemsContainer";
+import ButtonBack from "./ButtonBack/ButtonBack";
 
 export {
   HeaderLink,
@@ -15,5 +16,6 @@ export {
   ProfileElement,
   ProfileError,
   SearchField,
-  ItemsContainer
+  ItemsContainer,
+  ButtonBack
 };

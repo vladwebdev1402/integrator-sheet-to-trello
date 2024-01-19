@@ -1,3 +1,3 @@
-import SheetsList from "./ui/SheetsList";
+import SheetList from "./ui/SheetList";
 
-export { SheetsList };
+export { SheetList };

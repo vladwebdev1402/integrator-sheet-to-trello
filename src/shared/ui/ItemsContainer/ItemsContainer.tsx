@@ -29,7 +29,7 @@ const ItemsContainer: FC<Props> = ({
   clickNextLimit = () => {},
 }) => {
   return (
-    <div className={st.contaner}>
+    <div className={st.container}>
       <div
         className={`${className} ${st.container__body} ${
           (isNotFound || isError) && !isLoading

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 
-import { useGetAllSheetsQuery } from "@/entities/sheet-list";
+import { useGetAllSheetsQuery } from "@/entities/list-of-sheets";
 import { Spreadsheet } from "@/entities/spreedsheet";
 
 import { ItemsSearch } from "@/features/items-search";
