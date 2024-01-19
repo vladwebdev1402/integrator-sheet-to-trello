@@ -10,7 +10,8 @@ import { ItemsContainer } from "@/shared/ui";
 
 const SheetsList = () => {
   const [search, setSearch] = useState("");
-  const { data, isFetching, isError } = useGetAllSheetsQuery(null);
+  const [limit, setLimit] = useState(20);
+  const { data, isLoading, isFetching, isError } = useGetAllSheetsQuery(limit);
   const { isAuth } = useAppSelector((state) => state.AuthGoogleReducer);
 
   const filterData = useMemo(() => {
@@ -28,9 +29,14 @@ const SheetsList = () => {
 
       {isAuth && (
         <ItemsContainer
-          isLoading={isFetching}
+          isLoading={isLoading}
           isError={isError}
           isNotFound={filterData.length === 0}
+          isVisibleMore={!!data && !!data.nextPageToken}
+          isMoreFetching={isFetching}
+          clickNextLimit={() => {
+            setLimit(limit + 20);
+          }}
           notFoundMessage="Oops, spreadsheets not found :("
           errorMessage="Oops, an error has occurred. Please reload the page :("
         >

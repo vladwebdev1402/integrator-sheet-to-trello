@@ -8,12 +8,13 @@ export const SheetsListService = createApi({
   reducerPath: "SheetsListService",
   baseQuery: baseGoogleQuery,
   endpoints: (builder) => ({
-    getAllSheets: builder.query<IResponseGetAllSheets, any>({
-      query: () => {
+    getAllSheets: builder.query<IResponseGetAllSheets, number>({
+      query: (limit) => {
         return {
           url: baseUrl + `/drive/v3/files`,
           params: {
-            q: `mimeType = '${sheetMimeType}' and 'me' in owners`
+            q: `mimeType = '${sheetMimeType}' and 'me' in owners`,
+            pageSize: limit,
           },
         };
       },

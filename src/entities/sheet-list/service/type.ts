@@ -1,4 +1,5 @@
 export interface IResponseGetAllSheets {
+    nextPageToken?: string;
     files: {
         id: string;
         name: string;
