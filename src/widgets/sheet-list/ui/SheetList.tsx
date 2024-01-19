@@ -5,6 +5,7 @@ import {
   AccordionDetails,
   CardActionArea,
   Typography,
+  Box,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useParams } from "react-router-dom";
@@ -39,14 +40,14 @@ const SheetList: FC<Props> = ({ sheetId, title, expanded = false }) => {
             top: 0,
           }}
         ></CardActionArea>
-        <Typography
-          component="div"
-          fontWeight={500}
-          fontSize={"20px"}
-          variant="body1"
-        >
-          {title}
-        </Typography>
+        <Box sx={{ display: "flex", gap: "16px", alignItems: "center" }}>
+          <Typography fontWeight={500} fontSize={"20px"} variant="body1">
+            {title}
+          </Typography>
+          <Typography variant="subtitle1">
+            {data && Array.isArray(data.values) ? data.values.length : 0}
+          </Typography>
+        </Box>
       </AccordionSummary>
       <AccordionDetails className={st.sheet__cards}>
         {isLoading && expanded && <Skeletons />}

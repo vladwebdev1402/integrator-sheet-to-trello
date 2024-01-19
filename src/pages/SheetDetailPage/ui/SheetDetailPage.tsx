@@ -7,9 +7,12 @@ import { SheetList } from "@/widgets/sheet-list";
 import { useGetSpreadSheetByIdQuery } from "@/entities/spreedsheet";
 import { ButtonBack } from "@/shared/ui";
 import Skeletons from "./Skeletons";
+import { SheetListAdd } from "@/features/sheet-card-add";
 const SheetDetailPage = () => {
   const params = useParams<{ id: string }>();
-  const { data, isLoading } = useGetSpreadSheetByIdQuery(params?.id ?? "no-id");
+  const { data, isLoading, isFetching } = useGetSpreadSheetByIdQuery(
+    params?.id ?? "no-id"
+  );
 
   return (
     <div className={`container ${st.sheet}`}>
@@ -35,6 +38,12 @@ const SheetDetailPage = () => {
               key={sheet.sheetId}
             />
           ))}
+        {!isLoading && (
+          <SheetListAdd
+            count={data && data.sheets ? data.sheets.length : 0}
+            isUpdating={isFetching}
+          />
+        )}
       </Box>
     </div>
   );

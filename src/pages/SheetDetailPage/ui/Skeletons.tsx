@@ -13,6 +13,7 @@ const Skeletons = () => {
         <Skeleton variant="rectangular" height={60} sx={{ marginTop: "5px" }} />
         <Skeleton variant="rectangular" height={60} sx={{ marginTop: "5px" }} />
       </Box>
+      <Skeleton width={130} height={50} sx={{ margin: "16px auto 0" }} />
     </>
   );
 };
