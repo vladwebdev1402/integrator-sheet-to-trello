@@ -1,11 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
   CardActionArea,
   Typography,
-  Box,
+  Badge,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useParams } from "react-router-dom";
@@ -13,7 +13,8 @@ import { useParams } from "react-router-dom";
 import st from "./SheetList.module.scss";
 import { useGetSheetByNameQuery } from "@/entities/spreedsheet";
 import Skeletons from "./Skeletons";
-import SheetCard from "@/entities/sheet-card/ui/SheetCard";
+import { SheetCard } from "@/entities/sheet-card";
+import { SheetCardAdd } from "@/features/sheet-card-add";
 interface Props {
   sheetId: number;
   title: string;
@@ -23,14 +24,23 @@ interface Props {
 const SheetList: FC<Props> = ({ sheetId, title, expanded = false }) => {
   const params = useParams<{ id: string }>();
 
-  const { data, isLoading } = useGetSheetByNameQuery({
+  const { data, isLoading, isFetching } = useGetSheetByNameQuery({
     spreadsheetId: params?.id ?? "",
     sheetTitle: title,
   });
 
+  const countCards = useMemo(() => {
+    return data && Array.isArray(data.values) ? data.values.length : 0;
+  }, [data]);
+
   return (
     <Accordion defaultExpanded={expanded}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Badge color="info" showZero badgeContent={countCards}>
+          <Typography fontWeight={500} fontSize={"20px"} variant="body1">
+            {title}
+          </Typography>
+        </Badge>
         <CardActionArea
           sx={{
             position: "absolute",
@@ -40,27 +50,23 @@ const SheetList: FC<Props> = ({ sheetId, title, expanded = false }) => {
             top: 0,
           }}
         ></CardActionArea>
-        <Box sx={{ display: "flex", gap: "16px", alignItems: "center" }}>
-          <Typography fontWeight={500} fontSize={"20px"} variant="body1">
-            {title}
-          </Typography>
-          <Typography variant="subtitle1">
-            {data && Array.isArray(data.values) ? data.values.length : 0}
-          </Typography>
-        </Box>
       </AccordionSummary>
       <AccordionDetails className={st.sheet__cards}>
         {isLoading && expanded && <Skeletons />}
         {data &&
-          Array.isArray(data.values) &&
-          data.values.map((card) => (
+          countCards > 0 &&
+          data.values!.map((card, idx) => (
             <SheetCard
+              key={idx}
               card={{
                 title: card[0] ? card[0] : "Name card is empty",
                 description: card[1] ? card[1] : "",
               }}
             />
           ))}
+        {!isLoading && (
+          <SheetCardAdd isUpdating={isFetching} sheetTitle={title} />
+        )}
       </AccordionDetails>
     </Accordion>
   );

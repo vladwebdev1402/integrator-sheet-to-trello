@@ -4,6 +4,7 @@ import {
   useGetSpreadSheetByIdQuery,
   useGetSheetByNameQuery,
   useAddNewListMutation,
+  useAddNewCardMutation,
 } from "./service/service";
 
 export {
@@ -12,4 +13,5 @@ export {
   useGetSpreadSheetByIdQuery,
   useGetSheetByNameQuery,
   useAddNewListMutation,
+  useAddNewCardMutation,
 };

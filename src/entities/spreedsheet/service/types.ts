@@ -16,3 +16,20 @@ export interface IResponseGetSheet {
   range: string;
   values?: string[][];
 }
+
+export interface IBodyAddNewList {
+  requests: [
+    {
+      addSheet: {
+        properties: {
+          title: string;
+        };
+      };
+    }
+  ];
+}
+
+export interface IQueryMutationAddCard {
+  spreadsheetId: string;
+  sheetTitle: string;
+}

@@ -7,7 +7,7 @@ import { SheetList } from "@/widgets/sheet-list";
 import { useGetSpreadSheetByIdQuery } from "@/entities/spreedsheet";
 import { ButtonBack } from "@/shared/ui";
 import Skeletons from "./Skeletons";
-import { SheetListAdd } from "@/features/sheet-card-add";
+import { SheetListAdd } from "@/features/sheet-list-add";
 const SheetDetailPage = () => {
   const params = useParams<{ id: string }>();
   const { data, isLoading, isFetching } = useGetSpreadSheetByIdQuery(
