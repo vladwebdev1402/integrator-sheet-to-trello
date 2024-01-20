@@ -26,14 +26,17 @@ const NameSpreadsheet: FC<Props> = ({ title }) => {
           <Typography variant="h5" component={"div"}>
             {title}
           </Typography>
-          <IconButton size={"medium"} onClick={editClick}>
+
+          <IconButton size={"small"} onClick={editClick}>
             <EditIcon />
           </IconButton>
         </>
       )}
-      {isEdit && (
-        <SpreadsheetEditName currentValue={title} setEdit={setIsEdit} />
-      )}
+      <SpreadsheetEditName
+        currentValue={title}
+        setEdit={setIsEdit}
+        isEdit={isEdit}
+      />
     </Box>
   );
 };

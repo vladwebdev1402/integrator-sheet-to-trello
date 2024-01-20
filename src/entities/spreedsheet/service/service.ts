@@ -30,6 +30,13 @@ export const SpreadSheetService = createApi({
       providesTags: ["List of Spreadsheet"],
     }),
 
+    getSpreadSheetById: build.query<IResponseGetSpreadsheet, string>({
+      query: (id: string) => ({
+        url: baseUrl + `/${id}`,
+      }),
+      providesTags: ["Spreadsheet-Detail"],
+    }),
+
     createNewSpreadSheet: build.mutation<IResponseGetSpreadsheet, any>({
       query: () => ({
         url: baseUrl,
@@ -53,14 +60,15 @@ export const SpreadSheetService = createApi({
           }]
         }
       }),
-      invalidatesTags: ["Spreadsheet-Detail"],
+      invalidatesTags: ["Spreadsheet-Detail", "List of Spreadsheet"],
     }),
 
-    getSpreadSheetById: build.query<IResponseGetSpreadsheet, string>({
-      query: (id: string) => ({
-        url: baseUrl + `/${id}`,
+    deleteSpreadSheet: build.mutation<any, {id: string}>({
+      query: ({id}) => ({
+        url: baseDriveUrl + `/files/${id}`,
+        method: "DELETE",
       }),
-      providesTags: ["Spreadsheet-Detail"],
+      invalidatesTags: ["List of Spreadsheet"],
     }),
 
     getSheetByName: build.query<
@@ -135,4 +143,5 @@ export const {
   useDeleteListMutation,
   useCreateNewSpreadSheetMutation,
   useRenameSpreadSheetMutation,
+  useDeleteSpreadSheetMutation,
 } = SpreadSheetService;
