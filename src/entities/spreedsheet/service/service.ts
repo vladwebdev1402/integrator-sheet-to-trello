@@ -2,6 +2,7 @@ import { baseGoogleQuery } from "@/shared/rtk";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   IQueryMutationAddCard,
+  IQueryMutationDeleteList,
   IResponseGetSheet,
   IResponseGetSpreadsheet,
 } from "./types";
@@ -13,7 +14,6 @@ export const SpreadSheetService = createApi({
   baseQuery: baseGoogleQuery,
   tagTypes: ["Spreadsheet", "Sheet-List", "Sheet-Card"],
   endpoints: (build) => ({
-
     getSpreadSheetById: build.query<IResponseGetSpreadsheet, string>({
       query: (id: string) => ({
         url: baseUrl + `/${id}`,
@@ -50,6 +50,23 @@ export const SpreadSheetService = createApi({
       }),
       invalidatesTags: ["Spreadsheet"],
     }),
+    
+    deleteList: build.mutation<any, IQueryMutationDeleteList>({
+      query: ({ spreadsheetId, sheetId }) => ({
+        url: baseUrl + `/${spreadsheetId}:batchUpdate`,
+        method: "POST",
+        body: {
+          requests: [
+            {
+              deleteSheet: {
+                sheetId,
+              },
+            },
+          ],
+        },
+      }),
+      invalidatesTags: ["Spreadsheet"],
+    }),
 
     addNewCard: build.mutation<any, IQueryMutationAddCard>({
       query: ({ sheetTitle, spreadsheetId }) => ({
@@ -65,11 +82,12 @@ export const SpreadSheetService = createApi({
       invalidatesTags: ["Sheet-List"],
     }),
   }),
-  
 });
+
 export const {
   useGetSpreadSheetByIdQuery,
   useGetSheetByNameQuery,
   useAddNewListMutation,
   useAddNewCardMutation,
+  useDeleteListMutation,
 } = SpreadSheetService;

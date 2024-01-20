@@ -5,6 +5,7 @@ import {
   useGetSheetByNameQuery,
   useAddNewListMutation,
   useAddNewCardMutation,
+  useDeleteListMutation,
 } from "./service/service";
 
 export {
@@ -14,4 +15,5 @@ export {
   useGetSheetByNameQuery,
   useAddNewListMutation,
   useAddNewCardMutation,
+  useDeleteListMutation
 };

@@ -15,6 +15,7 @@ import { useGetSheetByNameQuery } from "@/entities/spreedsheet";
 import Skeletons from "./Skeletons";
 import { SheetCard } from "@/entities/sheet-card";
 import { SheetCardAdd } from "@/features/sheet-card-add";
+import { SheetListDelete } from "@/features/sheet-list-delete";
 interface Props {
   sheetId: number;
   title: string;
@@ -68,6 +69,13 @@ const SheetList: FC<Props> = ({ sheetId, title, expanded = false }) => {
           <SheetCardAdd isUpdating={isFetching} sheetTitle={title} />
         )}
       </AccordionDetails>
+      {!isLoading && (
+        <SheetListDelete
+          sheetId={sheetId}
+          isUpdating={isFetching}
+          countCards={countCards}
+        />
+      )}
     </Accordion>
   );
 };

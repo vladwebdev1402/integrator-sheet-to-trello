@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Box } from "@mui/material";
+import { Card, Box, CardContent } from "@mui/material";
 import { ButtonAddNew } from "@/shared/ui";
 import { useParams } from "react-router-dom";
 import { useAddNewCardMutation } from "@/entities/spreedsheet";
@@ -22,13 +22,17 @@ const SheetCardAdd: FC<Props> = ({ isUpdating, sheetTitle }) => {
   };
 
   return (
-    <Box alignItems={"center"} justifyContent={"center"} display={"flex"}>
-      <ButtonAddNew
-        isLoading={isLoading || isUpdating}
-        title="add new card"
-        onClick={addClick}
-      />
-    </Box>
+    <Card>
+      <CardContent>
+        <Box alignItems={"center"} justifyContent={"center"} display={"flex"}>
+          <ButtonAddNew
+            isLoading={isLoading || isUpdating}
+            title="add new card"
+            onClick={addClick}
+          />
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 

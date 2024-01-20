@@ -17,14 +17,17 @@ export interface IResponseGetSheet {
   values?: string[][];
 }
 
-export interface IBodyAddNewList {
+export interface IBatchRequest {
   requests: [
     {
-      addSheet: {
+      addSheet?: {
         properties: {
           title: string;
         };
-      };
+      },
+      deleteSheet?: {
+        sheetId: number;
+      }
     }
   ];
 }
@@ -32,4 +35,9 @@ export interface IBodyAddNewList {
 export interface IQueryMutationAddCard {
   spreadsheetId: string;
   sheetTitle: string;
+}
+
+export interface IQueryMutationDeleteList {
+  spreadsheetId: string;
+  sheetId: number;
 }

@@ -6,8 +6,9 @@ import ProfileElement from "./Profile/ProfileElement";
 import ProfileError from "./Profile/ProfileError";
 import SearchField from "./SearchField/SearchField";
 import ItemsContainer from "./ItemsContainer/ItemsContainer";
-import ButtonBack from "./ButtonBack/ButtonBack";
-import ButtonAddNew from "./ButtonAddNew/ButtonAddNew";
+import ButtonBack from "./buttons/ButtonBack/ButtonBack";
+import ButtonAddNew from "./buttons/ButtonAddNew/ButtonAddNew";
+import ButtonDelete from "./buttons/ButtonDelete/ButtonDelete";
 
 export {
   HeaderLink,
@@ -19,5 +20,6 @@ export {
   SearchField,
   ItemsContainer,
   ButtonBack,
-  ButtonAddNew
+  ButtonAddNew,
+  ButtonDelete
 };
