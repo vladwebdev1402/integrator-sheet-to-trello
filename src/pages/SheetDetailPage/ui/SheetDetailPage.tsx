@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { Typography, Box } from "@mui/material";
+import { Box } from "@mui/material";
 
 import st from "./SheetDetailPage.module.scss";
 import { SheetList } from "@/widgets/sheet-list";
@@ -8,26 +8,22 @@ import { useGetSpreadSheetByIdQuery } from "@/entities/spreedsheet";
 import { ButtonBack } from "@/shared/ui";
 import Skeletons from "./Skeletons";
 import { SheetListAdd } from "@/features/sheet-list-add";
+import NameSpreadsheet from "./NameSpreadsheet";
 const SheetDetailPage = () => {
   const params = useParams<{ id: string }>();
   const { data, isLoading, isFetching } = useGetSpreadSheetByIdQuery(
     params?.id ?? "no-id"
   );
 
+  const countSheets = useMemo(() => {
+    return data && data.sheets ? data.sheets.length : 0;
+  }, [data]);
+
   return (
     <div className={`container ${st.sheet}`}>
       <ButtonBack />
       {isLoading && <Skeletons />}
-      {data && (
-        <Typography
-          variant="h4"
-          textAlign={"center"}
-          sx={{ margin: "0 100px" }}
-          component={"div"}
-        >
-          {data.properties.title}
-        </Typography>
-      )}
+      {data && <NameSpreadsheet title={data.properties.title} />}
       <Box sx={{ marginTop: "48px" }}>
         {data &&
           data.sheets.map(({ properties: sheet }, idx) => (
@@ -35,14 +31,12 @@ const SheetDetailPage = () => {
               title={sheet.title}
               sheetId={sheet.sheetId}
               expanded={idx === 0}
+              visibleDelete={countSheets > 1}
               key={sheet.sheetId}
             />
           ))}
         {!isLoading && (
-          <SheetListAdd
-            count={data && data.sheets ? data.sheets.length : 0}
-            isUpdating={isFetching}
-          />
+          <SheetListAdd count={countSheets} isUpdating={isFetching} />
         )}
       </Box>
     </div>

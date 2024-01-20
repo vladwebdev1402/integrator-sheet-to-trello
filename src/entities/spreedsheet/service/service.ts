@@ -38,6 +38,24 @@ export const SpreadSheetService = createApi({
       invalidatesTags: ["List of Spreadsheet"],
     }),
 
+    renameSpreadSheet: build.mutation<any, {id: string, name: string}>({
+      query: ({id, name}) => ({
+        url: baseUrl + `/${id}:batchUpdate`,
+        method: "POST",
+        body: {
+          requests: [{
+            updateSpreadsheetProperties: {
+              properties: {
+                title: name
+              },
+              fields: "title",
+            }
+          }]
+        }
+      }),
+      invalidatesTags: ["Spreadsheet-Detail"],
+    }),
+
     getSpreadSheetById: build.query<IResponseGetSpreadsheet, string>({
       query: (id: string) => ({
         url: baseUrl + `/${id}`,
@@ -65,7 +83,7 @@ export const SpreadSheetService = createApi({
             {
               addSheet: {
                 properties: {
-                  title: `New List ${name}`,
+                  // title: `New List ${name}`,
                 },
               },
             },
@@ -116,4 +134,5 @@ export const {
   useAddNewCardMutation,
   useDeleteListMutation,
   useCreateNewSpreadSheetMutation,
+  useRenameSpreadSheetMutation,
 } = SpreadSheetService;

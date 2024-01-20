@@ -8,6 +8,7 @@ import {
   useAddNewCardMutation,
   useDeleteListMutation,
   useCreateNewSpreadSheetMutation,
+  useRenameSpreadSheetMutation,
 } from "./service/service";
 
 export {
@@ -20,4 +21,5 @@ export {
   useAddNewCardMutation,
   useDeleteListMutation,
   useCreateNewSpreadSheetMutation,
+  useRenameSpreadSheetMutation
 };

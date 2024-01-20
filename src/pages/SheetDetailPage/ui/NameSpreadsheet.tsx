@@ -1,0 +1,41 @@
+import React, { FC, useState } from "react";
+import { Typography, Box, IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import { SpreadsheetEditName } from "@/features/spreadsheet-edit-name";
+
+interface Props {
+  title: string;
+}
+
+const NameSpreadsheet: FC<Props> = ({ title }) => {
+  const [isEdit, setIsEdit] = useState(false);
+  const editClick = () => {
+    setIsEdit(true);
+  };
+
+  return (
+    <Box
+      display={"flex"}
+      sx={{ padding: "48px 0px 0px 0px" }}
+      gap={"5px"}
+      padding="0"
+      alignItems={"center"}
+    >
+      {!isEdit && (
+        <>
+          <Typography variant="h5" component={"div"}>
+            {title}
+          </Typography>
+          <IconButton size={"medium"} onClick={editClick}>
+            <EditIcon />
+          </IconButton>
+        </>
+      )}
+      {isEdit && (
+        <SpreadsheetEditName currentValue={title} setEdit={setIsEdit} />
+      )}
+    </Box>
+  );
+};
+
+export default NameSpreadsheet;

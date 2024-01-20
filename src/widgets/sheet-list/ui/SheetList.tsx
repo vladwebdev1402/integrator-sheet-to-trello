@@ -19,10 +19,16 @@ import { SheetListDelete } from "@/features/sheet-list-delete";
 interface Props {
   sheetId: number;
   title: string;
+  visibleDelete: boolean;
   expanded?: boolean;
 }
 
-const SheetList: FC<Props> = ({ sheetId, title, expanded = false }) => {
+const SheetList: FC<Props> = ({
+  sheetId,
+  title,
+  visibleDelete,
+  expanded = false,
+}) => {
   const params = useParams<{ id: string }>();
 
   const { data, isLoading, isFetching } = useGetSheetByNameQuery({
@@ -36,22 +42,34 @@ const SheetList: FC<Props> = ({ sheetId, title, expanded = false }) => {
 
   return (
     <Accordion defaultExpanded={expanded}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Badge color="info" showZero badgeContent={countCards}>
+      <Badge
+        color="info"
+        showZero
+        anchorOrigin={{
+          horizontal: "left",
+          vertical: "top",
+        }}
+        badgeContent={countCards}
+        sx={{ width: "100%" }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          sx={{ width: "100%" }}
+        >
           <Typography fontWeight={500} fontSize={"20px"} variant="body1">
             {title}
           </Typography>
-        </Badge>
-        <CardActionArea
-          sx={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            left: 0,
-            top: 0,
-          }}
-        ></CardActionArea>
-      </AccordionSummary>
+          <CardActionArea
+            sx={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              left: 0,
+              top: 0,
+            }}
+          ></CardActionArea>
+        </AccordionSummary>
+      </Badge>
       <AccordionDetails className={st.sheet__cards}>
         {isLoading && expanded && <Skeletons />}
         {data &&
@@ -69,7 +87,7 @@ const SheetList: FC<Props> = ({ sheetId, title, expanded = false }) => {
           <SheetCardAdd isUpdating={isFetching} sheetTitle={title} />
         )}
       </AccordionDetails>
-      {!isLoading && (
+      {!isLoading && visibleDelete && (
         <SheetListDelete
           sheetId={sheetId}
           isUpdating={isFetching}

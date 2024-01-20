@@ -15,7 +15,12 @@ const SheetListAdd: FC<Props> = ({ count, isUpdating }) => {
   const params = useParams<{ id: string }>();
 
   const addListClick = () => {
-    if (params.id) addList({ spreadsheetId: params.id, name: `${count}` });
+    if (params.id)
+      addList({
+        spreadsheetId: params.id,
+        // name: `${count + new Date().getTime()}`, подумать что с этим сделать
+        name: "",
+      });
   };
 
   return (
