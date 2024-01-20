@@ -89,9 +89,7 @@ const SheetList: FC<Props> = ({
               }}
             />
           ))}
-        {!isLoading && (
-          <SheetCardAdd isUpdating={isFetching} sheetTitle={title} />
-        )}
+        {!isLoading && <SheetCardAdd sheetTitle={title} />}
       </AccordionDetails>
       {!isLoading && visibleDelete && (
         <SheetListDelete

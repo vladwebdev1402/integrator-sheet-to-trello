@@ -5,13 +5,12 @@ import { useParams } from "react-router-dom";
 import { useAddNewCardMutation } from "@/entities/spreedsheet";
 
 interface Props {
-  isUpdating: boolean;
   sheetTitle: string;
 }
 
-const SheetCardAdd: FC<Props> = ({ isUpdating, sheetTitle }) => {
+const SheetCardAdd: FC<Props> = ({ sheetTitle }) => {
   const params = useParams<{ id: string }>();
-  const [addCard, { isLoading }] = useAddNewCardMutation();
+  const [addCard] = useAddNewCardMutation();
 
   const addClick = () => {
     if (params.id)
@@ -26,7 +25,7 @@ const SheetCardAdd: FC<Props> = ({ isUpdating, sheetTitle }) => {
       <CardContent>
         <Box alignItems={"center"} justifyContent={"center"} display={"flex"}>
           <ButtonAddNew
-            isLoading={isLoading || isUpdating}
+            isLoading={false}
             title="add new card"
             onClick={addClick}
           />

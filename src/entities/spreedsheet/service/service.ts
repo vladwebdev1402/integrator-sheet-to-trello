@@ -15,7 +15,12 @@ const baseDriveUrl = "https://www.googleapis.com/drive/v3";
 export const SpreadSheetService = createApi({
   reducerPath: "SpreadSheetService",
   baseQuery: baseGoogleQuery,
-  tagTypes: ["List of Spreadsheet", "Spreadsheet-Detail", "Sheet-List", "Sheet-Card"],
+  tagTypes: [
+    "List of Spreadsheet",
+    "Spreadsheet-Detail",
+    "Sheet-List",
+    "Sheet-Card",
+  ],
   endpoints: (build) => ({
     getAllSheets: build.query<IResponseGetAllSheets, number>({
       query: (limit) => {
@@ -45,26 +50,44 @@ export const SpreadSheetService = createApi({
       invalidatesTags: ["List of Spreadsheet"],
     }),
 
-    renameSpreadSheet: build.mutation<any, {id: string, name: string}>({
-      query: ({id, name}) => ({
+    renameSpreadSheet: build.mutation<any, { id: string; name: string }>({
+      query: ({ id, name }) => ({
         url: baseUrl + `/${id}:batchUpdate`,
         method: "POST",
         body: {
-          requests: [{
-            updateSpreadsheetProperties: {
-              properties: {
-                title: name
+          requests: [
+            {
+              updateSpreadsheetProperties: {
+                properties: {
+                  title: name,
+                },
+                fields: "title",
               },
-              fields: "title",
-            }
-          }]
-        }
+            },
+          ],
+        },
       }),
+      async onQueryStarted({ id, name }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          SpreadSheetService.util.updateQueryData(
+            "getSpreadSheetById",
+            id,
+            (draft) => {
+              draft.properties.title = name;
+            }
+          )
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
       invalidatesTags: ["Spreadsheet-Detail", "List of Spreadsheet"],
     }),
 
-    deleteSpreadSheet: build.mutation<any, {id: string}>({
-      query: ({id}) => ({
+    deleteSpreadSheet: build.mutation<any, { id: string }>({
+      query: ({ id }) => ({
         url: baseDriveUrl + `/files/${id}`,
         method: "DELETE",
       }),
@@ -100,7 +123,7 @@ export const SpreadSheetService = createApi({
       }),
       invalidatesTags: ["Spreadsheet-Detail"],
     }),
-    
+
     deleteList: build.mutation<any, IQueryMutationDeleteList>({
       query: ({ spreadsheetId, sheetId }) => ({
         url: baseUrl + `/${spreadsheetId}:batchUpdate`,
@@ -130,6 +153,26 @@ export const SpreadSheetService = createApi({
         },
       }),
       invalidatesTags: ["Sheet-List"],
+      onQueryStarted: async (
+        { sheetTitle, spreadsheetId },
+        { dispatch, queryFulfilled }
+      ) => {
+        const patchResult = dispatch(
+          SpreadSheetService.util.updateQueryData(
+            "getSheetByName",
+            { sheetTitle, spreadsheetId },
+            (draft) => {
+              draft.values?.push(["New Card"]);
+            }
+          )
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
     }),
   }),
 });
