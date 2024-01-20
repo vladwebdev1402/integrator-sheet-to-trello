@@ -1,40 +1,42 @@
 import React, { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
+  FormControl,
   TextField,
   CircularProgress,
-  FormControl,
   useMediaQuery,
-  IconButton,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 
-import { useRenameSpreadSheetMutation } from "@/entities/spreedsheet";
+import { useRenameListMutation } from "@/entities/spreedsheet";
 
 interface Props {
   currentValue: string;
   isEdit: boolean;
   setEdit: (value: boolean) => void;
+  sheetId: number;
 }
 
-const SpreadsheetEditName: FC<Props> = ({ currentValue, isEdit, setEdit }) => {
-  const mediaMD = useMediaQuery("(max-width: 768px)");
+const SheetListRename: FC<Props> = ({
+  currentValue,
+  sheetId,
+  isEdit,
+  setEdit,
+}) => {
   const params = useParams<{ id: string }>();
   const [value, setValue] = useState(currentValue);
-
-  const [rename, { isLoading }] = useRenameSpreadSheetMutation();
-
+  const [rename, { isLoading }] = useRenameListMutation();
   const editChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
-
-  const editIconClick = () => {
-    setEdit(!isEdit);
-  };
+  const mediaSM = useMediaQuery("(max-width: 568px)");
 
   const editAction = () => {
     if (value !== currentValue && value !== "")
-      rename({ id: params.id || "", name: value });
+      rename({
+        sheetId,
+        spreadsheetId: params.id || "no-id",
+        sheetName: value,
+      });
     setEdit(false);
   };
 
@@ -43,13 +45,12 @@ const SpreadsheetEditName: FC<Props> = ({ currentValue, isEdit, setEdit }) => {
     editAction();
   };
 
+  const inputClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+  };
+
   return (
     <>
-      {!isEdit && !isLoading && (
-        <IconButton size={"small"} onClick={editIconClick}>
-          <EditIcon />
-        </IconButton>
-      )}
       {isEdit && (
         <FormControl fullWidth component={"form"} onSubmit={formSubmit}>
           <TextField
@@ -57,9 +58,15 @@ const SpreadsheetEditName: FC<Props> = ({ currentValue, isEdit, setEdit }) => {
             value={value}
             placeholder={"Input name spreadsheet"}
             onChange={editChange}
+            onClick={inputClick}
             onBlur={editAction}
             variant="standard"
-            inputProps={{ style: { fontSize: mediaMD ? "1.25rem" : "1.5rem" } }}
+            inputProps={{
+              style: {
+                fontSize: mediaSM ? "17px" : "20px",
+                fontWeight: 500,
+              },
+            }}
           />
         </FormControl>
       )}
@@ -68,4 +75,4 @@ const SpreadsheetEditName: FC<Props> = ({ currentValue, isEdit, setEdit }) => {
   );
 };
 
-export default SpreadsheetEditName;
+export default SheetListRename;

@@ -10,6 +10,7 @@ import {
   useCreateNewSpreadSheetMutation,
   useRenameSpreadSheetMutation,
   useDeleteSpreadSheetMutation,
+  useRenameListMutation,
 } from "./service/service";
 
 export {
@@ -24,4 +25,5 @@ export {
   useCreateNewSpreadSheetMutation,
   useRenameSpreadSheetMutation,
   useDeleteSpreadSheetMutation,
+  useRenameListMutation,
 };

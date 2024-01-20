@@ -37,9 +37,13 @@ export interface IQueryMutationAddCard {
   sheetTitle: string;
 }
 
-export interface IQueryMutationDeleteList {
+export interface ISheetMutation {
   spreadsheetId: string;
   sheetId: number;
+}
+
+export interface ISheetRenameMutaion extends ISheetMutation {
+  sheetName: string;
 }
 
 export interface IResponseGetAllSheets {

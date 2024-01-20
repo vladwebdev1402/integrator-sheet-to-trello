@@ -2,10 +2,11 @@ import { baseGoogleQuery } from "@/shared/rtk";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   IQueryMutationAddCard,
-  IQueryMutationDeleteList,
   IResponseGetAllSheets,
   IResponseGetSheet,
   IResponseGetSpreadsheet,
+  ISheetMutation,
+  ISheetRenameMutaion,
   sheetMimeType,
 } from "./types";
 
@@ -124,7 +125,7 @@ export const SpreadSheetService = createApi({
       invalidatesTags: ["Spreadsheet-Detail"],
     }),
 
-    deleteList: build.mutation<any, IQueryMutationDeleteList>({
+    deleteList: build.mutation<any, ISheetMutation>({
       query: ({ spreadsheetId, sheetId }) => ({
         url: baseUrl + `/${spreadsheetId}:batchUpdate`,
         method: "POST",
@@ -139,6 +140,50 @@ export const SpreadSheetService = createApi({
         },
       }),
       invalidatesTags: ["Spreadsheet-Detail"],
+    }),
+
+    renameList: build.mutation<any, ISheetRenameMutaion>({
+      query: ({ sheetId, sheetName, spreadsheetId }) => ({
+        url: baseUrl + `/${spreadsheetId}:batchUpdate`,
+        method: "POST",
+        body: {
+          requests: [
+            {
+              updateSheetProperties: {
+                fields: "title",
+                properties: {
+                  title: sheetName,
+                  sheetId: sheetId,
+                },
+              },
+            },
+          ],
+        },
+      }),
+      invalidatesTags: ["Sheet-List"],
+      async onQueryStarted(
+        { sheetId, sheetName, spreadsheetId },
+        { dispatch, queryFulfilled }
+      ) {
+        const patchResult = dispatch(
+          SpreadSheetService.util.updateQueryData(
+            "getSpreadSheetById",
+            spreadsheetId,
+            (draft) => {
+              const renamedList = draft.sheets.filter(
+                (sheet) => sheet.properties.sheetId === sheetId
+              )[0];
+              renamedList.properties.title = sheetName;
+            }
+          )
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
     }),
 
     addNewCard: build.mutation<any, IQueryMutationAddCard>({
@@ -181,9 +226,10 @@ export const {
   useGetSpreadSheetByIdQuery,
   useGetSheetByNameQuery,
   useGetAllSheetsQuery,
-  useAddNewListMutation,
   useAddNewCardMutation,
+  useAddNewListMutation,
   useDeleteListMutation,
+  useRenameListMutation,
   useCreateNewSpreadSheetMutation,
   useRenameSpreadSheetMutation,
   useDeleteSpreadSheetMutation,

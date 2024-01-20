@@ -1,22 +1,21 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, useState } from "react";
 import {
   Accordion,
-  AccordionSummary,
   AccordionDetails,
-  CardActionArea,
-  Typography,
-  Badge,
-  useMediaQuery,
+  AccordionActions,
+  Button,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import EditIcon from "@mui/icons-material/Edit";
 import { useParams } from "react-router-dom";
 
 import st from "./SheetList.module.scss";
-import { useGetSheetByNameQuery } from "@/entities/spreedsheet";
 import Skeletons from "./Skeletons";
+import { useGetSheetByNameQuery } from "@/entities/spreedsheet";
 import { SheetCard } from "@/entities/sheet-card";
 import { SheetCardAdd } from "@/features/sheet-card-add";
 import { SheetListDelete } from "@/features/sheet-list-delete";
+import ListHead from "./ListHead";
+
 interface Props {
   sheetId: number;
   title: string;
@@ -31,8 +30,7 @@ const SheetList: FC<Props> = ({
   expanded = false,
 }) => {
   const params = useParams<{ id: string }>();
-  const mediaSM = useMediaQuery("(max-width: 568px)");
-
+  const [isEdit, setIsEdit] = useState(false);
   const { data, isLoading, isFetching } = useGetSheetByNameQuery({
     spreadsheetId: params?.id ?? "",
     sheetTitle: title,
@@ -42,40 +40,18 @@ const SheetList: FC<Props> = ({
     return data && Array.isArray(data.values) ? data.values.length : 0;
   }, [data]);
 
+  const renameClick = () => {
+    setIsEdit(true);
+  };
   return (
     <Accordion defaultExpanded={expanded}>
-      <Badge
-        color="info"
-        showZero
-        anchorOrigin={{
-          horizontal: "left",
-          vertical: "top",
-        }}
-        badgeContent={countCards}
-        sx={{ width: "100%" }}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          sx={{ width: "100%" }}
-        >
-          <Typography
-            fontWeight={500}
-            fontSize={mediaSM ? "17px" : "20px"}
-            variant="body1"
-          >
-            {title}
-          </Typography>
-          <CardActionArea
-            sx={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              left: 0,
-              top: 0,
-            }}
-          ></CardActionArea>
-        </AccordionSummary>
-      </Badge>
+      <ListHead
+        countCards={countCards}
+        isEdit={isEdit}
+        setIsEdit={setIsEdit}
+        sheetId={sheetId}
+        title={title}
+      />
       <AccordionDetails className={st.sheet__cards}>
         {isLoading && expanded && <Skeletons />}
         {data &&
@@ -92,11 +68,20 @@ const SheetList: FC<Props> = ({
         {!isLoading && <SheetCardAdd sheetTitle={title} />}
       </AccordionDetails>
       {!isLoading && visibleDelete && (
-        <SheetListDelete
-          sheetId={sheetId}
-          isUpdating={isFetching}
-          countCards={countCards}
-        />
+        <AccordionActions>
+          <Button
+            startIcon={<EditIcon />}
+            variant="outlined"
+            onClick={renameClick}
+          >
+            rename
+          </Button>
+          <SheetListDelete
+            sheetId={sheetId}
+            isUpdating={isFetching}
+            countCards={countCards}
+          />
+        </AccordionActions>
       )}
     </Accordion>
   );

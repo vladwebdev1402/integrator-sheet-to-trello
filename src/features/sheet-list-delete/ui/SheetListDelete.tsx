@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { AccordionActions, Snackbar } from "@mui/material";
+import { Snackbar } from "@mui/material";
 import { ButtonDelete } from "@/shared/ui";
 import { useDeleteListMutation } from "@/entities/spreedsheet";
 import { useParams } from "react-router-dom";
@@ -36,7 +36,7 @@ const SheetListDelete: FC<Props> = ({ sheetId, isUpdating, countCards }) => {
   };
 
   return (
-    <AccordionActions>
+    <>
       <ButtonDelete onClick={deleteClick} isLoading={isLoading || isUpdating}>
         delete this list
       </ButtonDelete>
@@ -47,7 +47,7 @@ const SheetListDelete: FC<Props> = ({ sheetId, isUpdating, countCards }) => {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         message="Please, delete all cards on this list to delete."
       />
-    </AccordionActions>
+    </>
   );
 };
 
