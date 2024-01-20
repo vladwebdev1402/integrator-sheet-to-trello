@@ -6,6 +6,7 @@ import {
   CardActionArea,
   Typography,
   Badge,
+  useMediaQuery,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useParams } from "react-router-dom";
@@ -30,6 +31,7 @@ const SheetList: FC<Props> = ({
   expanded = false,
 }) => {
   const params = useParams<{ id: string }>();
+  const mediaSM = useMediaQuery("(max-width: 568px)");
 
   const { data, isLoading, isFetching } = useGetSheetByNameQuery({
     spreadsheetId: params?.id ?? "",
@@ -56,7 +58,11 @@ const SheetList: FC<Props> = ({
           expandIcon={<ExpandMoreIcon />}
           sx={{ width: "100%" }}
         >
-          <Typography fontWeight={500} fontSize={"20px"} variant="body1">
+          <Typography
+            fontWeight={500}
+            fontSize={mediaSM ? "17px" : "20px"}
+            variant="body1"
+          >
             {title}
           </Typography>
           <CardActionArea

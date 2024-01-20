@@ -7,16 +7,18 @@ import {
   DialogTitle,
   DialogContentText,
   Button,
+  useMediaQuery,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 import { ButtonDelete } from "@/shared/ui";
-import { useDeleteSpreadSheetMutation } from "@/entities/spreedsheet";
 import { routerPaths } from "@/shared/constants";
+import { useDeleteSpreadSheetMutation } from "@/entities/spreedsheet";
 
 const SpreadsheetDelete: FC = () => {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const mediaMD = useMediaQuery("(max-width: 768px)");
   const [open, setOpen] = useState(false);
 
   const [deleteSpredsheet, { isLoading, isSuccess }] =
@@ -32,7 +34,12 @@ const SpreadsheetDelete: FC = () => {
 
   return (
     <>
-      <ButtonDelete onClick={() => setOpen(!open)}>delete table</ButtonDelete>
+      <ButtonDelete
+        onClick={() => setOpen(!open)}
+        sx={{ flex: mediaMD ? "1 1 150px" : "" }}
+      >
+        delete table
+      </ButtonDelete>
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Do you really want to delete the spreadsheet?</DialogTitle>
         <DialogContent>

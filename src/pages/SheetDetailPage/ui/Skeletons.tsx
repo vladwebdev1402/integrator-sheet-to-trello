@@ -4,8 +4,8 @@ import { Skeleton, Typography, Box } from "@mui/material";
 const Skeletons = () => {
   return (
     <>
-      <Typography component={"div"} variant="h3">
-        <Skeleton sx={{ margin: "0 auto" }} variant="text" width={250} />
+      <Typography component={"div"} variant="h3" sx={{ paddingTop: "96px" }}>
+        <Skeleton variant="text" width={250} />
       </Typography>
       <Box sx={{ marginTop: "48px" }}>
         <Skeleton variant="rectangular" height={60} />
@@ -13,7 +13,10 @@ const Skeletons = () => {
         <Skeleton variant="rectangular" height={60} sx={{ marginTop: "5px" }} />
         <Skeleton variant="rectangular" height={60} sx={{ marginTop: "5px" }} />
       </Box>
-      <Skeleton width={130} height={50} sx={{ margin: "16px auto 0" }} />
+      <Box display={"flex"} gap={"16px"} marginTop={"16px"}>
+        <Skeleton width={130} height={50} />
+        <Skeleton width={130} height={50} />
+      </Box>
     </>
   );
 };

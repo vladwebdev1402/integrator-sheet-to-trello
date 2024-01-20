@@ -20,7 +20,7 @@ const ButtonDelete: FC<Props> = ({
   return (
     <LoadingButton
       className={className}
-      sx={sx}
+      sx={{ whiteSpace: "nowrap", ...sx }}
       onClick={onClick}
       variant="outlined"
       color="error"

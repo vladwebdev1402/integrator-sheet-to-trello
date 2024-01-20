@@ -1,5 +1,10 @@
 import React, { FC, useState } from "react";
-import { TextField, CircularProgress, FormControl } from "@mui/material";
+import {
+  TextField,
+  CircularProgress,
+  FormControl,
+  useMediaQuery,
+} from "@mui/material";
 import { useRenameSpreadSheetMutation } from "@/entities/spreedsheet";
 import { useParams } from "react-router-dom";
 
@@ -10,10 +15,11 @@ interface Props {
 }
 
 const SpreadsheetEditName: FC<Props> = ({ currentValue, isEdit, setEdit }) => {
+  const mediaMD = useMediaQuery("(max-width: 768px)");
+  const params = useParams<{ id: string }>();
   const [value, setValue] = useState(currentValue);
 
   const [rename, { isLoading }] = useRenameSpreadSheetMutation();
-  const params = useParams<{ id: string }>();
 
   const editChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -41,7 +47,7 @@ const SpreadsheetEditName: FC<Props> = ({ currentValue, isEdit, setEdit }) => {
             onChange={editChange}
             onBlur={editAction}
             variant="standard"
-            inputProps={{ style: { fontSize: "1.5rem" } }}
+            inputProps={{ style: { fontSize: mediaMD ? "1.25rem" : "1.5rem" } }}
           />
         </FormControl>
       )}

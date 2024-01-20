@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { useParams } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
 
 import { useAddNewListMutation } from "@/entities/spreedsheet";
 import { ButtonAddNew } from "@/shared/ui";
@@ -12,6 +13,7 @@ interface Props {
 const SheetListAdd: FC<Props> = ({ count, isUpdating }) => {
   const [addList, { isLoading }] = useAddNewListMutation();
   const params = useParams<{ id: string }>();
+  const mediaMD = useMediaQuery("(max-width: 768px)");
 
   const addListClick = () => {
     if (params.id)
@@ -27,6 +29,7 @@ const SheetListAdd: FC<Props> = ({ count, isUpdating }) => {
       isLoading={isLoading || isUpdating}
       onClick={addListClick}
       title="add new list"
+      sx={{ flex: mediaMD ? "1 1 150px" : "" }}
     />
   );
 };

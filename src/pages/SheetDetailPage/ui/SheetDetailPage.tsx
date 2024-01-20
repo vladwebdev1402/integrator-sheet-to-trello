@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Button } from "@mui/material";
+import { Box, Button, useMediaQuery } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 import { useGetSpreadSheetByIdQuery } from "@/entities/spreedsheet";
@@ -15,6 +15,8 @@ import NameSpreadsheet from "./NameSpreadsheet";
 
 const SheetDetailPage = () => {
   const params = useParams<{ id: string }>();
+  const mediaMD = useMediaQuery("(max-width: 768px)");
+
   const { data, isLoading, isFetching } = useGetSpreadSheetByIdQuery(
     params?.id ?? "no-id"
   );
@@ -45,16 +47,17 @@ const SheetDetailPage = () => {
           ))}
       </Box>
       {!isLoading && data && (
-        <Box display={"flex"} gap={"16px"} marginTop={"16px"}>
-          <SpreadsheetDelete />
+        <Box display={"flex"} gap={"16px"} flexWrap={"wrap"} marginTop={"16px"}>
           <SheetListAdd count={countSheets} isUpdating={isFetching} />
           <Button
             color="secondary"
             startIcon={<OpenInNewIcon />}
             onClick={seeSpredsheetClick}
+            sx={{ flex: mediaMD ? "1 1 150px" : "", whiteSpace: "nowrap" }}
           >
             see spreadsheet
           </Button>
+          <SpreadsheetDelete />
         </Box>
       )}
     </div>
