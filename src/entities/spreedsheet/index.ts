@@ -3,9 +3,11 @@ import {
   SpreadSheetService,
   useGetSpreadSheetByIdQuery,
   useGetSheetByNameQuery,
+  useGetAllSheetsQuery,
   useAddNewListMutation,
   useAddNewCardMutation,
   useDeleteListMutation,
+  useCreateNewSpreadSheetMutation,
 } from "./service/service";
 
 export {
@@ -13,7 +15,9 @@ export {
   SpreadSheetService,
   useGetSpreadSheetByIdQuery,
   useGetSheetByNameQuery,
+  useGetAllSheetsQuery,
   useAddNewListMutation,
   useAddNewCardMutation,
-  useDeleteListMutation
+  useDeleteListMutation,
+  useCreateNewSpreadSheetMutation,
 };

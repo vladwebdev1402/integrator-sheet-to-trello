@@ -5,9 +5,14 @@ import { useDebounce } from "@/shared/hooks";
 interface Props {
   activeSearch: string;
   setActiveSearch: (value: string) => void;
+  placeholder?: string;
 }
 
-const ItemsSearch: FC<Props> = ({ activeSearch, setActiveSearch }) => {
+const ItemsSearch: FC<Props> = ({
+  activeSearch,
+  setActiveSearch,
+  placeholder = "",
+}) => {
   const [search, setSearch] = useState(activeSearch);
 
   const searchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +27,7 @@ const ItemsSearch: FC<Props> = ({ activeSearch, setActiveSearch }) => {
 
   return (
     <SearchField
-      placeholder="Sheet name"
+      placeholder={placeholder}
       value={search}
       onChange={searchChange}
     />

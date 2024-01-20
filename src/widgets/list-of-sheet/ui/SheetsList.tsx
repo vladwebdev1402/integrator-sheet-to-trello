@@ -1,12 +1,13 @@
 import React, { useMemo, useState } from "react";
 
-import { useGetAllSheetsQuery } from "@/entities/list-of-sheets";
-import { Spreadsheet } from "@/entities/spreedsheet";
-
-import { ItemsSearch } from "@/features/items-search";
 import { useAppSelector } from "@/shared/hooks";
-import { NotAuthSheetList } from "@/features/auth";
 import { ItemsContainer } from "@/shared/ui";
+
+import { Spreadsheet, useGetAllSheetsQuery } from "@/entities/spreedsheet";
+
+import { SpreadsheetAdd } from "@/features/spreadsheet-add";
+import { ItemsSearch } from "@/features/items-search";
+import { NotAuthSheetList } from "@/features/auth";
 
 const SheetsList = () => {
   const [search, setSearch] = useState("");
@@ -24,8 +25,13 @@ const SheetsList = () => {
 
   return (
     <div>
-      <ItemsSearch activeSearch={search} setActiveSearch={setSearch} />
+      <ItemsSearch
+        activeSearch={search}
+        setActiveSearch={setSearch}
+        placeholder="Search spreadsheet with name..."
+      />
       {!isAuth && <NotAuthSheetList />}
+      {isAuth && <SpreadsheetAdd />}
 
       {isAuth && (
         <ItemsContainer
