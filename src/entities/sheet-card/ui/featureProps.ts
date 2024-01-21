@@ -7,4 +7,5 @@ export interface ICardDeleteProps {
 
 export interface ICardShiftProps {
     card: CSheetCard;
+    closeDialog: () => void;
 }

@@ -17,9 +17,10 @@ import { CSheetCard } from "@/shared/types";
 
 interface Props {
   card: CSheetCard;
+  closeDialog: () => void;
 }
 
-const SheetCardShift: FC<Props> = ({ card }) => {
+const SheetCardShift: FC<Props> = ({ card, closeDialog }) => {
   const params = useParams<{ id: string }>();
   const [currentSheet, setCurrentSheet] = useState(card.sheetId);
 
@@ -36,7 +37,7 @@ const SheetCardShift: FC<Props> = ({ card }) => {
   };
 
   useEffect(() => {
-    if (currentSheet !== card.idx) {
+    if (currentSheet !== card.sheetId) {
       deleteCard({
         idx: card.idx,
         sheetId: card.sheetId,
@@ -48,6 +49,7 @@ const SheetCardShift: FC<Props> = ({ card }) => {
         spreadsheetId: params?.id || "no-id",
         isShift: true,
       });
+      closeDialog();
     }
   }, [currentSheet]);
 

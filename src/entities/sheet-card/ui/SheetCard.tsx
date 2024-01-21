@@ -96,7 +96,7 @@ const SheetCard: FC<Props> = ({
                   sheet
                 </Typography>
               </Box>
-              <CardShift card={card} />
+              <CardShift card={card} closeDialog={handleClose} />
             </Box>
           </DialogContent>
           <DialogActions>

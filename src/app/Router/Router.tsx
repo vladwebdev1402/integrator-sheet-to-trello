@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
+
 import {
   createBrowserRouter,
   Route,
@@ -7,24 +8,15 @@ import {
 } from "react-router-dom";
 
 import Root from "./Root";
-import { MainPage, ProfilePage } from "@/pages";
 import { getGoogleUserInfo } from "@/entities/user-google";
 import { getTrelloUserInfo } from "@/entities/user-trello";
 import { routerPaths } from "@/shared/constants";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks";
 import { SheetsListPage } from "@/pages/SheetsListPage";
-import { SheetDetailPage } from "@/pages/SheetDetailPage";
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path={routerPaths.main} element={<Root />}>
-      <Route index element={<MainPage />} />
-      <Route path={routerPaths.profile} element={<ProfilePage />} />
-      <Route path={routerPaths.google} element={<SheetsListPage />} />
-      <Route path={routerPaths.sheetDetail} element={<SheetDetailPage />} />
-    </Route>
-  )
-);
+import { MainPage } from "@/pages/MainPage";
+import { ProfilePage } from "@/pages/ProfilePage";
+import { SkeletonsSheetDetail } from "@/pages/SheetDetailPage";
+const SheetDetailPage = lazy(() => import("@/pages/SheetDetailPage"));
 
 const Router = () => {
   const dispatch = useAppDispatch();
@@ -43,7 +35,29 @@ const Router = () => {
     if (isTrelloAuth) dispatch(getTrelloUserInfo(null));
   }, [isTrelloAuth, dispatch]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <RouterProvider
+      router={createBrowserRouter(
+        createRoutesFromElements(
+          <Route path={routerPaths.main} element={<Root />}>
+            <Route index element={<MainPage />} />
+            <Route path={routerPaths.profile} element={<ProfilePage />} />
+            <Route path={routerPaths.google} element={<SheetsListPage />} />
+            {isGoogleAuth && (
+              <Route
+                path={routerPaths.sheetDetail}
+                element={
+                  <Suspense fallback={<SkeletonsSheetDetail />}>
+                    <SheetDetailPage />
+                  </Suspense>
+                }
+              />
+            )}
+          </Route>
+        )
+      )}
+    />
+  );
 };
 
 export default Router;

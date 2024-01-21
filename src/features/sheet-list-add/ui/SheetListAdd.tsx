@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 
 import { useAddNewListMutation } from "@/entities/spreedsheet";
-import { ButtonAddNew } from "@/shared/ui";
-
 interface Props {
   count: number;
   isUpdating: boolean;
@@ -25,12 +25,15 @@ const SheetListAdd: FC<Props> = ({ count, isUpdating }) => {
   };
 
   return (
-    <ButtonAddNew
-      isLoading={isLoading || isUpdating}
+    <LoadingButton
+      loading={isLoading || isUpdating}
       onClick={addListClick}
-      title="add new list"
-      sx={{ flex: mediaMD ? "1 1 150px" : "" }}
-    />
+      sx={{ whiteSpace: "nowrap", flex: mediaMD ? "1 1 150px" : "" }}
+      startIcon={<PlaylistAddIcon />}
+      loadingPosition="start"
+    >
+      add new sheet
+    </LoadingButton>
   );
 };
 

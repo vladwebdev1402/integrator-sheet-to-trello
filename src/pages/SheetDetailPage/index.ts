@@ -1,3 +1,5 @@
 import SheetDetailPage from "./ui/SheetDetailPage";
+import SkeletonsSheetDetail from "./ui/SkeletonsSheetDetail";
 
-export { SheetDetailPage };
+export default SheetDetailPage;
+export { SheetDetailPage, SkeletonsSheetDetail };

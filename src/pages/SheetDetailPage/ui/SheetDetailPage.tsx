@@ -10,7 +10,7 @@ import { SheetList } from "@/widgets/sheet-list";
 import { ButtonBack } from "@/shared/ui";
 
 import st from "./SheetDetailPage.module.scss";
-import Skeletons from "./Skeletons";
+import SkeletonsSheetDetail from "./SkeletonsSheetDetail";
 import NameSpreadsheet from "./NameSpreadsheet";
 
 const SheetDetailPage = () => {
@@ -32,7 +32,7 @@ const SheetDetailPage = () => {
   return (
     <div className={`container ${st.sheet}`}>
       <ButtonBack />
-      {isLoading && <Skeletons />}
+      {isLoading && <SkeletonsSheetDetail />}
       {data && (
         <>
           <NameSpreadsheet title={data.properties.title} />

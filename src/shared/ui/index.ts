@@ -7,7 +7,6 @@ import ProfileError from "./Profile/ProfileError";
 import SearchField from "./input/SearchField/SearchField";
 import ItemsContainer from "./ItemsContainer/ItemsContainer";
 import ButtonBack from "./buttons/ButtonBack/ButtonBack";
-import ButtonAddNew from "./buttons/ButtonAddNew/ButtonAddNew";
 import ButtonDelete from "./buttons/ButtonDelete/ButtonDelete";
 import EditValue from "./EditValue/EditValue";
 
@@ -23,7 +22,6 @@ export {
   SearchField,
   ItemsContainer,
   ButtonBack,
-  ButtonAddNew,
   ButtonDelete,
   EditValue,
 };

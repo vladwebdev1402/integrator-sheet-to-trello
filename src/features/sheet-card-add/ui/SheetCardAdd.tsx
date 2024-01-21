@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import { Card, Box, CardContent } from "@mui/material";
-import { ButtonAddNew } from "@/shared/ui";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { useParams } from "react-router-dom";
 import { useAddNewCardMutation } from "@/entities/spreedsheet";
-
+import AddCardIcon from "@mui/icons-material/AddCard";
 interface Props {
   sheetId: number;
   countCards: number;
@@ -26,11 +26,14 @@ const SheetCardAdd: FC<Props> = ({ sheetId, countCards }) => {
     <Card>
       <CardContent>
         <Box alignItems={"center"} justifyContent={"center"} display={"flex"}>
-          <ButtonAddNew
-            isLoading={false}
-            title="add new card"
+          <LoadingButton
             onClick={addClick}
-          />
+            sx={{ whiteSpace: "nowrap" }}
+            startIcon={<AddCardIcon />}
+            loadingPosition="start"
+          >
+            add new card
+          </LoadingButton>
         </Box>
       </CardContent>
     </Card>

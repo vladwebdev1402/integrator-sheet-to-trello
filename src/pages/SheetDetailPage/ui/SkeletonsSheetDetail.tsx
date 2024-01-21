@@ -1,7 +1,7 @@
 import React from "react";
 import { Skeleton, Typography, Box } from "@mui/material";
 
-const Skeletons = () => {
+const SkeletonsSheetDetail = () => {
   return (
     <>
       <Typography component={"div"} variant="h3" sx={{ paddingTop: "96px" }}>
@@ -21,4 +21,4 @@ const Skeletons = () => {
   );
 };
 
-export default Skeletons;
+export default SkeletonsSheetDetail;
