@@ -1,3 +1,3 @@
 import SheetCard from "./ui/SheetCard";
-
-export { SheetCard };
+import { CSheetCard } from "./lib/ClassSheetCard";
+export { SheetCard, CSheetCard };

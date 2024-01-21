@@ -160,7 +160,6 @@ export const SpreadSheetService = createApi({
           patchResult.undo();
         }
       },
-      invalidatesTags: ["Spreadsheet-Detail"],
     }),
 
     renameList: build.mutation<any, ISheetRenameMutaion>({

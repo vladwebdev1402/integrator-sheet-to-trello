@@ -9,7 +9,10 @@ import ItemsContainer from "./ItemsContainer/ItemsContainer";
 import ButtonBack from "./buttons/ButtonBack/ButtonBack";
 import ButtonAddNew from "./buttons/ButtonAddNew/ButtonAddNew";
 import ButtonDelete from "./buttons/ButtonDelete/ButtonDelete";
-import InputEdit from "./input/InputEdit/InputEdit";
+import EditValue from "./EditValue/EditValue";
+
+import { IEditFuatureProps } from "./EditValue/props";
+
 export {
   HeaderLink,
   FooterLink,
@@ -22,5 +25,9 @@ export {
   ButtonBack,
   ButtonAddNew,
   ButtonDelete,
-  InputEdit,
+  EditValue,
 };
+
+export type {
+  IEditFuatureProps
+}

@@ -70,7 +70,9 @@ const SheetListRename: FC<Props> = ({
           />
         </FormControl>
       )}
-      {!isEdit && isLoading && <CircularProgress size="15px" />}
+      {!isEdit && isLoading && (
+        <CircularProgress sx={{ marginLeft: "5px" }} size="15px" />
+      )}
     </>
   );
 };
