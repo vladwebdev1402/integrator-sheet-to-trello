@@ -149,6 +149,17 @@ export const SpreadSheetService = createApi({
           ],
         },
       }),
+      async onQueryStarted({sheetId, spreadsheetId}, {dispatch, queryFulfilled}) {  
+        const patchResult = dispatch(SpreadSheetService.util.updateQueryData("getSpreadSheetById",spreadsheetId , (draft) => {
+            draft.sheets = draft.sheets.filter((sheet) => sheet.properties.sheetId !== sheetId)
+        }))
+
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo();
+        }
+      },
       invalidatesTags: ["Spreadsheet-Detail"],
     }),
 
