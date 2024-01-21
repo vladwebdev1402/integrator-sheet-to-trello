@@ -80,7 +80,7 @@ export const SpreadSheetService = createApi({
             }
           )
         );
-        queryFulfilled.catch(patchResult.undo)
+        queryFulfilled.catch(patchResult.undo);
       },
       invalidatesTags: ["List of Spreadsheet"],
     }),
@@ -170,7 +170,7 @@ export const SpreadSheetService = createApi({
           )
         );
 
-        queryFulfilled.catch(patchResult.undo)
+        queryFulfilled.catch(patchResult.undo);
       },
     }),
 
@@ -209,7 +209,7 @@ export const SpreadSheetService = createApi({
           )
         );
 
-        queryFulfilled.catch(patchResult.undo)
+        queryFulfilled.catch(patchResult.undo);
       },
     }),
 
@@ -248,7 +248,7 @@ export const SpreadSheetService = createApi({
           )
         );
 
-        queryFulfilled.catch(patchResult.undo)
+        queryFulfilled.catch(patchResult.undo);
       },
     }),
 
@@ -273,7 +273,7 @@ export const SpreadSheetService = createApi({
         },
       }),
       async onQueryStarted(
-        { card, sheetId, spreadsheetId },
+        { card, sheetId, spreadsheetId, isShift = false },
         { dispatch, queryFulfilled }
       ) {
         const resultPatch = dispatch(
@@ -281,16 +281,20 @@ export const SpreadSheetService = createApi({
             "getSheetById",
             { sheetId, spreadsheetId },
             (draft) => {
-              draft[card.idx] = [card.title, card.description];
+              if (isShift) {
+                draft.push([card.title, card.description]);
+                card.idx = draft.length - 1;
+                card.sheetId = sheetId;
+              } else draft[card.idx] = [card.title, card.description];
             }
           )
         );
-        queryFulfilled.catch(resultPatch.undo)
+        queryFulfilled.catch(resultPatch.undo);
       },
     }),
 
-    deleteCard: build.mutation<any, ICardDeleteMutauin>(({
-      query: ({idx, sheetId, spreadsheetId}) =>  ({
+    deleteCard: build.mutation<any, ICardDeleteMutauin>({
+      query: ({ idx, sheetId, spreadsheetId }) => ({
         url: baseUrl + `/${spreadsheetId}:batchUpdate`,
         method: "POST",
         body: {
@@ -302,14 +306,28 @@ export const SpreadSheetService = createApi({
                   sheetId: sheetId,
                   startIndex: idx,
                   endIndex: idx + 1,
-                }
-              }
-            }
-          ]
+                },
+              },
+            },
+          ],
         },
       }),
-      invalidatesTags: ["Sheet-List"],
-    }))
+      async onQueryStarted(
+        { idx, sheetId, spreadsheetId },
+        { dispatch, queryFulfilled }
+      ) {
+        const resultPatch = dispatch(
+          SpreadSheetService.util.updateQueryData(
+            "getSheetById",
+            { sheetId, spreadsheetId },
+            (draft) => {
+              draft.splice(idx, 1);
+            }
+          )
+        );
+        queryFulfilled.catch(resultPatch.undo);
+      },
+    }),
   }),
 });
 

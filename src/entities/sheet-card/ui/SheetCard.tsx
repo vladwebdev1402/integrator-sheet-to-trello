@@ -11,18 +11,19 @@ import {
   Box,
   Button,
 } from "@mui/material";
-
+import SegmentIcon from "@mui/icons-material/Segment";
 import DescriptionIcon from "@mui/icons-material/Description";
 
 import { CSheetCard } from "@/shared/types";
 import { IEditFuatureObjectProps } from "@/shared/ui";
-import { ICardDeleteProps } from "./featureProps";
+import { ICardDeleteProps, ICardShiftProps } from "./featureProps";
 
 interface Props {
   card: CSheetCard;
   TitleEdit: FC<IEditFuatureObjectProps<CSheetCard>>;
   DescriptionEdit: FC<IEditFuatureObjectProps<CSheetCard>>;
   CardDelete: FC<ICardDeleteProps>;
+  CardShift: FC<ICardShiftProps>;
 }
 
 const SheetCard: FC<Props> = ({
@@ -30,6 +31,7 @@ const SheetCard: FC<Props> = ({
   TitleEdit,
   DescriptionEdit,
   CardDelete,
+  CardShift,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isTitleEdit, setIsTitleEdit] = useState(false);
@@ -86,6 +88,15 @@ const SheetCard: FC<Props> = ({
                   currentValue={card}
                 />
               </Box>
+            </Box>
+            <Box marginTop={"24px"}>
+              <Box display="flex" gap="12px" alignItems="center">
+                <SegmentIcon />
+                <Typography variant="overline" fontWeight={500} fontSize="15px">
+                  sheet
+                </Typography>
+              </Box>
+              <CardShift card={card} />
             </Box>
           </DialogContent>
           <DialogActions>

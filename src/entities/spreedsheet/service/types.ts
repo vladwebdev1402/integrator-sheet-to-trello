@@ -64,6 +64,7 @@ export interface IResponseGetAllSheets {
 
 export interface ICardEditMutaion extends ISheetMutation {
   card: CSheetCard;
+  isShift?: boolean;
 }
 
 export interface ICardDeleteMutauin extends ISheetMutation {

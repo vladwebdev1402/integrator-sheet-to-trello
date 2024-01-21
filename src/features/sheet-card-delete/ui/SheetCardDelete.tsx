@@ -1,6 +1,9 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { useParams } from "react-router-dom";
-import { useDeleteCardMutation } from "@/entities/spreedsheet";
+import {
+  useDeleteCardMutation,
+  useGetSheetByIdQuery,
+} from "@/entities/spreedsheet";
 import { CSheetCard } from "@/shared/types";
 import { ButtonDelete } from "@/shared/ui";
 
@@ -11,7 +14,11 @@ interface Props {
 
 const SheetCardDelete: FC<Props> = ({ card, closeDialog }) => {
   const params = useParams<{ id: string }>();
-  const [deleteCard, { isLoading, isSuccess }] = useDeleteCardMutation();
+  const [deleteCard, { isLoading }] = useDeleteCardMutation();
+  const { isFetching } = useGetSheetByIdQuery({
+    sheetId: card.sheetId,
+    spreadsheetId: params?.id ?? "no-id",
+  });
 
   const deleteClick = () => {
     deleteCard({
@@ -19,14 +26,11 @@ const SheetCardDelete: FC<Props> = ({ card, closeDialog }) => {
       sheetId: card.sheetId,
       spreadsheetId: params?.id ?? "no-id",
     });
+    closeDialog();
   };
 
-  useEffect(() => {
-    if (isSuccess) closeDialog();
-  }, [isSuccess]);
-
   return (
-    <ButtonDelete isLoading={isLoading} onClick={deleteClick}>
+    <ButtonDelete isLoading={isLoading || isFetching} onClick={deleteClick}>
       delete
     </ButtonDelete>
   );
