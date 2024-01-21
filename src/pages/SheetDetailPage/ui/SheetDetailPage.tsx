@@ -17,7 +17,7 @@ const SheetDetailPage = () => {
   const params = useParams<{ id: string }>();
   const mediaMD = useMediaQuery("(max-width: 768px)");
 
-  const { data, isLoading, isFetching } = useGetSpreadSheetByIdQuery(
+  const { data, isLoading, isFetching, isError } = useGetSpreadSheetByIdQuery(
     params?.id ?? "no-id"
   );
 
@@ -85,6 +85,15 @@ const SheetDetailPage = () => {
             <SpreadsheetDelete />
           </Box>
         </>
+      )}
+      {isError && (
+        <Typography
+          textAlign={"center"}
+          paddingTop={"92px"}
+          variant={mediaMD ? "h6" : "h5"}
+        >
+          The spreadsheet was not found. Go back to the list of your tables.
+        </Typography>
       )}
     </div>
   );

@@ -10,12 +10,12 @@ const spreadsheetExtendApi = SpreadSheetService.injectEndpoints({
   endpoints: (build) => ({
 
     
-    getAllSheets: build.query<IResponseGetAllSheets, number>({
-      query: (limit) => {
+    getAllSheets: build.query<IResponseGetAllSheets, {limit: number, name: string}>({
+      query: ({limit, name}) => {
         return {
           url: baseDriveUrl + `/files`,
           params: {
-            q: `mimeType = '${sheetMimeType}' and 'me' in owners`,
+            q: `mimeType = '${sheetMimeType}' and 'me' in owners and name contains '${name}' `,
             pageSize: limit,
           },
         };
