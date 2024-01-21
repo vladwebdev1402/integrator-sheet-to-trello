@@ -89,7 +89,7 @@ const SheetCard: FC<Props> = ({
             </Box>
           </DialogContent>
           <DialogActions>
-            <CardDelete closeDialog={handleClose} idx={card.idx} />
+            <CardDelete closeDialog={handleClose} card={card} />
             <Button onClick={handleClose} variant="contained">
               Close
             </Button>

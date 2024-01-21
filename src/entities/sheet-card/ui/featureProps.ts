@@ -1,4 +1,6 @@
+import { CSheetCard } from "@/shared/types";
+
 export interface ICardDeleteProps {
     closeDialog: () => void;
-    idx: number;
+    card: CSheetCard;
 }

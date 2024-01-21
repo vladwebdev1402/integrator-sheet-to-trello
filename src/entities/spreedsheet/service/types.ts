@@ -66,4 +66,8 @@ export interface ICardEditMutaion extends ISheetMutation {
   card: CSheetCard;
 }
 
+export interface ICardDeleteMutauin extends ISheetMutation {
+  idx: number;
+}
+
 export const sheetMimeType = "application/vnd.google-apps.spreadsheet";

@@ -8,6 +8,7 @@ interface Props {
   isLoading?: boolean;
   sx?: SxProps;
   className?: string;
+  visibleIcon?: boolean;
 }
 
 const ButtonDelete: FC<Props> = ({
@@ -16,6 +17,7 @@ const ButtonDelete: FC<Props> = ({
   isLoading = false,
   sx = {},
   className = "",
+  visibleIcon = true,
 }) => {
   return (
     <LoadingButton
@@ -24,7 +26,7 @@ const ButtonDelete: FC<Props> = ({
       onClick={onClick}
       variant="outlined"
       color="error"
-      startIcon={<DeleteIcon />}
+      startIcon={visibleIcon ? <DeleteIcon /> : <></>}
       loading={isLoading}
       loadingPosition="start"
     >

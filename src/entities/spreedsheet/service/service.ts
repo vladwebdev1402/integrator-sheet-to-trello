@@ -1,6 +1,7 @@
 import { baseGoogleQuery } from "@/shared/rtk";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
+  ICardDeleteMutauin,
   ICardEditMutaion,
   IQueryMutationAddCard,
   IResponseGetAllSheets,
@@ -79,11 +80,7 @@ export const SpreadSheetService = createApi({
             }
           )
         );
-        try {
-          await queryFulfilled;
-        } catch {
-          patchResult.undo();
-        }
+        queryFulfilled.catch(patchResult.undo)
       },
       invalidatesTags: ["List of Spreadsheet"],
     }),
@@ -173,11 +170,7 @@ export const SpreadSheetService = createApi({
           )
         );
 
-        try {
-          await queryFulfilled;
-        } catch {
-          patchResult.undo();
-        }
+        queryFulfilled.catch(patchResult.undo)
       },
     }),
 
@@ -216,11 +209,7 @@ export const SpreadSheetService = createApi({
           )
         );
 
-        try {
-          await queryFulfilled;
-        } catch {
-          patchResult.undo();
-        }
+        queryFulfilled.catch(patchResult.undo)
       },
     }),
 
@@ -259,11 +248,7 @@ export const SpreadSheetService = createApi({
           )
         );
 
-        try {
-          await queryFulfilled;
-        } catch {
-          patchResult.undo();
-        }
+        queryFulfilled.catch(patchResult.undo)
       },
     }),
 
@@ -300,13 +285,31 @@ export const SpreadSheetService = createApi({
             }
           )
         );
-        try {
-          await queryFulfilled;
-        } catch {
-          resultPatch.undo();
-        }
+        queryFulfilled.catch(resultPatch.undo)
       },
     }),
+
+    deleteCard: build.mutation<any, ICardDeleteMutauin>(({
+      query: ({idx, sheetId, spreadsheetId}) =>  ({
+        url: baseUrl + `/${spreadsheetId}:batchUpdate`,
+        method: "POST",
+        body: {
+          requests: [
+            {
+              deleteDimension: {
+                range: {
+                  dimension: "ROWS",
+                  sheetId: sheetId,
+                  startIndex: idx,
+                  endIndex: idx + 1,
+                }
+              }
+            }
+          ]
+        },
+      }),
+      invalidatesTags: ["Sheet-List"],
+    }))
   }),
 });
 
@@ -322,4 +325,5 @@ export const {
   useRenameSpreadSheetMutation,
   useDeleteSpreadSheetMutation,
   useEditCardMutation,
+  useDeleteCardMutation,
 } = SpreadSheetService;

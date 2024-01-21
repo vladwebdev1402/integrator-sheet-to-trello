@@ -12,6 +12,7 @@ import {
   useDeleteSpreadSheetMutation,
   useRenameListMutation,
   useEditCardMutation,
+  useDeleteCardMutation,
 } from "./service/service";
 
 export {
@@ -28,4 +29,5 @@ export {
   useDeleteSpreadSheetMutation,
   useRenameListMutation,
   useEditCardMutation,
+  useDeleteCardMutation,
 };
