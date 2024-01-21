@@ -11,6 +11,7 @@ import {
   useRenameSpreadSheetMutation,
   useDeleteSpreadSheetMutation,
   useRenameListMutation,
+  useEditCardMutation,
 } from "./service/service";
 
 export {
@@ -26,4 +27,5 @@ export {
   useRenameSpreadSheetMutation,
   useDeleteSpreadSheetMutation,
   useRenameListMutation,
+  useEditCardMutation,
 };

@@ -14,14 +14,14 @@ import {
 
 import DescriptionIcon from "@mui/icons-material/Description";
 
-import { CSheetCard } from "../lib/ClassSheetCard";
-import { IEditFuatureProps } from "@/shared/ui";
+import { CSheetCard } from "@/shared/types";
+import { IEditFuatureObjectProps } from "@/shared/ui";
 import { ICardDeleteProps } from "./featureProps";
 
 interface Props {
   card: CSheetCard;
-  TitleEdit: FC<IEditFuatureProps>;
-  DescriptionEdit: FC<IEditFuatureProps>;
+  TitleEdit: FC<IEditFuatureObjectProps<CSheetCard>>;
+  DescriptionEdit: FC<IEditFuatureObjectProps<CSheetCard>>;
   CardDelete: FC<ICardDeleteProps>;
 }
 
@@ -59,7 +59,7 @@ const SheetCard: FC<Props> = ({
             <TitleEdit
               isEdit={isTitleEdit}
               setIsEdit={setIsTitleEdit}
-              currentValue={card.title}
+              currentValue={card}
             />
           </DialogTitle>
           <DialogContent>
@@ -83,13 +83,13 @@ const SheetCard: FC<Props> = ({
                 <DescriptionEdit
                   isEdit={isDescEdit}
                   setIsEdit={setIsDescEdit}
-                  currentValue={card.description}
+                  currentValue={card}
                 />
               </Box>
             </Box>
           </DialogContent>
           <DialogActions>
-            <CardDelete closeDialog={handleClose} idx={card.id} />
+            <CardDelete closeDialog={handleClose} idx={card.idx} />
             <Button onClick={handleClose} variant="contained">
               Close
             </Button>

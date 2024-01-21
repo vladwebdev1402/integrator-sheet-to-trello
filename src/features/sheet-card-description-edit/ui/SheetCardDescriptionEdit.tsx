@@ -1,17 +1,30 @@
-import { EditValue, IEditFuatureProps } from "@/shared/ui";
 import React, { FC } from "react";
+import { useParams } from "react-router-dom";
 
-const SheetCardDescriptionEdit: FC<IEditFuatureProps> = ({
+import { useEditCardMutation } from "@/entities/spreedsheet";
+import { CSheetCard } from "@/shared/types";
+import { EditValue, IEditFuatureObjectProps } from "@/shared/ui";
+
+const SheetCardDescriptionEdit: FC<IEditFuatureObjectProps<CSheetCard>> = ({
   isEdit,
   currentValue,
   setIsEdit,
 }) => {
-  const updateValue = (value: string) => {};
+  const params = useParams<{ id: string }>();
+  const [update] = useEditCardMutation();
+
+  const updateValue = (value: string) => {
+    update({
+      card: { ...currentValue, description: value },
+      spreadsheetId: params.id || "no-id",
+      sheetId: currentValue.sheetId,
+    });
+  };
 
   return (
     <EditValue
       callbackUpdate={updateValue}
-      currentValue={currentValue}
+      currentValue={currentValue.description}
       isEdit={isEdit}
       setIsEdit={setIsEdit}
       visibleEditIcon={false}
@@ -20,6 +33,7 @@ const SheetCardDescriptionEdit: FC<IEditFuatureProps> = ({
         color: "rgba(0, 0, 0, 0.87)",
       }}
       type="area"
+      allowedEmpty
     />
   );
 };

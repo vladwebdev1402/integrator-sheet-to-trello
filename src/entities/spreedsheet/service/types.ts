@@ -1,3 +1,5 @@
+import { CSheetCard } from "@/shared/types";
+
 export interface IResponseGetSpreadsheet {
   spreadsheetId: string;
   properties: {
@@ -58,6 +60,10 @@ export interface IResponseGetAllSheets {
       name: string;
       mimeType: string;
   }[];
+}
+
+export interface ICardEditMutaion extends ISheetMutation {
+  card: CSheetCard;
 }
 
 export const sheetMimeType = "application/vnd.google-apps.spreadsheet";

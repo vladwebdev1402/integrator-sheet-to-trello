@@ -10,14 +10,15 @@ import { useParams } from "react-router-dom";
 
 import st from "./SheetList.module.scss";
 import Skeletons from "./Skeletons";
+import ListHead from "./ListHead";
 import { useGetSheetByIdQuery } from "@/entities/spreedsheet";
-import { CSheetCard, SheetCard } from "@/entities/sheet-card";
+import { SheetCard } from "@/entities/sheet-card";
 import { SheetCardAdd } from "@/features/sheet-card-add";
 import { SheetListDelete } from "@/features/sheet-list-delete";
-import ListHead from "./ListHead";
 import { SheetCardTitleEdit } from "@/features/sheet-card-title-edit";
 import { SheetCardDescriptionEdit } from "@/features/sheet-card-description-edit";
 import { SheetCardDelete } from "@/features/sheet-card-delete";
+import { CSheetCard } from "@/shared/types";
 
 interface Props {
   sheetId: number;
@@ -61,7 +62,7 @@ const SheetList: FC<Props> = ({
           data.map((card, idx) => (
             <SheetCard
               key={idx}
-              card={new CSheetCard(card, idx)}
+              card={new CSheetCard(card, idx, sheetId)}
               TitleEdit={SheetCardTitleEdit}
               DescriptionEdit={SheetCardDescriptionEdit}
               CardDelete={SheetCardDelete}

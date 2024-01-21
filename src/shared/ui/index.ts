@@ -11,7 +11,7 @@ import ButtonAddNew from "./buttons/ButtonAddNew/ButtonAddNew";
 import ButtonDelete from "./buttons/ButtonDelete/ButtonDelete";
 import EditValue from "./EditValue/EditValue";
 
-import { IEditFuatureProps } from "./EditValue/props";
+import { IEditFuatureProps, IEditFuatureObjectProps } from "./EditValue/props";
 
 export {
   HeaderLink,
@@ -29,5 +29,6 @@ export {
 };
 
 export type {
-  IEditFuatureProps
+  IEditFuatureProps,
+  IEditFuatureObjectProps
 }

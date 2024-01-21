@@ -28,6 +28,7 @@ interface Props {
     minRows?: number;
     maxRows?: number;
   };
+  allowedEmpty?: boolean;
 }
 
 const EditValue: FC<Props> = ({
@@ -43,6 +44,7 @@ const EditValue: FC<Props> = ({
   type = "input",
   placeholder = "",
   areaConfig = {},
+  allowedEmpty = false,
 }) => {
   const [value, setValue] = useState(currentValue);
 
@@ -67,7 +69,8 @@ const EditValue: FC<Props> = ({
 
   const updateValue = () => {
     handleCloseEdit();
-    if (value !== "" && value !== currentValue) callbackUpdate(value);
+    if ((value !== "" || allowedEmpty) && value !== currentValue)
+      callbackUpdate(value);
   };
 
   useEffect(() => {
@@ -110,7 +113,9 @@ const EditValue: FC<Props> = ({
           <EditIcon fontSize={iconSize} />
         </IconButton>
       )}
-      {isLoading && <CircularProgress size={loaderSize} />}
+      {isLoading && (
+        <CircularProgress size={loaderSize} sx={{ marginLeft: "8px" }} />
+      )}
     </>
   );
 };

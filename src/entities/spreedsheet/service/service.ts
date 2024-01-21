@@ -1,6 +1,7 @@
 import { baseGoogleQuery } from "@/shared/rtk";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
+  ICardEditMutaion,
   IQueryMutationAddCard,
   IResponseGetAllSheets,
   IResponseGetSheetById,
@@ -95,7 +96,10 @@ export const SpreadSheetService = createApi({
       invalidatesTags: ["List of Spreadsheet"],
     }),
 
-    getSheetById: build.query<string[][], { spreadsheetId: string; sheetId: number }>({
+    getSheetById: build.query<
+      string[][],
+      { spreadsheetId: string; sheetId: number }
+    >({
       query: ({ spreadsheetId, sheetId }) => ({
         method: "POST",
         url: baseUrl + `/${spreadsheetId}/values:batchGetByDataFilter`,
@@ -103,15 +107,19 @@ export const SpreadSheetService = createApi({
           dataFilters: [
             {
               gridRange: {
-                sheetId: sheetId
-              }
-            }
-          ]
-        }
+                sheetId: sheetId,
+              },
+            },
+          ],
+        },
       }),
-      transformResponse(baseQueryReturnValue:IResponseGetSheetById, meta, arg) {
+      transformResponse(
+        baseQueryReturnValue: IResponseGetSheetById,
+        meta,
+        arg
+      ) {
         const values = baseQueryReturnValue.valueRanges[0].valueRange.values;
-        return values !== undefined ? values : []
+        return values !== undefined ? values : [];
       },
       providesTags: ["Sheet-List"],
     }),
@@ -149,13 +157,24 @@ export const SpreadSheetService = createApi({
           ],
         },
       }),
-      async onQueryStarted({sheetId, spreadsheetId}, {dispatch, queryFulfilled}) {  
-        const patchResult = dispatch(SpreadSheetService.util.updateQueryData("getSpreadSheetById",spreadsheetId , (draft) => {
-            draft.sheets = draft.sheets.filter((sheet) => sheet.properties.sheetId !== sheetId)
-        }))
+      async onQueryStarted(
+        { sheetId, spreadsheetId },
+        { dispatch, queryFulfilled }
+      ) {
+        const patchResult = dispatch(
+          SpreadSheetService.util.updateQueryData(
+            "getSpreadSheetById",
+            spreadsheetId,
+            (draft) => {
+              draft.sheets = draft.sheets.filter(
+                (sheet) => sheet.properties.sheetId !== sheetId
+              );
+            }
+          )
+        );
 
         try {
-          await queryFulfilled
+          await queryFulfilled;
         } catch {
           patchResult.undo();
         }
@@ -206,7 +225,7 @@ export const SpreadSheetService = createApi({
     }),
 
     addNewCard: build.mutation<any, IQueryMutationAddCard>({
-      query: ({ sheetId, countCards,spreadsheetId }) => ({
+      query: ({ sheetId, countCards, spreadsheetId }) => ({
         url: baseUrl + `/${spreadsheetId}/values:batchUpdateByDataFilter`,
         method: "POST",
         body: {
@@ -216,20 +235,16 @@ export const SpreadSheetService = createApi({
                 gridRange: {
                   sheetId: sheetId,
                   startRowIndex: countCards,
-                }
+                },
               },
-              values: [
-                [
-                  "New Card"
-                ],
-              ],
+              values: [["New Card"]],
               majorDimension: "ROWS",
-            }
+            },
           ],
           valueInputOption: "RAW",
         },
       }),
-      
+
       onQueryStarted: async (
         { sheetId, spreadsheetId },
         { dispatch, queryFulfilled }
@@ -239,7 +254,7 @@ export const SpreadSheetService = createApi({
             "getSheetById",
             { sheetId, spreadsheetId },
             (draft) => {
-             draft.push(["New Card"]);
+              draft.push(["New Card"]);
             }
           )
         );
@@ -252,6 +267,46 @@ export const SpreadSheetService = createApi({
       },
     }),
 
+    editCard: build.mutation<any, ICardEditMutaion>({
+      query: ({ card, sheetId, spreadsheetId }) => ({
+        url: baseUrl + `/${spreadsheetId}/values:batchUpdateByDataFilter`,
+        method: "POST",
+        body: {
+          valueInputOption: "RAW",
+          data: [
+            {
+              dataFilter: {
+                gridRange: {
+                  sheetId,
+                  startRowIndex: card.idx,
+                },
+              },
+              values: [[card.title, card.description]],
+              majorDimension: "ROWS",
+            },
+          ],
+        },
+      }),
+      async onQueryStarted(
+        { card, sheetId, spreadsheetId },
+        { dispatch, queryFulfilled }
+      ) {
+        const resultPatch = dispatch(
+          SpreadSheetService.util.updateQueryData(
+            "getSheetById",
+            { sheetId, spreadsheetId },
+            (draft) => {
+              draft[card.idx] = [card.title, card.description];
+            }
+          )
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          resultPatch.undo();
+        }
+      },
+    }),
   }),
 });
 
@@ -266,4 +321,5 @@ export const {
   useCreateNewSpreadSheetMutation,
   useRenameSpreadSheetMutation,
   useDeleteSpreadSheetMutation,
+  useEditCardMutation,
 } = SpreadSheetService;
