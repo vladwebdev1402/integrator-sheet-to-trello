@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 
 import st from "./SheetList.module.scss";
 import Skeletons from "./Skeletons";
-import { useGetSheetByNameQuery } from "@/entities/spreedsheet";
+import { useGetSheetByIdQuery } from "@/entities/spreedsheet";
 import { SheetCard } from "@/entities/sheet-card";
 import { SheetCardAdd } from "@/features/sheet-card-add";
 import { SheetListDelete } from "@/features/sheet-list-delete";
@@ -31,13 +31,13 @@ const SheetList: FC<Props> = ({
 }) => {
   const params = useParams<{ id: string }>();
   const [isEdit, setIsEdit] = useState(false);
-  const { data, isLoading, isFetching } = useGetSheetByNameQuery({
+  const { data, isLoading, isFetching } = useGetSheetByIdQuery({
     spreadsheetId: params?.id ?? "",
-    sheetTitle: title,
+    sheetId: sheetId,
   });
 
   const countCards = useMemo(() => {
-    return data && Array.isArray(data.values) ? data.values.length : 0;
+    return data ? data.length : 0;
   }, [data]);
 
   const renameClick = () => {
@@ -55,8 +55,7 @@ const SheetList: FC<Props> = ({
       <AccordionDetails className={st.sheet__cards}>
         {isLoading && expanded && <Skeletons />}
         {data &&
-          countCards > 0 &&
-          data.values!.map((card, idx) => (
+          data.map((card, idx) => (
             <SheetCard
               key={idx}
               card={{
@@ -65,9 +64,11 @@ const SheetList: FC<Props> = ({
               }}
             />
           ))}
-        {!isLoading && <SheetCardAdd sheetTitle={title} />}
+        {!isLoading && (
+          <SheetCardAdd sheetId={sheetId} countCards={countCards} />
+        )}
       </AccordionDetails>
-      {!isLoading && visibleDelete && (
+      {!isLoading && (
         <AccordionActions>
           <Button
             startIcon={<EditIcon />}
@@ -76,11 +77,13 @@ const SheetList: FC<Props> = ({
           >
             rename
           </Button>
-          <SheetListDelete
-            sheetId={sheetId}
-            isUpdating={isFetching}
-            countCards={countCards}
-          />
+          {visibleDelete && (
+            <SheetListDelete
+              sheetId={sheetId}
+              isUpdating={isFetching}
+              countCards={countCards}
+            />
+          )}
         </AccordionActions>
       )}
     </Accordion>

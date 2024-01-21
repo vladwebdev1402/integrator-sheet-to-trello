@@ -3,7 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   IQueryMutationAddCard,
   IResponseGetAllSheets,
-  IResponseGetSheet,
+  IResponseGetSheetById,
   IResponseGetSpreadsheet,
   ISheetMutation,
   ISheetRenameMutaion,
@@ -84,7 +84,7 @@ export const SpreadSheetService = createApi({
           patchResult.undo();
         }
       },
-      invalidatesTags: ["Spreadsheet-Detail", "List of Spreadsheet"],
+      invalidatesTags: ["List of Spreadsheet"],
     }),
 
     deleteSpreadSheet: build.mutation<any, { id: string }>({
@@ -95,14 +95,24 @@ export const SpreadSheetService = createApi({
       invalidatesTags: ["List of Spreadsheet"],
     }),
 
-    getSheetByName: build.query<
-      IResponseGetSheet,
-      { spreadsheetId: string; sheetTitle: string }
-    >({
-      query: ({ spreadsheetId, sheetTitle }) => ({
-        method: "GET",
-        url: baseUrl + `/${spreadsheetId}/values/'${sheetTitle}'!A1:D100`,
+    getSheetById: build.query<string[][], { spreadsheetId: string; sheetId: number }>({
+      query: ({ spreadsheetId, sheetId }) => ({
+        method: "POST",
+        url: baseUrl + `/${spreadsheetId}/values:batchGetByDataFilter`,
+        body: {
+          dataFilters: [
+            {
+              gridRange: {
+                sheetId: sheetId
+              }
+            }
+          ]
+        }
       }),
+      transformResponse(baseQueryReturnValue:IResponseGetSheetById, meta, arg) {
+        const values = baseQueryReturnValue.valueRanges[0].valueRange.values;
+        return values !== undefined ? values : []
+      },
       providesTags: ["Sheet-List"],
     }),
 
@@ -160,7 +170,6 @@ export const SpreadSheetService = createApi({
           ],
         },
       }),
-      invalidatesTags: ["Sheet-List"],
       async onQueryStarted(
         { sheetId, sheetName, spreadsheetId },
         { dispatch, queryFulfilled }
@@ -187,27 +196,40 @@ export const SpreadSheetService = createApi({
     }),
 
     addNewCard: build.mutation<any, IQueryMutationAddCard>({
-      query: ({ sheetTitle, spreadsheetId }) => ({
-        url: baseUrl + `/${spreadsheetId}/values/'${sheetTitle}'!A1:append`,
-        params: {
-          valueInputOption: "RAW",
-        },
+      query: ({ sheetId, countCards,spreadsheetId }) => ({
+        url: baseUrl + `/${spreadsheetId}/values:batchUpdateByDataFilter`,
         method: "POST",
         body: {
-          values: [["New Card"]],
+          data: [
+            {
+              dataFilter: {
+                gridRange: {
+                  sheetId: sheetId,
+                  startRowIndex: countCards,
+                }
+              },
+              values: [
+                [
+                  "New Card"
+                ],
+              ],
+              majorDimension: "ROWS",
+            }
+          ],
+          valueInputOption: "RAW",
         },
       }),
-      invalidatesTags: ["Sheet-List"],
+      
       onQueryStarted: async (
-        { sheetTitle, spreadsheetId },
+        { sheetId, spreadsheetId },
         { dispatch, queryFulfilled }
       ) => {
         const patchResult = dispatch(
           SpreadSheetService.util.updateQueryData(
-            "getSheetByName",
-            { sheetTitle, spreadsheetId },
+            "getSheetById",
+            { sheetId, spreadsheetId },
             (draft) => {
-              draft.values?.push(["New Card"]);
+             draft.push(["New Card"]);
             }
           )
         );
@@ -219,12 +241,13 @@ export const SpreadSheetService = createApi({
         }
       },
     }),
+
   }),
 });
 
 export const {
   useGetSpreadSheetByIdQuery,
-  useGetSheetByNameQuery,
+  useGetSheetByIdQuery,
   useGetAllSheetsQuery,
   useAddNewCardMutation,
   useAddNewListMutation,

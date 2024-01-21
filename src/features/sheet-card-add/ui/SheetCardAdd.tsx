@@ -5,10 +5,11 @@ import { useParams } from "react-router-dom";
 import { useAddNewCardMutation } from "@/entities/spreedsheet";
 
 interface Props {
-  sheetTitle: string;
+  sheetId: number;
+  countCards: number;
 }
 
-const SheetCardAdd: FC<Props> = ({ sheetTitle }) => {
+const SheetCardAdd: FC<Props> = ({ sheetId, countCards }) => {
   const params = useParams<{ id: string }>();
   const [addCard] = useAddNewCardMutation();
 
@@ -16,7 +17,8 @@ const SheetCardAdd: FC<Props> = ({ sheetTitle }) => {
     if (params.id)
       addCard({
         spreadsheetId: params.id,
-        sheetTitle,
+        sheetId,
+        countCards,
       });
   };
 

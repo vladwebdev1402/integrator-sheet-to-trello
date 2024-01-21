@@ -12,9 +12,14 @@ export interface IResponseGetSpreadsheet {
   spreadsheetUrl: string;
 }
 
-export interface IResponseGetSheet {
-  range: string;
-  values?: string[][];
+export interface IResponseGetSheetById {
+  valueRanges: [
+    {
+      valueRange: {
+        values?: string[][]; 
+      }
+    }
+  ];
 }
 
 export interface IBatchRequest {
@@ -31,10 +36,10 @@ export interface IBatchRequest {
     }
   ];
 }
-
 export interface IQueryMutationAddCard {
   spreadsheetId: string;
-  sheetTitle: string;
+  sheetId: number;
+  countCards: number;
 }
 
 export interface ISheetMutation {

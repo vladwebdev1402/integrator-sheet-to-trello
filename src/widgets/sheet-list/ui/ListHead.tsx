@@ -46,6 +46,7 @@ const ListHead: FC<Props> = ({
           fontWeight={500}
           fontSize={mediaSM ? "17px" : "20px"}
           variant="body1"
+          component="div"
           sx={{ width: "100%" }}
         >
           {!isEdit && title}

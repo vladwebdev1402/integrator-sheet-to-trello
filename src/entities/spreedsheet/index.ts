@@ -2,7 +2,7 @@ import Spreadsheet from "./ui/Spreadsheet";
 import {
   SpreadSheetService,
   useGetSpreadSheetByIdQuery,
-  useGetSheetByNameQuery,
+  useGetSheetByIdQuery,
   useGetAllSheetsQuery,
   useAddNewListMutation,
   useAddNewCardMutation,
@@ -17,7 +17,7 @@ export {
   Spreadsheet,
   SpreadSheetService,
   useGetSpreadSheetByIdQuery,
-  useGetSheetByNameQuery,
+  useGetSheetByIdQuery,
   useGetAllSheetsQuery,
   useAddNewListMutation,
   useAddNewCardMutation,
