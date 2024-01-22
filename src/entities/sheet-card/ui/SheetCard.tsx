@@ -54,7 +54,9 @@ const SheetCard: FC<Props> = ({
 
   return (
     <>
-      <Card sx={{ position: "relative" }}>
+      <Card
+        sx={{ position: "relative", display: "flex", flexDirection: "column" }}
+      >
         <CardActionArea
           onClick={handleOpen}
           sx={{
@@ -65,7 +67,7 @@ const SheetCard: FC<Props> = ({
             top: "0",
           }}
         ></CardActionArea>
-        <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+        <CardContent sx={{ flex: "1 1 100%" }}>
           <Typography variant="body1" component={"div"}>
             {card.title}
           </Typography>
