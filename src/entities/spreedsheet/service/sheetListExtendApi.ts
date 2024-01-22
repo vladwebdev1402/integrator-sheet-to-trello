@@ -49,6 +49,7 @@ const sheetListExtendApi = SpreadSheetService.injectEndpoints({
               draft.sheets = draft.sheets.filter(
                 (sheet) => sheet.properties.sheetId !== sheetId
               );
+              draft.sheets.forEach((sheet, idx) => sheet.properties.index = idx);
             }
           )
         );
