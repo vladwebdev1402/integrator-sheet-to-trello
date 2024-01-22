@@ -1,8 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 
-import { useRenameListMutation } from "@/entities/spreedsheet";
+import {
+  useGetSpreadSheetByIdQuery,
+  useUpdateListMutation,
+} from "@/entities/spreedsheet";
 import { EditValue } from "@/shared/ui";
 
 interface Props {
@@ -19,16 +22,23 @@ const SheetListRename: FC<Props> = ({
   setEdit,
 }) => {
   const params = useParams<{ id: string }>();
-  const [rename, { isLoading }] = useRenameListMutation();
-
+  const [rename, { isLoading }] = useUpdateListMutation();
+  const { currentData } = useGetSpreadSheetByIdQuery(params?.id || "");
+  const sheet = useMemo(() => {
+    return currentData?.sheets.filter(
+      (sheet) => sheet.properties.sheetId === sheetId
+    )[0];
+  }, [sheetId, currentData]);
   const mediaSM = useMediaQuery("(max-width: 568px)");
 
   const editAction = (value: string) => {
-    rename({
-      sheetId,
-      spreadsheetId: params.id || "no-id",
-      sheetName: value,
-    });
+    if (sheet) {
+      rename({
+        newSheet: { ...sheet.properties, title: value },
+        spreadsheetId: params.id || "no-id",
+      });
+    }
+
     setEdit(false);
   };
 

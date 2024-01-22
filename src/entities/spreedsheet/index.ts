@@ -16,7 +16,7 @@ import {
 import {
   useAddNewListMutation,
   useDeleteListMutation,
-  useRenameListMutation,
+  useUpdateListMutation,
 } from "./service/sheetListExtendApi";
 
 import {
@@ -38,7 +38,7 @@ export {
   useCreateNewSpreadSheetMutation,
   useRenameSpreadSheetMutation,
   useDeleteSpreadSheetMutation,
-  useRenameListMutation,
+  useUpdateListMutation,
   useEditCardMutation,
   useDeleteCardMutation,
   useShiftCardInsideMutation,

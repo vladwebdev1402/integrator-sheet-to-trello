@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   CardActionArea,
+  CardActions,
   Typography,
   Dialog,
   DialogTitle,
@@ -53,21 +54,25 @@ const SheetCard: FC<Props> = ({
 
   return (
     <>
-      <Card>
-        <CardActionArea sx={{ height: "100%" }} onClick={handleOpen}>
-          <CardContent
-            sx={{ height: "100%", display: "flex", flexDirection: "column" }}
-          >
-            <Typography
-              variant="body1"
-              component={"div"}
-              sx={{ flex: "0 1 100%" }}
-            >
-              {card.title}
-            </Typography>
-            <CardShiftInside card={card} />
-          </CardContent>
-        </CardActionArea>
+      <Card sx={{ position: "relative" }}>
+        <CardActionArea
+          onClick={handleOpen}
+          sx={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            left: "0",
+            top: "0",
+          }}
+        ></CardActionArea>
+        <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+          <Typography variant="body1" component={"div"}>
+            {card.title}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <CardShiftInside card={card} />
+        </CardActions>
       </Card>
       {isOpen && (
         <Dialog open={isOpen} onClose={handleClose} maxWidth={"md"} fullWidth>

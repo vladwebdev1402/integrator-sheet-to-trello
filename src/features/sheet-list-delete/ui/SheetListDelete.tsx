@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Snackbar } from "@mui/material";
+import { Snackbar, useMediaQuery } from "@mui/material";
 import { ButtonDelete } from "@/shared/ui";
 import { useDeleteListMutation } from "@/entities/spreedsheet";
 import { useParams } from "react-router-dom";
@@ -14,7 +14,7 @@ const SheetListDelete: FC<Props> = ({ sheetId, isUpdating, countCards }) => {
   const params = useParams<{ id: string }>();
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [deleteList, { isLoading }] = useDeleteListMutation();
-
+  const mediaMD = useMediaQuery("(max-width: 768px)");
   const deleteClick = () => {
     if (params.id && countCards === 0)
       deleteList({
@@ -37,7 +37,11 @@ const SheetListDelete: FC<Props> = ({ sheetId, isUpdating, countCards }) => {
 
   return (
     <>
-      <ButtonDelete onClick={deleteClick} isLoading={isLoading || isUpdating}>
+      <ButtonDelete
+        onClick={deleteClick}
+        isLoading={isLoading || isUpdating}
+        sx={{ flex: mediaMD ? "1 1 200px" : "" }}
+      >
         delete this list
       </ButtonDelete>
       <Snackbar

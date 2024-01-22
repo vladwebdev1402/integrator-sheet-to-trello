@@ -1,4 +1,5 @@
 export interface ISheet {
+    sheetId: number;
     title: string;
-    values: string[][];
+    index: number;
 }

@@ -21,6 +21,7 @@ import { SheetCardDelete } from "@/features/sheet-card-delete";
 import { CSheetCard } from "@/shared/types";
 import { SheetCardShift } from "@/features/sheet-card-shift";
 import { SheetCardShiftInside } from "@/features/sheet-card-shift-inside";
+import { SheetListShift } from "@/features/sheet-list-shift";
 
 interface Props {
   sheetId: number;
@@ -78,6 +79,7 @@ const SheetList: FC<Props> = ({
       </AccordionDetails>
       {!isLoading && (
         <AccordionActions sx={{ flexWrap: "wrap", rowGap: "8px" }}>
+          <SheetListShift sheetId={sheetId} />
           <Button
             startIcon={<EditIcon />}
             variant="outlined"

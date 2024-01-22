@@ -1,5 +1,5 @@
 import { SpreadSheetService } from "./service";
-import { ISheetMutation, ISheetRenameMutaion } from "./types";
+import { ISheetMutation, ISheetUpdateMutaion } from "./types";
 import { baseSheetUrl } from "./url";
 
 const sheetListExtendApi = SpreadSheetService.injectEndpoints({
@@ -57,18 +57,28 @@ const sheetListExtendApi = SpreadSheetService.injectEndpoints({
       },
     }),
 
-    renameList: build.mutation<any, ISheetRenameMutaion>({
-      query: ({ sheetId, sheetName, spreadsheetId }) => ({
+    updateList: build.mutation<any, ISheetUpdateMutaion>({
+      query: ({
+        newSheet,
+        spreadsheetId,
+        isMoveDown = false,
+        isMoveUp = false,
+      }) => ({
         url: baseSheetUrl + `/${spreadsheetId}:batchUpdate`,
         method: "POST",
         body: {
           requests: [
             {
               updateSheetProperties: {
-                fields: "title",
+                fields: "title, index",
                 properties: {
-                  title: sheetName,
-                  sheetId: sheetId,
+                  title: newSheet.title,
+                  sheetId: newSheet.sheetId,
+                  index: isMoveDown
+                    ? newSheet.index + 2
+                    : isMoveUp
+                    ? newSheet.index - 1
+                    : newSheet.index,
                 },
               },
             },
@@ -76,7 +86,7 @@ const sheetListExtendApi = SpreadSheetService.injectEndpoints({
         },
       }),
       async onQueryStarted(
-        { sheetId, sheetName, spreadsheetId },
+        { newSheet, spreadsheetId, isMoveDown = false, isMoveUp = false },
         { dispatch, queryFulfilled }
       ) {
         const patchResult = dispatch(
@@ -84,10 +94,23 @@ const sheetListExtendApi = SpreadSheetService.injectEndpoints({
             "getSpreadSheetById",
             spreadsheetId,
             (draft) => {
-              const renamedList = draft.sheets.filter(
-                (sheet) => sheet.properties.sheetId === sheetId
+              const updateList = draft.sheets.filter(
+                (sheet) => sheet.properties.sheetId === newSheet.sheetId
               )[0];
-              renamedList.properties.title = sheetName;
+              updateList.properties.title = newSheet.title;
+              if (isMoveDown || isMoveUp) {
+                if (isMoveUp) {
+                  const newIdx = updateList.properties.index -= 1;
+                  updateList.properties.index = newIdx;
+                  draft.sheets[newIdx].properties.index += 1;
+                }
+                else if (isMoveDown) {
+                  const newIdx = updateList.properties.index += 1;
+                  updateList.properties.index = newIdx;
+                  draft.sheets[newIdx].properties.index -= 1;
+                }
+                draft.sheets.sort((a, b) => a.properties.index - b.properties.index);  
+              }
             }
           )
         );
@@ -100,6 +123,6 @@ const sheetListExtendApi = SpreadSheetService.injectEndpoints({
 
 export const {
   useAddNewListMutation,
-  useRenameListMutation,
+  useUpdateListMutation,
   useDeleteListMutation,
 } = sheetListExtendApi;

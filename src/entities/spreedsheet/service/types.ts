@@ -1,4 +1,4 @@
-import { CSheetCard } from "@/shared/types";
+import { CSheetCard, ISheet } from "@/shared/types";
 
 export interface IResponseGetSpreadsheet {
   spreadsheetId: string;
@@ -9,6 +9,7 @@ export interface IResponseGetSpreadsheet {
     properties: {
       sheetId: number;
       title: string;
+      index: number;
     };
   }[];
   spreadsheetUrl: string;
@@ -49,8 +50,11 @@ export interface ISheetMutation {
   sheetId: number;
 }
 
-export interface ISheetRenameMutaion extends ISheetMutation {
-  sheetName: string;
+export interface ISheetUpdateMutaion {
+  spreadsheetId: string;
+  newSheet: ISheet;
+  isMoveUp?: boolean;
+  isMoveDown?: boolean;
 }
 
 export interface IResponseGetAllSheets {
