@@ -20,6 +20,7 @@ import { SheetCardDescriptionEdit } from "@/features/sheet-card-description-edit
 import { SheetCardDelete } from "@/features/sheet-card-delete";
 import { CSheetCard } from "@/shared/types";
 import { SheetCardShift } from "@/features/sheet-card-shift";
+import { SheetCardShiftInside } from "@/features/sheet-card-shift-inside";
 
 interface Props {
   sheetId: number;
@@ -68,6 +69,7 @@ const SheetList: FC<Props> = ({
               DescriptionEdit={SheetCardDescriptionEdit}
               CardDelete={SheetCardDelete}
               CardShift={SheetCardShift}
+              CardShiftInside={SheetCardShiftInside}
             />
           ))}
         {!isLoading && (

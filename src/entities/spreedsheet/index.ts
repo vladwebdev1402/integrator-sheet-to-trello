@@ -23,6 +23,7 @@ import {
   useAddNewCardMutation,
   useEditCardMutation,
   useDeleteCardMutation,
+  useShiftCardInsideMutation,
 } from "./service/sheetCardExtendApi";
 
 export {
@@ -40,4 +41,5 @@ export {
   useRenameListMutation,
   useEditCardMutation,
   useDeleteCardMutation,
+  useShiftCardInsideMutation,
 };

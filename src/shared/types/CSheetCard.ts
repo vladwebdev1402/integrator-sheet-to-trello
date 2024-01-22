@@ -10,6 +10,10 @@ class CSheetCard {
       this.title = arrayCard[0] || "Card name is empty";
       this.description = arrayCard[1] || "";
     }
+
+    getArray = () : string[] => {
+      return [this.title, this.description]
+    }
   }
   
   export { CSheetCard };

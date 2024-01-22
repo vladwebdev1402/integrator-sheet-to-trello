@@ -9,3 +9,7 @@ export interface ICardShiftProps {
     card: CSheetCard;
     closeDialog: () => void;
 }
+
+export interface ICardShiftInsideProps {
+    card: CSheetCard;
+}

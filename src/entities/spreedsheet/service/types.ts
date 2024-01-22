@@ -71,4 +71,10 @@ export interface ICardDeleteMutauin extends ISheetMutation {
   idx: number;
 }
 
+export interface ICardShiftInside extends ISheetMutation {
+  newSheet: string[][];
+  newIdx: number;
+  oldIdx: number;
+}
+
 export const sheetMimeType = "application/vnd.google-apps.spreadsheet";

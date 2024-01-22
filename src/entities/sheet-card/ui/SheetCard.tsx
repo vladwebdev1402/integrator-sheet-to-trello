@@ -16,7 +16,11 @@ import DescriptionIcon from "@mui/icons-material/Description";
 
 import { CSheetCard } from "@/shared/types";
 import { IEditFuatureObjectProps } from "@/shared/ui";
-import { ICardDeleteProps, ICardShiftProps } from "./featureProps";
+import {
+  ICardDeleteProps,
+  ICardShiftInsideProps,
+  ICardShiftProps,
+} from "./featureProps";
 
 interface Props {
   card: CSheetCard;
@@ -24,6 +28,7 @@ interface Props {
   DescriptionEdit: FC<IEditFuatureObjectProps<CSheetCard>>;
   CardDelete: FC<ICardDeleteProps>;
   CardShift: FC<ICardShiftProps>;
+  CardShiftInside: FC<ICardShiftInsideProps>;
 }
 
 const SheetCard: FC<Props> = ({
@@ -32,6 +37,7 @@ const SheetCard: FC<Props> = ({
   DescriptionEdit,
   CardDelete,
   CardShift,
+  CardShiftInside,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isTitleEdit, setIsTitleEdit] = useState(false);
@@ -49,8 +55,17 @@ const SheetCard: FC<Props> = ({
     <>
       <Card>
         <CardActionArea sx={{ height: "100%" }} onClick={handleOpen}>
-          <CardContent sx={{ height: "100%" }}>
-            <Typography variant="body1">{card.title}</Typography>
+          <CardContent
+            sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+          >
+            <Typography
+              variant="body1"
+              component={"div"}
+              sx={{ flex: "0 1 100%" }}
+            >
+              {card.title}
+            </Typography>
+            <CardShiftInside card={card} />
           </CardContent>
         </CardActionArea>
       </Card>
