@@ -67,6 +67,12 @@ const EditValue: FC<Props> = ({
     updateValue();
   };
 
+  const clickInput = (
+    e: React.MouseEvent<HTMLDivElement | HTMLTextAreaElement>
+  ) => {
+    e.stopPropagation();
+  };
+
   const updateValue = () => {
     handleCloseEdit();
     if ((value !== "" || allowedEmpty) && value !== currentValue)
@@ -89,6 +95,7 @@ const EditValue: FC<Props> = ({
               onBlur={updateValue}
               placeholder={placeholder}
               inputProps={{ style: { ...inputProps } }}
+              onClick={clickInput}
             />
           )}
           {type === "area" && (
@@ -104,6 +111,7 @@ const EditValue: FC<Props> = ({
                 fontSize: inputProps.fontSize,
                 fontWeight: inputProps.fontWeight,
               }}
+              onClick={clickInput}
             />
           )}
         </FormControl>

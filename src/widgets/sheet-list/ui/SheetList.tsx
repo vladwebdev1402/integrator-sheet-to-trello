@@ -75,7 +75,7 @@ const SheetList: FC<Props> = ({
         )}
       </AccordionDetails>
       {!isLoading && (
-        <AccordionActions>
+        <AccordionActions sx={{ flexWrap: "wrap", rowGap: "8px" }}>
           <Button
             startIcon={<EditIcon />}
             variant="outlined"

@@ -1,5 +1,6 @@
-import HeaderLink from "./HeaderLink/HeaderLink";
-import FooterLink from "./FooterLink/FooterLink";
+import HeaderLink from "./link/HeaderLink/HeaderLink";
+import FooterLink from "./link/FooterLink/FooterLink";
+import BurgerLink from "./link/BurgerLink/BurgerLink";
 import ProfileAvatar from "./Profile/ProfileAvatar";
 import ProfileContainer from "./Profile/ProfileContainer";
 import ProfileElement from "./Profile/ProfileElement";
@@ -15,6 +16,7 @@ import { IEditFuatureProps, IEditFuatureObjectProps } from "./EditValue/props";
 export {
   HeaderLink,
   FooterLink,
+  BurgerLink,
   ProfileAvatar,
   ProfileContainer,
   ProfileElement,
