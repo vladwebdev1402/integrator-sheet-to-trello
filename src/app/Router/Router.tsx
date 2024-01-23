@@ -16,6 +16,7 @@ import { SheetsListPage } from "@/pages/SheetsListPage";
 import { MainPage } from "@/pages/MainPage";
 import { ProfilePage } from "@/pages/ProfilePage";
 import { SkeletonsSheetDetail } from "@/pages/SheetDetailPage";
+import { TrelloBoadrdsPage } from "@/pages/TrelloBoadrdsPage";
 const SheetDetailPage = lazy(() => import("@/pages/SheetDetailPage"));
 
 const Router = () => {
@@ -43,6 +44,7 @@ const Router = () => {
             <Route index element={<MainPage />} />
             <Route path={routerPaths.profile} element={<ProfilePage />} />
             <Route path={routerPaths.google} element={<SheetsListPage />} />
+            <Route path={routerPaths.trello} element={<TrelloBoadrdsPage />} />
             {isGoogleAuth && (
               <Route
                 path={routerPaths.sheetDetail}

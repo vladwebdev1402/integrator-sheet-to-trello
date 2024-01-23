@@ -3,7 +3,7 @@ import { IAuthSearchParams } from "./IAuthSearchParams";
 import { ILinkProps } from "./ILinkProps";
 import { ISheet } from "./ISheet";
 import { ISpreedsheet } from "./ISpredsheets";
-
+import { IBoard } from "./IBoard";
 export { CSheetCard }
 
 export type {
@@ -11,4 +11,5 @@ export type {
     ILinkProps,
     ISheet,
     ISpreedsheet,
+    IBoard
 }

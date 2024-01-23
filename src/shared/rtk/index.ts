@@ -1,3 +1,3 @@
 import { baseGoogleQuery } from "./baseGoogleQuery";
-
-export { baseGoogleQuery };
+import { baseTrelloQuery } from "./baseTrelloQuery";
+export { baseGoogleQuery, baseTrelloQuery };
