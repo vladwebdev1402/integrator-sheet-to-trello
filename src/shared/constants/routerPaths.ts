@@ -5,6 +5,8 @@ export const routerPaths = {
     profile: root + "/profile",
     trello: root + "/trello",
     google: root + "/google",
-    sheetDetail: root + "google/:id",
+    sheetDetail: root + "/google/:id",
     navigateSheetDetail: (id: string) => root + "/google/" + id,
+    trelloDetail: root + "/trello/:id",
+    navigateTrelloDetail: (id: string) => root + "/trello/" + id,
 }

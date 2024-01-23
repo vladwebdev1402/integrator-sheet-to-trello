@@ -12,13 +12,16 @@ import {
 import { LoadingButton } from "@mui/lab";
 
 import { BoardColorPicker } from "@/shared/ui";
-import { useCreateBoardMutation } from "@/entities/trello-board/service/boardExtendApi";
+import { useNavigate } from "react-router-dom";
+import { routerPaths } from "@/shared/constants";
+import { useCreateBoardMutation } from "@/entities/trello-board";
 
 const BoardAdd = () => {
   const [createBoard, { data, isSuccess, isLoading, isError }] =
     useCreateBoardMutation();
   const [isOpen, setIsOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const [board, setBoard] = useState({
     name: { value: "", isError: false },
@@ -66,6 +69,14 @@ const BoardAdd = () => {
   };
 
   useEffect(() => {
+    setBoard({
+      name: { value: "", isError: false },
+      description: "",
+      theme: "blue",
+    });
+  }, [isOpen]);
+
+  useEffect(() => {
     setIsOpen(false);
   }, [isSuccess]);
 
@@ -74,12 +85,8 @@ const BoardAdd = () => {
   }, [isError]);
 
   useEffect(() => {
-    setBoard({
-      name: { value: "", isError: false },
-      description: "",
-      theme: "blue",
-    });
-  }, [isOpen]);
+    if (isSuccess && data) navigate(routerPaths.navigateTrelloDetail(data.id));
+  }, [isSuccess, data, navigate]);
 
   return (
     <>

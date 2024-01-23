@@ -55,6 +55,14 @@ const Router = () => {
                 }
               />
             )}
+            {isTrelloAuth && (
+              <>
+                <Route
+                  path={routerPaths.trelloDetail}
+                  element={<TrelloBoadrdsPage />}
+                />
+              </>
+            )}
           </Route>
         )
       )}

@@ -14,16 +14,20 @@ import {
   BoardMedia,
   BoardName,
 } from "./styled";
+import { useNavigate } from "react-router-dom";
+import { routerPaths } from "@/shared/constants";
 
 interface Props {
   id: string;
 }
 
 const BoardCard: FC<Props> = ({ id }) => {
-  const boardClick = () => {};
-
   const { data: board, isLoading } = useGetBoardByIdQuery(id);
   const { data: members } = useGetBoardsMembersByIdQuery(id);
+  const navigate = useNavigate();
+  const boardClick = () => {
+    navigate(routerPaths.navigateTrelloDetail(id));
+  };
 
   if (isLoading)
     return <Skeleton variant="rectangular" sx={{ minHeight: "150px" }} />;
