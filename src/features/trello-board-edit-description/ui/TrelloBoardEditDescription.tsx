@@ -43,6 +43,7 @@ const TrelloBoardEditDescription: FC<Props> = ({ board }) => {
         visibleEditIcon={false}
         type="area"
         areaConfig={{ maxRows: 5 }}
+        allowedEmpty
       />
     </Box>
   );

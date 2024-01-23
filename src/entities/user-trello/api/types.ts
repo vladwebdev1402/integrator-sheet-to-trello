@@ -1,6 +1,6 @@
 export interface IUserInfoReponse {
     id: string;
-    avatarUrl: string;
+    avatarHash: string;
     bio: string;
     fullName: string;
     idBoards: string[];

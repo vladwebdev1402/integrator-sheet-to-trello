@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 
 import st from "./TrelloBoardDetailPage.module.scss";
-import { ButtonBack, DetailCategory, DetailPageTitle } from "@/shared/ui";
+import { ButtonBack, DetailCategory } from "@/shared/ui";
 import { useParams } from "react-router-dom";
 import { useGetBoardByIdQuery } from "@/entities/trello-board";
 import { TrelloBoardEditTitle } from "@/features/trello-board-edit-title";
