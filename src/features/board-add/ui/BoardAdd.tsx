@@ -7,9 +7,10 @@ import {
   TextField,
   FormControl,
   Snackbar,
+  Box,
 } from "@mui/material";
-
 import { LoadingButton } from "@mui/lab";
+
 import { BoardColorPicker } from "@/shared/ui";
 import { useCreateBoardMutation } from "@/entities/trello-board/service/boardExtendApi";
 
@@ -69,7 +70,7 @@ const BoardAdd = () => {
   }, [isSuccess]);
 
   useEffect(() => {
-    setSnackbarOpen(true);
+    if (isError) setSnackbarOpen(true);
   }, [isError]);
 
   useEffect(() => {
@@ -116,14 +117,22 @@ const BoardAdd = () => {
               currentValue={board.theme}
               setCurrentValue={colorBoardThemeChange}
             />
-            <LoadingButton
-              type="submit"
-              sx={{ width: "150px", margin: "25px auto 0 auto" }}
-              loading={isLoading}
-              variant="contained"
+            <Box
+              display="flex"
+              gap={"10px"}
+              justifyContent="center"
+              marginTop="24px"
             >
-              Создать
-            </LoadingButton>
+              <LoadingButton
+                type="submit"
+                loading={isLoading}
+                variant="contained"
+                color="secondary"
+              >
+                Create
+              </LoadingButton>
+              <Button onClick={handleClose}>close</Button>
+            </Box>
           </FormControl>
         </DialogContent>
       </Dialog>
