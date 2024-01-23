@@ -1,5 +1,5 @@
 export interface ICreateBoard {
     name: string;
-    description: string;
+    desc: string;
     prefs_background: string;
 }

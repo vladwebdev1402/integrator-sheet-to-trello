@@ -1,11 +1,10 @@
 import React, { FC, useState, useEffect } from "react";
 import {
   IconButton,
-  Input,
+  TextField,
   FormControl,
   CircularProgress,
 } from "@mui/material";
-import { Textarea } from "@mui/joy";
 import EditIcon from "@mui/icons-material/Edit";
 
 interface Props {
@@ -87,33 +86,20 @@ const EditValue: FC<Props> = ({
     <>
       {isEdit && (
         <FormControl component="form" fullWidth onSubmit={formSubmit}>
-          {type === "input" && (
-            <Input
-              value={value}
-              onChange={valueChange}
-              autoFocus
-              onBlur={updateValue}
-              placeholder={placeholder}
-              inputProps={{ style: { ...inputProps } }}
-              onClick={clickInput}
-            />
-          )}
-          {type === "area" && (
-            <Textarea
-              value={value}
-              onChange={valueChange}
-              autoFocus
-              onBlur={updateValue}
-              placeholder={placeholder}
-              maxRows={areaConfig.maxRows}
-              minRows={areaConfig.minRows}
-              sx={{
-                fontSize: inputProps.fontSize,
-                fontWeight: inputProps.fontWeight,
-              }}
-              onClick={clickInput}
-            />
-          )}
+          <TextField
+            value={value}
+            onChange={valueChange}
+            autoFocus
+            onBlur={updateValue}
+            placeholder={placeholder}
+            inputProps={{ style: { ...inputProps } }}
+            onClick={clickInput}
+            maxRows={areaConfig.maxRows}
+            minRows={areaConfig.minRows}
+            multiline={type === "area"}
+            size="small"
+            variant={type === "area" ? "outlined" : "standard"}
+          />
         </FormControl>
       )}
       {!isEdit && !isLoading && visibleEditIcon && (

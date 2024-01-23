@@ -13,8 +13,23 @@ const boardExtendApi = TrelloService.injectEndpoints({
             }),
             invalidatesTags: ["Boards"],
         }),    
+        updateBoard: build.mutation<IBoard, IBoard>({
+            query: (params) => ({
+                url: `/boards/${params.id}`,
+                method: "PUT",
+                params: {name: params.name, desc: params.desc},
+            }),
+            onQueryStarted: async (board, {dispatch, queryFulfilled}) => {
+                const patchResult = dispatch(TrelloService.util.updateQueryData(
+                    "getBoardById",
+                    board.id,
+                    (draft) => Object.assign(draft, board)
+                ))
+                queryFulfilled.catch(patchResult.undo);
+            },
+        })
     }),
 
 });
 
-export const {useCreateBoardMutation} = boardExtendApi;
+export const {useCreateBoardMutation, useUpdateBoardMutation} = boardExtendApi;

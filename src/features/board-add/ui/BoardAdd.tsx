@@ -46,7 +46,7 @@ const BoardAdd = () => {
       setBoard({ ...board, name: { ...board.name, isError: true } });
     else {
       createBoard({
-        description: board.description,
+        desc: board.description,
         name: board.name.value,
         prefs_background: board.theme,
       });

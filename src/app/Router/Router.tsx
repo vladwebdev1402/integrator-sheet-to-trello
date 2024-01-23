@@ -17,6 +17,7 @@ import { MainPage } from "@/pages/MainPage";
 import { ProfilePage } from "@/pages/ProfilePage";
 import { SkeletonsSheetDetail } from "@/pages/SheetDetailPage";
 import { TrelloBoadrdsPage } from "@/pages/TrelloBoadrdsPage";
+import { TrelloBoardDetailPage } from "@/pages/TrelloBoardDetailPage";
 const SheetDetailPage = lazy(() => import("@/pages/SheetDetailPage"));
 
 const Router = () => {
@@ -59,7 +60,7 @@ const Router = () => {
               <>
                 <Route
                   path={routerPaths.trelloDetail}
-                  element={<TrelloBoadrdsPage />}
+                  element={<TrelloBoardDetailPage />}
                 />
               </>
             )}

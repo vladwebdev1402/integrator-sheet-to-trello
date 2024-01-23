@@ -12,6 +12,8 @@ import ButtonDelete from "./buttons/ButtonDelete/ButtonDelete";
 import EditValue from "./EditValue/EditValue";
 import BoardColorPicker from "./BoardColorPicker/BoardColorPicker";
 import { IEditFuatureProps, IEditFuatureObjectProps } from "./EditValue/props";
+import DetailCategory from "./title/DetailCategory";
+import DetailPageTitle from "./title/DetailPageTitle";
 
 export {
   HeaderLink,
@@ -27,6 +29,8 @@ export {
   ButtonDelete,
   EditValue,
   BoardColorPicker,
+  DetailCategory,
+  DetailPageTitle
 };
 
 export type {
