@@ -1,20 +1,18 @@
 import React, { useState, useMemo } from "react";
 
 import { ItemsContainer } from "@/shared/ui";
-import { useAppSelector } from "@/shared/hooks";
-import { BoardCard } from "@/entities/trello-board";
+import { BoardCard, useGetAllBoardQuery } from "@/entities/trello-board";
 import { NotAuthTrelloBoards } from "@/features/auth/not-auth-trello-boards";
+import { BoardAdd } from "@/features/board-add";
 
 const TrelloBoards = () => {
   const [limit, setLimit] = useState(10);
 
-  const { user, isLoading, error } = useAppSelector(
-    (state) => state.AuthTrelloReducer
-  );
+  const { data, isLoading, isError } = useGetAllBoardQuery(null);
 
   const limitBoards = useMemo(() => {
-    return user ? user.boards.slice(0, limit) : [];
-  }, [user, limit]);
+    return data ? data.idBoards.slice(0, limit) : [];
+  }, [data, limit]);
 
   const moreClick = () => {
     setLimit(limit + 10);
@@ -22,20 +20,21 @@ const TrelloBoards = () => {
 
   return (
     <div>
+      <BoardAdd />
       <ItemsContainer
         clickNextLimit={moreClick}
-        isVisibleMore={!!user && user.boards.length > limit}
+        isVisibleMore={!!data && data.idBoards.length > limit}
         notFoundMessage="Your boards not found :("
-        isNotFound={!!user && user.boards.length === 0}
+        isNotFound={!!data && data.idBoards.length === 0}
         isLoading={isLoading}
-        isError={!!error}
+        isError={!!isError}
         errorMessage={"Oops, an error has occurred. Please reload the page."}
       >
         {limitBoards.map((board) => (
           <BoardCard id={board} key={board} />
         ))}
       </ItemsContainer>
-      {!user && !isLoading && <NotAuthTrelloBoards />}
+      {!data && !isLoading && <NotAuthTrelloBoards />}
     </div>
   );
 };

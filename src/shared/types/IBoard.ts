@@ -7,13 +7,12 @@ export interface IBoard {
     shortUrl: string;
     prefs: {
         background: string;
-        backgroundImage: string;
+        backgroundImage: string | null;
         backgroundImageScaled: [{
             width: number;
             height: number;
             url: string;
         }];
-        backgroundBottomColor: string,
-        backgroundTopColor: string,
+        backgroundColor: string;
     }
 }

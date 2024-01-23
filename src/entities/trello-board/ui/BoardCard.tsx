@@ -32,7 +32,15 @@ const BoardCard: FC<Props> = ({ id }) => {
     return (
       <Card sx={{ backgroundColor: "transparent", minHeight: "150px" }}>
         <CardActionArea sx={{ height: "100%" }} onClick={boardClick}>
-          <BoardMedia image={board.prefs.backgroundImage} />
+          <BoardMedia
+            image={board.prefs.backgroundImage || ""}
+            sx={{
+              backgroundColor: board.prefs.backgroundImage
+                ? "transparent"
+                : board.prefs.backgroundColor,
+            }}
+            component={"img"}
+          />
           <BoardFade></BoardFade>
           <BoardContent>
             <BoardName variant="h5" fontWeight={"500"} noWrap component="div">

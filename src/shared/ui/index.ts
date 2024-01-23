@@ -10,7 +10,7 @@ import ItemsContainer from "./ItemsContainer/ItemsContainer";
 import ButtonBack from "./buttons/ButtonBack/ButtonBack";
 import ButtonDelete from "./buttons/ButtonDelete/ButtonDelete";
 import EditValue from "./EditValue/EditValue";
-
+import BoardColorPicker from "./BoardColorPicker/BoardColorPicker";
 import { IEditFuatureProps, IEditFuatureObjectProps } from "./EditValue/props";
 
 export {
@@ -26,6 +26,7 @@ export {
   ButtonBack,
   ButtonDelete,
   EditValue,
+  BoardColorPicker,
 };
 
 export type {
