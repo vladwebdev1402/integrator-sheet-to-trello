@@ -1,18 +1,21 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { Box, Button } from "@mui/material";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 import st from "./TrelloBoardDetailPage.module.scss";
+import HeadSkeletons from "./HeadSkeletons";
+import SheetsSkeletons from "./SheetsSkeletons";
+import ActionsSkeletons from "./ActionsSkeletons";
 import { ButtonBack, DetailCategory } from "@/shared/ui";
-import { useParams } from "react-router-dom";
+
 import {
   useGetAllListByBoardIdQuery,
   useGetBoardByIdQuery,
 } from "@/entities/trello-board";
+import { TrelloBoardEditDescription } from "@/features/trello-board-edit-description";
 import { TrelloBoardEditTitle } from "@/features/trello-board-edit-title";
-import TrelloBoardEditDescription from "@/features/trello-board-edit-description/ui/TrelloBoardEditDescription";
-import HeadSkeletons from "./HeadSkeletons";
-import SheetsSkeletons from "./SheetsSkeletons";
-import ActionsSkeletons from "./ActionsSkeletons";
+import { TrelloBoardDelete } from "@/features/trello-board-delete";
 import { TrelloList } from "@/widgets/trello-list";
 
 const TrelloBoardDetailPage = () => {
@@ -23,6 +26,11 @@ const TrelloBoardDetailPage = () => {
   const { data: lists, isLoading: listsLoading } = useGetAllListByBoardIdQuery(
     params.id || ""
   );
+
+  const seeBoardClick = () => {
+    window.open(board?.url || "", "_blank");
+  };
+
   return (
     <div className={`container ${st.detail}`}>
       <ButtonBack />
@@ -47,6 +55,14 @@ const TrelloBoardDetailPage = () => {
       {board && (
         <Box marginTop={"16px"}>
           <DetailCategory>board actions</DetailCategory>
+          <Button
+            color="secondary"
+            startIcon={<OpenInNewIcon />}
+            onClick={seeBoardClick}
+          >
+            see board
+          </Button>
+          <TrelloBoardDelete />
         </Box>
       )}
       {boardLoading && <ActionsSkeletons />}

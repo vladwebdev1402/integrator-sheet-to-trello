@@ -24,7 +24,7 @@ const TrelloBoards = () => {
       <ItemsContainer
         clickNextLimit={moreClick}
         isVisibleMore={!!data && data.idBoards.length > limit}
-        isNotFound={!!data && data.idBoards.length === 1}
+        isNotFound={!!data && data.idBoards.length === 0}
         notFoundMessage="The workspace is empty. Create a new board"
         isLoading={isLoading}
         isError={!!isError}
