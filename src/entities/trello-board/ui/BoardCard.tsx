@@ -31,7 +31,13 @@ const BoardCard: FC<Props> = ({ id }) => {
   };
 
   if (isLoading)
-    return <Skeleton variant="rectangular" sx={{ minHeight: "150px" }} />;
+    return (
+      <Skeleton
+        variant="rectangular"
+        animation="wave"
+        sx={{ minHeight: "150px" }}
+      />
+    );
 
   if (board)
     return (

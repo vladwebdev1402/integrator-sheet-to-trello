@@ -3,6 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseTrelloQuery } from "@/shared/rtk";
 import { IBoard } from "@/shared/types";
 import { TokenService } from "@/shared/api";
+import { IBoardList } from "@/shared/types/IBoardList";
 
 const TrelloService = createApi({
   reducerPath: "TrelloService",
@@ -34,8 +35,15 @@ const TrelloService = createApi({
         return "There is not internet connection";
       },
     }),
+
+    getAllListByBoardId: build.query<IBoardList[], string>({
+      query: (id) => ({
+        url: `/boards/${id}/lists`,
+        params: {}
+      })
+    })
   }),
 });
 
 export { TrelloService };
-export const { useGetAllBoardQuery, useGetBoardByIdQuery, useGetBoardsMembersByIdQuery } = TrelloService;
+export const { useGetAllBoardQuery, useGetBoardByIdQuery, useGetBoardsMembersByIdQuery, useGetAllListByBoardIdQuery } = TrelloService;

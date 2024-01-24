@@ -4,6 +4,7 @@ import BoardCard from "./ui/BoardCard";
 import {
   useGetAllBoardQuery,
   useGetBoardByIdQuery,
+  useGetAllListByBoardIdQuery,
 } from "./service/TrelloService";
 import {
   useCreateBoardMutation,
@@ -12,6 +13,7 @@ import {
 
 export {
   useGetAllBoardQuery,
+  useGetAllListByBoardIdQuery,
   useGetBoardByIdQuery,
   useCreateBoardMutation,
   useUpdateBoardMutation,
