@@ -51,3 +51,12 @@ export const BoardDescription = styled(Typography)<TypographyProps>(() => ({
   color: "white",
 }));
 
+export const BoardErrorContent = styled(CardContent)<CardContentProps>(() => ({
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: "150px",
+  backgroundColor: "rgba(1, 1, 1, 0.2)"
+}));

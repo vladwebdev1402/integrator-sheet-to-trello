@@ -38,7 +38,7 @@ const AuthTrelloSlice = createSlice({
       const { avatarHash, bio, fullName, id, idBoards } = action.payload;
       state.user = {
         id,
-        avatar: `https://trello-members.s3.amazonaws.com/${id}/${avatarHash}/50.png`,
+        avatar: `https://trello-members.s3.amazonaws.com/${id}/${avatarHash}/170.png`,
         username: fullName,
         boards: idBoards,
         bio,

@@ -29,6 +29,10 @@ const TrelloService = createApi({
         url: `/boards/${id}`,
         params: {},
       }),
+      transformErrorResponse(error): string {
+        if ("originalStatus" in error && error.originalStatus === 404) return "This board not found";
+        return "There is not internet connection";
+      },
     }),
   }),
 });

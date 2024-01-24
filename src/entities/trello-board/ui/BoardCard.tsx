@@ -10,6 +10,7 @@ import {
 import {
   BoardContent,
   BoardDescription,
+  BoardErrorContent,
   BoardFade,
   BoardMedia,
   BoardName,
@@ -22,7 +23,7 @@ interface Props {
 }
 
 const BoardCard: FC<Props> = ({ id }) => {
-  const { data: board, isLoading } = useGetBoardByIdQuery(id);
+  const { data: board, isLoading, error } = useGetBoardByIdQuery(id);
   const { data: members } = useGetBoardsMembersByIdQuery(id);
   const navigate = useNavigate();
   const boardClick = () => {
@@ -58,6 +59,17 @@ const BoardCard: FC<Props> = ({ id }) => {
             </Typography>
           </BoardContent>
         </CardActionArea>
+      </Card>
+    );
+
+  if (error && typeof error === "string")
+    return (
+      <Card>
+        <BoardErrorContent>
+          <Typography color="error" variant="subtitle2">
+            {error}
+          </Typography>
+        </BoardErrorContent>
       </Card>
     );
 };
