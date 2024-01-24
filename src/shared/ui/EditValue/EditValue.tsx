@@ -4,6 +4,7 @@ import {
   TextField,
   FormControl,
   CircularProgress,
+  SxProps,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -12,13 +13,16 @@ interface Props {
   isEdit: boolean;
   setIsEdit: (value: boolean) => void;
   callbackUpdate: (newValue: string) => void;
+  sx?: SxProps;
   isLoading?: boolean;
   visibleEditIcon?: boolean;
   inputProps?: {
     fontSize?: string;
     fontWeight?: string;
     color?: string;
+    margin?: string;
   };
+  inputSize?: "small" | "meduim";
   iconSize?: "small" | "inherit" | "large" | "medium";
   loaderSize?: string;
   type?: "area" | "input";
@@ -36,9 +40,11 @@ const EditValue: FC<Props> = ({
   setIsEdit,
   callbackUpdate,
   isLoading = false,
+  sx = {},
   visibleEditIcon = true,
   inputProps = {},
   iconSize = "medium",
+  inputSize = "small",
   loaderSize = "16px",
   type = "input",
   placeholder = "",
@@ -72,6 +78,12 @@ const EditValue: FC<Props> = ({
     e.stopPropagation();
   };
 
+  const pressEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter") {
+      updateValue();
+    }
+  };
+
   const updateValue = () => {
     handleCloseEdit();
     if ((value !== "" || allowedEmpty) && value !== currentValue)
@@ -85,7 +97,12 @@ const EditValue: FC<Props> = ({
   return (
     <>
       {isEdit && (
-        <FormControl component="form" fullWidth onSubmit={formSubmit}>
+        <FormControl
+          component="form"
+          fullWidth
+          onSubmit={formSubmit}
+          sx={{ ...sx }}
+        >
           <TextField
             value={value}
             onChange={valueChange}
@@ -97,8 +114,9 @@ const EditValue: FC<Props> = ({
             maxRows={areaConfig.maxRows}
             minRows={areaConfig.minRows}
             multiline={type === "area"}
-            size="small"
+            size={inputSize === "small" ? "small" : "medium"}
             variant={type === "area" ? "outlined" : "standard"}
+            onKeyDown={pressEnter}
           />
         </FormControl>
       )}

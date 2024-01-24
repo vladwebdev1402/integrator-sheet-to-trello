@@ -12,6 +12,10 @@ import {
   useDeleteBoardMutation,
 } from "./service/boardExtendApi";
 
+import {
+  useCreateListMutation
+} from "./service/listExtendApi";
+
 export {
   useGetAllBoardQuery,
   useGetAllListByBoardIdQuery,
@@ -19,6 +23,7 @@ export {
   useCreateBoardMutation,
   useUpdateBoardMutation,
   useDeleteBoardMutation,
+  useCreateListMutation,
   TrelloService,
   BoardCard,
 };

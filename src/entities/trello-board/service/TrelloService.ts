@@ -40,7 +40,8 @@ const TrelloService = createApi({
       query: (id) => ({
         url: `/boards/${id}/lists`,
         params: {}
-      })
+      }),
+      providesTags: ["Board-List"],
     })
   }),
 });

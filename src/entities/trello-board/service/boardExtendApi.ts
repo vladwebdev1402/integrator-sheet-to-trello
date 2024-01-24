@@ -8,7 +8,7 @@ const boardExtendApi = TrelloService.injectEndpoints({
         createBoard: build.mutation<IBoard, ICreateBoard>({
             query: (params) => ({
                 url: `/boards`,
-                params: {...params},
+                params: {...params, defaultLists: false},
                 method: "POST",
             }),
             invalidatesTags: ["Boards"],

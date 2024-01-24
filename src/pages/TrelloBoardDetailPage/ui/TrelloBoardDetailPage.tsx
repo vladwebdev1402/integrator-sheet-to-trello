@@ -17,15 +17,18 @@ import { TrelloBoardEditDescription } from "@/features/trello-board-edit-descrip
 import { TrelloBoardEditTitle } from "@/features/trello-board-edit-title";
 import { TrelloBoardDelete } from "@/features/trello-board-delete";
 import { TrelloList } from "@/widgets/trello-list";
+import { TrelloListAdd } from "@/features/trello-list-add";
 
 const TrelloBoardDetailPage = () => {
   const params = useParams<{ id: string }>();
   const { data: board, isLoading: boardLoading } = useGetBoardByIdQuery(
     params.id || ""
   );
-  const { data: lists, isLoading: listsLoading } = useGetAllListByBoardIdQuery(
-    params.id || ""
-  );
+  const {
+    data: lists,
+    isLoading: listsLoading,
+    isFetching,
+  } = useGetAllListByBoardIdQuery(params.id || "");
 
   const seeBoardClick = () => {
     window.open(board?.url || "", "_blank");
@@ -49,6 +52,7 @@ const TrelloBoardDetailPage = () => {
           {lists.map((list, idx) => (
             <TrelloList list={list} key={list.id} expanded={idx === 0} />
           ))}
+          <TrelloListAdd isUpdating={isFetching} />
         </Box>
       )}
 
