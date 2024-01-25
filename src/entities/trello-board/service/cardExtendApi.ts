@@ -26,7 +26,30 @@ const cardExtendApi = TrelloService.injectEndpoints({
         } catch {}
       },
     }),
+
+    updateCard: build.mutation<IBoardCard, IBoardCard>({
+      query: (card) => ({
+        url: `/cards/${card.id}`,
+        params: {
+          name: card.name,
+          pos: card.pos,
+          desc: card.desc,
+        },
+        method: "PUT",
+      }),
+      onQueryStarted(card, {dispatch, queryFulfilled}) {
+        const resultPatch = dispatch(TrelloService.util.updateQueryData(
+          "getAllCardsByBoardId",
+          card.idBoard,
+          (draft) => {
+            const oldCard = draft.filter((arrCard) => arrCard.id === card.id)[0];
+            Object.assign(oldCard, card);
+          },
+        ));
+        queryFulfilled.catch(resultPatch.undo) 
+      },
+    })
   }),
 });
 
-export const { useAddCardMutation } = cardExtendApi;
+export const { useAddCardMutation, useUpdateCardMutation } = cardExtendApi;

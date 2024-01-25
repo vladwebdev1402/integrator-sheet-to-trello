@@ -19,7 +19,10 @@ import {
   useUpdateListMutation,
 } from "./service/listExtendApi";
 
-import { useAddCardMutation } from "./service/cardExtendApi";
+import {
+  useAddCardMutation,
+  useUpdateCardMutation,
+} from "./service/cardExtendApi";
 
 export {
   useGetAllBoardQuery,
@@ -33,6 +36,7 @@ export {
   useCreateListMutation,
   useUpdateListMutation,
   useAddCardMutation,
+  useUpdateCardMutation,
   TrelloService,
   TrelloCard,
 };

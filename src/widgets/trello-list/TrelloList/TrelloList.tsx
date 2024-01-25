@@ -38,7 +38,7 @@ const TrelloList: FC<Props> = ({ list, expanded }) => {
     <Accordion defaultExpanded={expanded}>
       <ListSummary
         title={list.name}
-        badgeContent={cards?.length ?? 0}
+        badgeContent={cardsByList?.length ?? 0}
         isEdit={isEditName}
       >
         <TrelloListRename

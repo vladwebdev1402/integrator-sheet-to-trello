@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { Box, Button } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
@@ -44,51 +44,54 @@ const TrelloBoardDetailPage = () => {
   };
 
   return (
-    <div className={`container ${st.detail}`}>
-      <ButtonBack />
-      {boardLoading && <HeadSkeletons />}
-      {board && (
-        <Box marginTop={"16px"}>
-          <TrelloBoardEditTitle board={board} />
-          <TrelloBoardEditDescription board={board} />
-        </Box>
-      )}
-      {listsLoading && <SheetsSkeletons />}
+    <>
+      <div className={`container ${st.detail}`}>
+        <ButtonBack />
+        {boardLoading && <HeadSkeletons />}
+        {board && (
+          <Box marginTop={"16px"}>
+            <TrelloBoardEditTitle board={board} />
+            <TrelloBoardEditDescription board={board} />
+          </Box>
+        )}
+        {listsLoading && <SheetsSkeletons />}
 
-      {lists && (
-        <Box marginTop={"16px"}>
-          <DetailCategory>your sheets</DetailCategory>
-          {openLists.map((list, idx) => (
-            <TrelloList list={list} key={list.id} expanded={idx === 0} />
-          ))}
-          <TrelloListAdd isUpdating={isFetching} />
-        </Box>
-      )}
+        {lists && (
+          <Box marginTop={"16px"}>
+            <DetailCategory>your sheets</DetailCategory>
+            {openLists.map((list, idx) => (
+              <TrelloList list={list} key={list.id} expanded={idx === 0} />
+            ))}
+            <TrelloListAdd isUpdating={isFetching} />
+          </Box>
+        )}
 
-      {lists && archiveLists.length > 0 && (
-        <Box marginTop={"16px"}>
-          <DetailCategory>your archive sheets</DetailCategory>
-          {archiveLists.map((list, idx) => (
-            <TrelloListArchive list={list} key={list.id} />
-          ))}
-        </Box>
-      )}
+        {lists && archiveLists.length > 0 && (
+          <Box marginTop={"16px"}>
+            <DetailCategory>your archive sheets</DetailCategory>
+            {archiveLists.map((list, idx) => (
+              <TrelloListArchive list={list} key={list.id} />
+            ))}
+          </Box>
+        )}
 
-      {board && (
-        <Box marginTop={"16px"}>
-          <DetailCategory>board actions</DetailCategory>
-          <Button
-            color="secondary"
-            startIcon={<OpenInNewIcon />}
-            onClick={seeBoardClick}
-          >
-            see board
-          </Button>
-          <TrelloBoardDelete />
-        </Box>
-      )}
-      {boardLoading && <ActionsSkeletons />}
-    </div>
+        {board && (
+          <Box marginTop={"16px"}>
+            <DetailCategory>board actions</DetailCategory>
+            <Button
+              color="secondary"
+              startIcon={<OpenInNewIcon />}
+              onClick={seeBoardClick}
+            >
+              see board
+            </Button>
+            <TrelloBoardDelete />
+          </Box>
+        )}
+        {boardLoading && <ActionsSkeletons />}
+      </div>
+      <Outlet />
+    </>
   );
 };
 

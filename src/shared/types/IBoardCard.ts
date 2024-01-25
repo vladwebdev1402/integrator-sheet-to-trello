@@ -4,4 +4,5 @@ export interface IBoardCard {
     idBoard: string;
     name: string;
     desc: string;
+    pos: number;
 }

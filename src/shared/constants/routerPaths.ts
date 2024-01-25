@@ -9,4 +9,6 @@ export const routerPaths = {
     navigateSheetDetail: (id: string) => root + "/google/" + id,
     trelloDetail: root + "/trello/:id",
     navigateTrelloDetail: (id: string) => root + "/trello/" + id,
+    trelloCardDetail: ":cardId",
+    navigatetrelloCardDetail: (cardId: string) => `${cardId}`,
 }
