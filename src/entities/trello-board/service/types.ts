@@ -9,3 +9,8 @@ export interface ICreateList {
     name: string;
     idBoard: string;
 }
+
+export interface ICreateCard {
+    name: string;
+    idList: string;
+}

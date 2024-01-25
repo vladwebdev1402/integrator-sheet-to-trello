@@ -4,12 +4,16 @@ import { ILinkProps } from "./ILinkProps";
 import { ISheet } from "./ISheet";
 import { ISpreedsheet } from "./ISpredsheets";
 import { IBoard } from "./IBoard";
-export { CSheetCard }
+import { IBoardList } from "./IBoardList";
+import { IBoardCard } from "./IBoardCard";
+export { CSheetCard };
 
 export type {
-    IAuthSearchParams,
-    ILinkProps,
-    ISheet,
-    ISpreedsheet,
-    IBoard
-}
+  IAuthSearchParams,
+  ILinkProps,
+  ISheet,
+  ISpreedsheet,
+  IBoard,
+  IBoardList,
+  IBoardCard,
+};

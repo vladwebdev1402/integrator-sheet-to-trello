@@ -5,6 +5,7 @@ import {
   useGetAllBoardQuery,
   useGetBoardByIdQuery,
   useGetAllListByBoardIdQuery,
+  useGetAllCardsByListIdQuery,
 } from "./service/TrelloService";
 import {
   useCreateBoardMutation,
@@ -17,15 +18,19 @@ import {
   useUpdateListMutation,
 } from "./service/listExtendApi";
 
+import { useAddCardMutation } from "./service/cardExtendApi";
+
 export {
   useGetAllBoardQuery,
   useGetAllListByBoardIdQuery,
   useGetBoardByIdQuery,
+  useGetAllCardsByListIdQuery,
   useCreateBoardMutation,
   useUpdateBoardMutation,
   useDeleteBoardMutation,
   useCreateListMutation,
   useUpdateListMutation,
+  useAddCardMutation,
   TrelloService,
   BoardCard,
 };

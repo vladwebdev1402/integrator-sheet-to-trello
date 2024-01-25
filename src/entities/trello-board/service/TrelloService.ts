@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { baseTrelloQuery } from "@/shared/rtk";
-import { IBoard } from "@/shared/types";
+import { IBoard, IBoardCard } from "@/shared/types";
 import { TokenService } from "@/shared/api";
 import { IBoardList } from "@/shared/types/IBoardList";
 
@@ -44,9 +44,17 @@ const TrelloService = createApi({
         }
       }),
       providesTags: ["Board-List"],
-    })
+    }),
+
+    getAllCardsByListId: build.query<IBoardCard[], string>({
+      query: (id) => ({
+        url: `/lists/${id}/cards`,
+        params: {}
+      }),
+      providesTags: ["Board-Card"],
+    }),
   }),
 });
 
 export { TrelloService };
-export const { useGetAllBoardQuery, useGetBoardByIdQuery, useGetBoardsMembersByIdQuery, useGetAllListByBoardIdQuery } = TrelloService;
+export const { useGetAllBoardQuery, useGetAllCardsByListIdQuery, useGetBoardByIdQuery, useGetBoardsMembersByIdQuery, useGetAllListByBoardIdQuery } = TrelloService;

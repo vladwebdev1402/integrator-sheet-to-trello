@@ -1,17 +1,15 @@
 import React, { FC, useState } from "react";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionActions,
-  Button,
-} from "@mui/material";
+import { Accordion, AccordionActions, Button } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
 
-import { IBoardList } from "@/shared/types/IBoardList";
-import ListSummary from "@/shared/ui/ListSummary/ListSummary";
 import { TrelloListRename } from "@/features/trello-list-rename";
 import { TrelloListToArchive } from "@/features/trello-list-to-archive";
+import { TrelloCardAdd } from "@/features/trello-card-add";
+import { useGetAllCardsByListIdQuery } from "@/entities/trello-board";
+import { ListBody, ListSummary } from "@/shared/ui";
+import { IBoardList } from "@/shared/types/IBoardList";
+import CardsSkeleton from "./CardsSkeleton";
 
 interface Props {
   list: IBoardList;
@@ -20,6 +18,12 @@ interface Props {
 
 const TrelloList: FC<Props> = ({ list, expanded }) => {
   const [isEditName, setIsEditName] = useState(false);
+
+  const {
+    data: cards,
+    isLoading,
+    isFetching,
+  } = useGetAllCardsByListIdQuery(list.id);
 
   const renameClick = () => {
     setIsEditName(true);
@@ -34,6 +38,11 @@ const TrelloList: FC<Props> = ({ list, expanded }) => {
           setIsEdit={setIsEditName}
         />
       </ListSummary>
+      <ListBody>
+        {cards && cards.map((card) => <div>{card.name}</div>)}
+        {isLoading && <CardsSkeleton />}
+        {!isLoading && <TrelloCardAdd list={list} isFetching={isFetching} />}
+      </ListBody>
       <AccordionActions>
         <TrelloListToArchive list={list} />
         <Button
