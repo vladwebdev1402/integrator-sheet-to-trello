@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 
 import { ItemsContainer } from "@/shared/ui";
-import { BoardCard, useGetAllBoardQuery } from "@/entities/trello-board";
+import { TrelloCard, useGetAllBoardQuery } from "@/entities/trello-board";
 import { NotAuthTrelloBoards } from "@/features/auth/not-auth-trello-boards";
 import { BoardAdd } from "@/features/board-add";
 
@@ -31,7 +31,7 @@ const TrelloBoards = () => {
         errorMessage={"Oops, an error has occurred. Please reload the page."}
       >
         {limitBoards.map((board) => (
-          <BoardCard id={board} key={board} />
+          <TrelloCard id={board} key={board} />
         ))}
       </ItemsContainer>
       {!data && !isLoading && <NotAuthTrelloBoards />}

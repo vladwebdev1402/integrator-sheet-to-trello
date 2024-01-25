@@ -6,10 +6,9 @@ import { useAddCardMutation } from "@/entities/trello-board";
 
 interface Props {
   list: IBoardList;
-  isFetching: boolean;
 }
 
-const TrelloCardAdd: FC<Props> = ({ list, isFetching }) => {
+const TrelloCardAdd: FC<Props> = ({ list }) => {
   const [createCard, { isLoading }] = useAddCardMutation();
 
   const addCallback = (value: string) => {
@@ -19,9 +18,7 @@ const TrelloCardAdd: FC<Props> = ({ list, isFetching }) => {
     });
   };
 
-  return (
-    <CardAdd addCallback={addCallback} isLoading={isFetching || isLoading} />
-  );
+  return <CardAdd addCallback={addCallback} isLoading={isLoading} />;
 };
 
 export default TrelloCardAdd;

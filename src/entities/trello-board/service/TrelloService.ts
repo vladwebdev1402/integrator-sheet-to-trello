@@ -46,15 +46,22 @@ const TrelloService = createApi({
       providesTags: ["Board-List"],
     }),
 
+    getAllCardsByBoardId: build.query<IBoardCard[], string>({
+      query: (id) => ({
+        url: `/boards/${id}/cards`,
+        params: {},
+      }),
+      providesTags: ["Board-Card"],
+    }),
+
     getAllCardsByListId: build.query<IBoardCard[], string>({
       query: (id) => ({
         url: `/lists/${id}/cards`,
-        params: {}
+        params: {},
       }),
-      providesTags: ["Board-Card"],
     }),
   }),
 });
 
 export { TrelloService };
-export const { useGetAllBoardQuery, useGetAllCardsByListIdQuery, useGetBoardByIdQuery, useGetBoardsMembersByIdQuery, useGetAllListByBoardIdQuery } = TrelloService;
+export const { useGetAllBoardQuery, useGetAllCardsByBoardIdQuery,  useGetAllCardsByListIdQuery, useGetBoardByIdQuery, useGetBoardsMembersByIdQuery, useGetAllListByBoardIdQuery } = TrelloService;

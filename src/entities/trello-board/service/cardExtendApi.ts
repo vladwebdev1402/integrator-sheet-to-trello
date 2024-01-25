@@ -10,9 +10,23 @@ const cardExtendApi = TrelloService.injectEndpoints({
         method: "POST",
         params: { name, idList, pos: "bottom" },
       }),
-      invalidatesTags: ["Board-Card"],
+      onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+        try {
+          const { data: createdCard } = await queryFulfilled;
+
+          dispatch(
+            TrelloService.util.updateQueryData(
+              "getAllCardsByBoardId",
+              createdCard.idBoard,
+              (draft) => {
+                draft.push(createdCard);
+              }
+            )
+          );
+        } catch {}
+      },
     }),
   }),
 });
 
-export const {useAddCardMutation} = cardExtendApi;
+export const { useAddCardMutation } = cardExtendApi;

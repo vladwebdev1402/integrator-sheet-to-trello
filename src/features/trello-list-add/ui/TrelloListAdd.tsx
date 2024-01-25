@@ -40,7 +40,7 @@ const TrelloListAdd: FC<Props> = ({ isUpdating }) => {
           startIcon={<PlaylistAddIcon />}
           loading={isLoading || isUpdating}
         >
-          create sheet
+          add new sheet
         </LoadingButton>
       )}
 

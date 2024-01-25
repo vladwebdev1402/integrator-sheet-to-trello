@@ -1,11 +1,12 @@
 import { TrelloService } from "./service/TrelloService";
-import BoardCard from "./ui/BoardCard";
+import TrelloCard from "./ui/TrelloCard";
 
 import {
   useGetAllBoardQuery,
   useGetBoardByIdQuery,
   useGetAllListByBoardIdQuery,
   useGetAllCardsByListIdQuery,
+  useGetAllCardsByBoardIdQuery,
 } from "./service/TrelloService";
 import {
   useCreateBoardMutation,
@@ -25,6 +26,7 @@ export {
   useGetAllListByBoardIdQuery,
   useGetBoardByIdQuery,
   useGetAllCardsByListIdQuery,
+  useGetAllCardsByBoardIdQuery,
   useCreateBoardMutation,
   useUpdateBoardMutation,
   useDeleteBoardMutation,
@@ -32,5 +34,5 @@ export {
   useUpdateListMutation,
   useAddCardMutation,
   TrelloService,
-  BoardCard,
+  TrelloCard,
 };

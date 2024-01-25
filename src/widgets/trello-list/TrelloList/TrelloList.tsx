@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useMemo } from "react";
 import { Accordion, AccordionActions, Button } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -6,10 +6,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import { TrelloListRename } from "@/features/trello-list-rename";
 import { TrelloListToArchive } from "@/features/trello-list-to-archive";
 import { TrelloCardAdd } from "@/features/trello-card-add";
-import { useGetAllCardsByListIdQuery } from "@/entities/trello-board";
+import { useGetAllCardsByBoardIdQuery } from "@/entities/trello-board";
 import { ListBody, ListSummary } from "@/shared/ui";
 import { IBoardList } from "@/shared/types/IBoardList";
 import CardsSkeleton from "./CardsSkeleton";
+import { BoardCard } from "@/entities/board-card";
+import { useParams } from "react-router-dom";
 
 interface Props {
   list: IBoardList;
@@ -18,12 +20,15 @@ interface Props {
 
 const TrelloList: FC<Props> = ({ list, expanded }) => {
   const [isEditName, setIsEditName] = useState(false);
+  const params = useParams<{ id: string }>();
 
-  const {
-    data: cards,
-    isLoading,
-    isFetching,
-  } = useGetAllCardsByListIdQuery(list.id);
+  const { data: cards, isLoading } = useGetAllCardsByBoardIdQuery(
+    params?.id ?? "no-id"
+  );
+
+  const cardsByList = useMemo(() => {
+    return cards?.filter((card) => card.idList === list.id) ?? [];
+  }, [list, cards]);
 
   const renameClick = () => {
     setIsEditName(true);
@@ -31,7 +36,11 @@ const TrelloList: FC<Props> = ({ list, expanded }) => {
 
   return (
     <Accordion defaultExpanded={expanded}>
-      <ListSummary title={list.name} badgeContent={0} isEdit={isEditName}>
+      <ListSummary
+        title={list.name}
+        badgeContent={cards?.length ?? 0}
+        isEdit={isEditName}
+      >
         <TrelloListRename
           isEdit={isEditName}
           list={list}
@@ -39,9 +48,10 @@ const TrelloList: FC<Props> = ({ list, expanded }) => {
         />
       </ListSummary>
       <ListBody>
-        {cards && cards.map((card) => <div>{card.name}</div>)}
+        {cards &&
+          cardsByList.map((card) => <BoardCard card={card} key={card.id} />)}
         {isLoading && <CardsSkeleton />}
-        {!isLoading && <TrelloCardAdd list={list} isFetching={isFetching} />}
+        {!isLoading && <TrelloCardAdd list={list} />}
       </ListBody>
       <AccordionActions>
         <TrelloListToArchive list={list} />

@@ -22,7 +22,7 @@ interface Props {
   id: string;
 }
 
-const BoardCard: FC<Props> = ({ id }) => {
+const TrelloCard: FC<Props> = ({ id }) => {
   const { data: board, isLoading, error } = useGetBoardByIdQuery(id);
   const { data: members } = useGetBoardsMembersByIdQuery(id);
   const navigate = useNavigate();
@@ -80,4 +80,4 @@ const BoardCard: FC<Props> = ({ id }) => {
     );
 };
 
-export default BoardCard;
+export default TrelloCard;
