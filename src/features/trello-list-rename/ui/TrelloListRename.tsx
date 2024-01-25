@@ -1,7 +1,7 @@
 import { EditValue } from "@/shared/ui";
 import React, { FC } from "react";
 import { useMediaQuery } from "@mui/material";
-import { useUpadteListMutation } from "@/entities/trello-board";
+import { useUpdateListMutation } from "@/entities/trello-board";
 import { IBoardList } from "@/shared/types/IBoardList";
 interface Props {
   list: IBoardList;
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const TrelloListRename: FC<Props> = ({ list, setIsEdit, isEdit }) => {
-  const [update, { isLoading }] = useUpadteListMutation();
+  const [update, { isLoading }] = useUpdateListMutation();
 
   const callbackRename = (value: string) => {
     update({

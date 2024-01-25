@@ -13,7 +13,7 @@ const listExtendApi = TrelloService.injectEndpoints({
       invalidatesTags: ["Board-List"],
     }),
 
-    upadteList: build.mutation<IBoardList, IBoardList>({
+    updateList: build.mutation<IBoardList, IBoardList>({
       query: (list) => ({
         url: `/lists/${list.id}`,
         params: { 
@@ -40,4 +40,4 @@ const listExtendApi = TrelloService.injectEndpoints({
   }),
 });
 
-export const { useCreateListMutation, useUpadteListMutation } = listExtendApi;
+export const { useCreateListMutation, useUpdateListMutation } = listExtendApi;

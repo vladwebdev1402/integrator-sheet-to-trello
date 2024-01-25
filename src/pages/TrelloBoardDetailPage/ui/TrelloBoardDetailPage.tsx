@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { Box, Button } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -18,6 +18,7 @@ import { TrelloBoardEditTitle } from "@/features/trello-board-edit-title";
 import { TrelloBoardDelete } from "@/features/trello-board-delete";
 import { TrelloList } from "@/widgets/trello-list";
 import { TrelloListAdd } from "@/features/trello-list-add";
+import TrelloListArchive from "@/widgets/trello-list-archive/ui/TrelloListArchive";
 
 const TrelloBoardDetailPage = () => {
   const params = useParams<{ id: string }>();
@@ -29,6 +30,14 @@ const TrelloBoardDetailPage = () => {
     isLoading: listsLoading,
     isFetching,
   } = useGetAllListByBoardIdQuery(params.id || "");
+
+  const openLists = useMemo(() => {
+    return lists?.filter((list) => list.closed === false) ?? [];
+  }, [lists]);
+
+  const archiveLists = useMemo(() => {
+    return lists?.filter((list) => list.closed === true) ?? [];
+  }, [lists]);
 
   const seeBoardClick = () => {
     window.open(board?.url || "", "_blank");
@@ -49,10 +58,19 @@ const TrelloBoardDetailPage = () => {
       {lists && (
         <Box marginTop={"16px"}>
           <DetailCategory>your sheets</DetailCategory>
-          {lists.map((list, idx) => (
+          {openLists.map((list, idx) => (
             <TrelloList list={list} key={list.id} expanded={idx === 0} />
           ))}
           <TrelloListAdd isUpdating={isFetching} />
+        </Box>
+      )}
+
+      {lists && archiveLists.length > 0 && (
+        <Box marginTop={"16px"}>
+          <DetailCategory>your archive sheets</DetailCategory>
+          {archiveLists.map((list, idx) => (
+            <TrelloListArchive list={list} key={list.id} />
+          ))}
         </Box>
       )}
 

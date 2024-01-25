@@ -14,6 +14,7 @@ import BoardColorPicker from "./BoardColorPicker/BoardColorPicker";
 import { IEditFuatureProps, IEditFuatureObjectProps } from "./EditValue/props";
 import DetailCategory from "./title/DetailCategory";
 import DetailPageTitle from "./title/DetailPageTitle";
+import { ListTitle } from "./title/ListTitle";
 
 export {
   HeaderLink,
@@ -30,7 +31,8 @@ export {
   EditValue,
   BoardColorPicker,
   DetailCategory,
-  DetailPageTitle
+  DetailPageTitle,
+  ListTitle,
 };
 
 export type {

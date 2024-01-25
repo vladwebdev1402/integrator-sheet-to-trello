@@ -11,6 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { IBoardList } from "@/shared/types/IBoardList";
 import ListSummary from "@/shared/ui/ListSummary/ListSummary";
 import { TrelloListRename } from "@/features/trello-list-rename";
+import { TrelloListToArchive } from "@/features/trello-list-to-archive";
 
 interface Props {
   list: IBoardList;
@@ -34,6 +35,7 @@ const TrelloList: FC<Props> = ({ list, expanded }) => {
         />
       </ListSummary>
       <AccordionActions>
+        <TrelloListToArchive list={list} />
         <Button
           startIcon={<EditIcon />}
           onClick={renameClick}

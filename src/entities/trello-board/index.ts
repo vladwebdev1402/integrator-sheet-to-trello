@@ -14,7 +14,7 @@ import {
 
 import {
   useCreateListMutation,
-  useUpadteListMutation,
+  useUpdateListMutation,
 } from "./service/listExtendApi";
 
 export {
@@ -25,7 +25,7 @@ export {
   useUpdateBoardMutation,
   useDeleteBoardMutation,
   useCreateListMutation,
-  useUpadteListMutation,
+  useUpdateListMutation,
   TrelloService,
   BoardCard,
 };

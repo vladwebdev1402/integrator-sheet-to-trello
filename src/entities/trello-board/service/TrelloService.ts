@@ -39,7 +39,9 @@ const TrelloService = createApi({
     getAllListByBoardId: build.query<IBoardList[], string>({
       query: (id) => ({
         url: `/boards/${id}/lists`,
-        params: {}
+        params: {
+          filter: "all"
+        }
       }),
       providesTags: ["Board-List"],
     })
