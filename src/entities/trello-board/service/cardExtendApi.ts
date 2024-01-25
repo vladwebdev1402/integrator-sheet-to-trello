@@ -48,8 +48,27 @@ const cardExtendApi = TrelloService.injectEndpoints({
         ));
         queryFulfilled.catch(resultPatch.undo) 
       },
+    }),
+
+    deleteCard: build.mutation<number, IBoardCard>({
+      query: (card) => ({
+        url: `/cards/${card.id}`,
+        params: {},
+        method: "DELETE",
+      }),
+      onQueryStarted(card, {dispatch, queryFulfilled}) {
+        const resultPatch = dispatch(TrelloService.util.updateQueryData(
+          "getAllCardsByBoardId",
+          card.idBoard,
+          (draft) => {
+            const idx = draft.findIndex((arrCard) => arrCard.id === card.id);
+            draft.splice(idx, 1);
+          },
+        ));
+        queryFulfilled.catch(resultPatch.undo) 
+      },
     })
   }),
 });
 
-export const { useAddCardMutation, useUpdateCardMutation } = cardExtendApi;
+export const { useAddCardMutation, useUpdateCardMutation, useDeleteCardMutation } = cardExtendApi;

@@ -22,6 +22,7 @@ import {
 import {
   useAddCardMutation,
   useUpdateCardMutation,
+  useDeleteCardMutation,
 } from "./service/cardExtendApi";
 
 export {
@@ -37,6 +38,7 @@ export {
   useUpdateListMutation,
   useAddCardMutation,
   useUpdateCardMutation,
+  useDeleteCardMutation,
   TrelloService,
   TrelloCard,
 };

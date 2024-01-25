@@ -1,10 +1,17 @@
 import React, { useMemo } from "react";
-import { Dialog, DialogContent, DialogTitle, Box } from "@mui/material";
+import {
+  Dialog,
+  DialogContent,
+  DialogActions,
+  DialogTitle,
+  Box,
+} from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetAllCardsByBoardIdQuery } from "@/entities/trello-board";
 import { TrelloCardRename } from "@/features/trello-card-rename";
 import { CardDescTitle } from "@/shared/ui";
 import { TrelloCardEditDesc } from "@/features/trello-card-edit-desc";
+import { TrelloCardDelete } from "@/features/trello-card-delete";
 
 const BoardCardDetail = () => {
   const navigate = useNavigate();
@@ -22,6 +29,7 @@ const BoardCardDetail = () => {
   const handleClose = () => {
     navigate(-1);
   };
+
   return (
     <Dialog open={true} onClose={handleClose} maxWidth={"md"} fullWidth>
       <DialogTitle>
@@ -35,6 +43,8 @@ const BoardCardDetail = () => {
           </Box>
         )}
       </DialogContent>
+
+      <DialogActions>{card && <TrelloCardDelete card={card} />}</DialogActions>
     </Dialog>
   );
 };

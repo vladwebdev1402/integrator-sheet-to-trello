@@ -23,6 +23,7 @@ const CardAdd: FC<Props> = ({ addCallback, isLoading = false }) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          height: "100%",
         }}
       >
         {!isAdd && (
