@@ -15,6 +15,7 @@ export const BoardContent = styled(CardContent)<CardContentProps>(() => ({
   zIndex: "3",
   display: "flex",
   flexDirection: "column",
+  position: "relative",
 }));
 
 export const BoardFade = styled(Box)<BoxProps>(() => ({

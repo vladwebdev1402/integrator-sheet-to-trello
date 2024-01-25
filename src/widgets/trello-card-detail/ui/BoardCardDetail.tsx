@@ -5,13 +5,15 @@ import {
   DialogActions,
   DialogTitle,
   Box,
+  Button,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetAllCardsByBoardIdQuery } from "@/entities/trello-board";
 import { TrelloCardRename } from "@/features/trello-card-rename";
-import { CardDescTitle } from "@/shared/ui";
+import { CardDescTitle, CardSheetTitle } from "@/shared/ui";
 import { TrelloCardEditDesc } from "@/features/trello-card-edit-desc";
 import { TrelloCardDelete } from "@/features/trello-card-delete";
+import { TrelloCardShift } from "@/features/trello-card-shift";
 
 const BoardCardDetail = () => {
   const navigate = useNavigate();
@@ -37,14 +39,29 @@ const BoardCardDetail = () => {
       </DialogTitle>
       <DialogContent>
         {card && (
-          <Box>
-            <CardDescTitle />
-            <TrelloCardEditDesc card={card} />
-          </Box>
+          <>
+            <Box>
+              <CardDescTitle />
+              <TrelloCardEditDesc card={card} />
+            </Box>
+            <Box marginTop="24px">
+              <CardSheetTitle />
+              <TrelloCardShift card={card} />
+            </Box>
+          </>
         )}
       </DialogContent>
 
-      <DialogActions>{card && <TrelloCardDelete card={card} />}</DialogActions>
+      <DialogActions>
+        {card && (
+          <>
+            <Button variant="contained" onClick={handleClose}>
+              close
+            </Button>
+            <TrelloCardDelete card={card} />
+          </>
+        )}
+      </DialogActions>
     </Dialog>
   );
 };

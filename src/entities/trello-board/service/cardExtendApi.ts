@@ -34,6 +34,7 @@ const cardExtendApi = TrelloService.injectEndpoints({
           name: card.name,
           pos: card.pos,
           desc: card.desc,
+          idList: card.idList,
         },
         method: "PUT",
       }),

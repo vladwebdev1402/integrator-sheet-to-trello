@@ -7,7 +7,7 @@ const CardSheetTitle = () => {
     <Box display="flex" gap="12px" alignItems="center">
       <SegmentIcon />
       <Typography variant="overline" fontWeight={500} fontSize="15px">
-        Description
+        Sheet
       </Typography>
     </Box>
   );

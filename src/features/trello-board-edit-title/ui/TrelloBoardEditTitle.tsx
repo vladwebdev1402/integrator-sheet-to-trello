@@ -21,7 +21,7 @@ const TrelloBoardEditTitle: FC<Props> = ({ board }) => {
 
   return (
     <>
-      <DetailCategory>your board</DetailCategory>
+      <DetailCategory>board name</DetailCategory>
       <Box display={"flex"} gap="5px" alignItems={"center"}>
         {!isEdit && <DetailPageTitle>{board.name}</DetailPageTitle>}
         <EditValue
