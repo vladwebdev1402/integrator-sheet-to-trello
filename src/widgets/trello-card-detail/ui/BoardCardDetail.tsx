@@ -1,8 +1,10 @@
 import React, { useMemo } from "react";
-import { Dialog, DialogTitle } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Box } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetAllCardsByBoardIdQuery } from "@/entities/trello-board";
 import { TrelloCardRename } from "@/features/trello-card-rename";
+import { CardDescTitle } from "@/shared/ui";
+import { TrelloCardEditDesc } from "@/features/trello-card-edit-desc";
 
 const BoardCardDetail = () => {
   const navigate = useNavigate();
@@ -25,6 +27,14 @@ const BoardCardDetail = () => {
       <DialogTitle>
         {currentData && card && <TrelloCardRename card={card} />}
       </DialogTitle>
+      <DialogContent>
+        {card && (
+          <Box>
+            <CardDescTitle />
+            <TrelloCardEditDesc card={card} />
+          </Box>
+        )}
+      </DialogContent>
     </Dialog>
   );
 };

@@ -19,6 +19,9 @@ import ListSummary from "./ListSummary/ListSummary";
 import { ListBody } from "./ListBody/ListBody";
 import CardAdd from "./CardAdd/CardAdd";
 import CardContainer from "./CardContainer/CardContainer";
+import CardDescTitle from "./title/CardDescTitle";
+import CardSheetTitle from "./title/CardSheetTitle";
+
 export {
   HeaderLink,
   FooterLink,
@@ -40,6 +43,8 @@ export {
   ListSummary,
   ListBody,
   CardContainer,
+  CardDescTitle,
+  CardSheetTitle,
 };
 
 export type {
