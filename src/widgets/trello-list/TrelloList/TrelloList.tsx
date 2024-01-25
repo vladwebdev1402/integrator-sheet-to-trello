@@ -1,13 +1,16 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import {
   Accordion,
-  AccordionSummary,
   AccordionDetails,
   AccordionActions,
+  Button,
 } from "@mui/material";
+
+import EditIcon from "@mui/icons-material/Edit";
 
 import { IBoardList } from "@/shared/types/IBoardList";
 import ListSummary from "@/shared/ui/ListSummary/ListSummary";
+import { TrelloListRename } from "@/features/trello-list-rename";
 
 interface Props {
   list: IBoardList;
@@ -15,11 +18,30 @@ interface Props {
 }
 
 const TrelloList: FC<Props> = ({ list, expanded }) => {
+  const [isEditName, setIsEditName] = useState(false);
+
+  const renameClick = () => {
+    setIsEditName(true);
+  };
+
   return (
     <Accordion defaultExpanded={expanded}>
-      <ListSummary title={list.name} badgeContent={0}>
-        <></>
+      <ListSummary title={list.name} badgeContent={0} isEdit={isEditName}>
+        <TrelloListRename
+          isEdit={isEditName}
+          list={list}
+          setIsEdit={setIsEditName}
+        />
       </ListSummary>
+      <AccordionActions>
+        <Button
+          startIcon={<EditIcon />}
+          onClick={renameClick}
+          variant="outlined"
+        >
+          rename
+        </Button>
+      </AccordionActions>
     </Accordion>
   );
 };

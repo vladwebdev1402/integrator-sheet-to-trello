@@ -38,7 +38,6 @@ export const BoardMedia = styled(CardMedia)<CardMediaProps>(() => ({
 
 export const BoardName = styled(Typography)<TypographyProps>(() => ({
   color: "white",
-  height: "48px"
 }))
 
 export const BoardDescription = styled(Typography)<TypographyProps>(() => ({
@@ -47,7 +46,6 @@ export const BoardDescription = styled(Typography)<TypographyProps>(() => ({
   textOverflow: "ellipsis",
   WebkitLineClamp: 4,
   WebkitBoxOrient: "vertical",
-  flex: "0 1 100%",
   color: "white",
 }));
 

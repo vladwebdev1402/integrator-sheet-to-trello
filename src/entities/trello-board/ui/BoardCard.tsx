@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Card, CardActionArea, Skeleton, Typography } from "@mui/material";
 
@@ -15,7 +16,6 @@ import {
   BoardMedia,
   BoardName,
 } from "./styled";
-import { useNavigate } from "react-router-dom";
 import { routerPaths } from "@/shared/constants";
 
 interface Props {
@@ -57,10 +57,10 @@ const BoardCard: FC<Props> = ({ id }) => {
             <BoardName variant="h5" fontWeight={"500"} noWrap component="div">
               {board.name}
             </BoardName>
-            <BoardDescription variant="subtitle2" component="div">
+            <BoardDescription variant="subtitle2">
               {board.desc}
             </BoardDescription>
-            <Typography color="white" variant="subtitle1" marginTop="8px">
+            <Typography color="white" variant="subtitle1" marginTop="auto">
               Members: {members?.length ?? 0}
             </Typography>
           </BoardContent>

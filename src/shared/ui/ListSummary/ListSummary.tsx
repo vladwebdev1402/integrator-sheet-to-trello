@@ -38,7 +38,6 @@ const ListSummary: FC<Props> = ({
         sx={{ width: "100%" }}
         focusVisibleClassName="123123"
       >
-        {children}
         <Typography
           fontWeight={500}
           fontSize={mediaSM ? "17px" : "20px"}
