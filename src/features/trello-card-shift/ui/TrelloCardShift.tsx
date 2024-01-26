@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import { FC, useMemo } from "react";
 
 import {
   FormControl,
@@ -51,10 +51,10 @@ const TrelloCardShift: FC<Props> = ({ card }) => {
 
   return (
     <FormControl sx={{ width: "230px" }}>
-      <InputLabel>Sheet</InputLabel>
+      <InputLabel>Column</InputLabel>
       <Select
         value={currentList}
-        label="Sheet"
+        label="Column"
         onChange={sheetChange}
         maxRows={5}
       >

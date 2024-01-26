@@ -22,6 +22,10 @@ import CardContainer from "./CardContainer/CardContainer";
 import CardDescTitle from "./title/CardDescTitle";
 import CardSheetTitle from "./title/CardSheetTitle";
 import CardShiftInsideTitle from "./title/CardShiftInsideTitle";
+import CardCommentTitle from "./title/CardCommentTitle";
+import Comment from "./Comment/Comment";
+import CommentSkeleton from "./Comment/CommentSkeleton";
+
 export {
   HeaderLink,
   FooterLink,
@@ -46,9 +50,9 @@ export {
   CardDescTitle,
   CardSheetTitle,
   CardShiftInsideTitle,
+  CardCommentTitle,
+  Comment,
+  CommentSkeleton,
 };
 
-export type {
-  IEditFuatureProps,
-  IEditFuatureObjectProps
-}
+export type { IEditFuatureProps, IEditFuatureObjectProps };

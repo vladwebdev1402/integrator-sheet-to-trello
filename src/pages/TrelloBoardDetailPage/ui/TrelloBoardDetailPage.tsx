@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { Box, Button } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -58,7 +58,7 @@ const TrelloBoardDetailPage = () => {
 
         {lists && (
           <Box marginTop={"16px"}>
-            <DetailCategory>your sheets</DetailCategory>
+            <DetailCategory>your columns</DetailCategory>
             {openLists.map((list, idx) => (
               <TrelloList
                 list={list}
@@ -73,7 +73,7 @@ const TrelloBoardDetailPage = () => {
 
         {lists && archiveLists.length > 0 && (
           <Box marginTop={"16px"}>
-            <DetailCategory>your archive sheets</DetailCategory>
+            <DetailCategory>your archive columns</DetailCategory>
             {archiveLists.map((list, idx) => (
               <TrelloListArchive list={list} key={list.id} />
             ))}

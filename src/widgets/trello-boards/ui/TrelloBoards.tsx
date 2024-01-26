@@ -7,7 +7,7 @@ import { BoardAdd } from "@/features/board-add";
 import { useAppSelector } from "@/shared/hooks";
 
 const TrelloBoards = () => {
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(12);
 
   const { isAuth } = useAppSelector((state) => state.AuthTrelloReducer);
   const { data, isLoading, isError } = useGetAllBoardQuery(null);
@@ -17,7 +17,7 @@ const TrelloBoards = () => {
   }, [data, limit]);
 
   const moreClick = () => {
-    setLimit(limit + 10);
+    setLimit(limit + 12);
   };
 
   return (

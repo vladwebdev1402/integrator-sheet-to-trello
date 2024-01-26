@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
@@ -40,7 +40,7 @@ const TrelloListAdd: FC<Props> = ({ isUpdating }) => {
           startIcon={<PlaylistAddIcon />}
           loading={isLoading || isUpdating}
         >
-          add new sheet
+          add new column
         </LoadingButton>
       )}
 
@@ -52,7 +52,7 @@ const TrelloListAdd: FC<Props> = ({ isUpdating }) => {
         type="area"
         visibleEditIcon={false}
         inputSize="meduim"
-        placeholder="Enter the name of the sheet or leave it blank to cancel"
+        placeholder="Enter the name of the column or leave it blank to cancel"
         sx={{ margin: "5px 0px" }}
         inputProps={{
           fontWeight: "500",

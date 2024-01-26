@@ -14,15 +14,15 @@ const TrelloService = createApi({
       query: (id) => ({
         url: `/boards/${id}/members`,
         params: {},
-      })
+      }),
     }),
 
-    getAllBoard: build.query<{idBoards: string[]}, any >({
+    getAllBoard: build.query<{ idBoards: string[] }, any>({
       query: () => ({
         url: `/tokens/${TokenService.getTrelloToken()}/member`,
         params: {},
       }),
-      providesTags: ["Boards"]
+      providesTags: ["Boards"],
     }),
 
     getBoardById: build.query<IBoard, string>({
@@ -31,7 +31,8 @@ const TrelloService = createApi({
         params: {},
       }),
       transformErrorResponse(error): string {
-        if ("originalStatus" in error && error.originalStatus === 404) return "This board not found";
+        if ("originalStatus" in error && error.originalStatus === 404)
+          return "This board not found";
         return "There is not internet connection";
       },
     }),
@@ -40,8 +41,8 @@ const TrelloService = createApi({
       query: (id) => ({
         url: `/boards/${id}/lists`,
         params: {
-          filter: "all"
-        }
+          filter: "all",
+        },
       }),
       providesTags: ["Board-List"],
       transformResponse(baseQueryReturnValue: IBoardList[], meta, arg) {
@@ -70,4 +71,11 @@ const TrelloService = createApi({
 });
 
 export { TrelloService };
-export const { useGetAllBoardQuery, useGetAllCardsByBoardIdQuery,  useGetAllCardsByListIdQuery, useGetBoardByIdQuery, useGetBoardsMembersByIdQuery, useGetAllListByBoardIdQuery } = TrelloService;
+export const {
+  useGetAllBoardQuery,
+  useGetAllCardsByBoardIdQuery,
+  useGetAllCardsByListIdQuery,
+  useGetBoardByIdQuery,
+  useGetBoardsMembersByIdQuery,
+  useGetAllListByBoardIdQuery,
+} = TrelloService;

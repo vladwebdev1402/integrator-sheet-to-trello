@@ -1,15 +1,15 @@
 import { Typography, Box } from "@mui/material";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 
-const CardDescTitle = () => {
+const CardCommentTitle = () => {
   return (
     <Box display="flex" gap="12px" alignItems="center">
-      <DescriptionOutlinedIcon />
+      <CommentOutlinedIcon />
       <Typography variant="overline" fontWeight={500} fontSize="15px">
-        Description
+        Comments
       </Typography>
     </Box>
   );
 };
 
-export default CardDescTitle;
+export default CardCommentTitle;

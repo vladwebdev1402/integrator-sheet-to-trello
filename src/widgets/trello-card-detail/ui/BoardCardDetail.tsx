@@ -20,6 +20,7 @@ import { TrelloCardDelete } from "@/features/trello-card-delete";
 import { TrelloCardShift } from "@/features/trello-card-shift";
 import { TrelloCardShiftInside } from "@/features/trello-card-shift-inside";
 import Skeletons from "./Skeletons";
+import { BoardCardComments } from "@/entities/board-card-comments";
 
 const BoardCardDetail = () => {
   const navigate = useNavigate();
@@ -60,6 +61,7 @@ const BoardCardDetail = () => {
               <CardShiftInsideTitle />
               <TrelloCardShiftInside card={card} />
             </Box>
+            <BoardCardComments />
           </>
         )}
       </DialogContent>
