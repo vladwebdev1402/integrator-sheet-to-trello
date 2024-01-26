@@ -29,9 +29,9 @@ const BoardCardMembers = () => {
           </AvatarGroup>
           {isLoading && (
             <Box display="flex" alignItems="center" gap="3px">
-              <Skeleton width="24px" height="24px" variant="circular" />,
-              <Skeleton width="24px" height="24px" variant="circular" />,
-              <Skeleton width="24px" height="24px" variant="circular" />,
+              <Skeleton width="24px" height="24px" variant="circular" />
+              <Skeleton width="24px" height="24px" variant="circular" />
+              <Skeleton width="24px" height="24px" variant="circular" />
             </Box>
           )}
         </Box>
