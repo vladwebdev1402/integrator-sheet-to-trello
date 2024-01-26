@@ -15,6 +15,7 @@ import {
   CardDescTitle,
   CardSheetTitle,
   CardShiftInsideTitle,
+  Label,
 } from "@/shared/ui";
 import { TrelloCardRename } from "@/features/trello-card-rename";
 import { TrelloCardEditDesc } from "@/features/trello-card-edit-desc";
@@ -66,6 +67,13 @@ const BoardCardDetail = () => {
       <DialogContent>
         {card && (
           <>
+            <Box display="flex" gap="5px" flexWrap="wrap">
+              {card.labels.map((label) => (
+                <Label key={label.id} color={label.color}>
+                  {label.name}
+                </Label>
+              ))}
+            </Box>
             <BoardCardMembers />
             <Box>
               <CardDescTitle />

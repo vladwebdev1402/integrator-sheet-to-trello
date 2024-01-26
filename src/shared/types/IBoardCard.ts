@@ -1,3 +1,5 @@
+import { ILabel } from "./ILabel";
+
 export interface IBoardCard {
     id: string;
     idList: string;
@@ -6,4 +8,5 @@ export interface IBoardCard {
     desc: string;
     pos: number;
     dateLastActivity: string;
+    labels: ILabel[];
 }
