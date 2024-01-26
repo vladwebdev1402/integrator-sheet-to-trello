@@ -23,9 +23,7 @@ const TrelloCardShiftInside: FC<Props> = ({ card }) => {
   const [updateCard] = useUpdateCardMutation();
 
   const cardsInsideList = useMemo(() => {
-    return currentData
-      ?.filter((arrCard) => arrCard.idList === card.idList)
-      .sort((a, b) => a.pos - b.pos);
+    return currentData?.filter((arrCard) => arrCard.idList === card.idList);
   }, [currentData, card]);
 
   const currentIdx = useMemo(() => {

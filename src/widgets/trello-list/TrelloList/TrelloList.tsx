@@ -12,13 +12,15 @@ import { IBoardList } from "@/shared/types/IBoardList";
 import CardsSkeleton from "./CardsSkeleton";
 import { BoardCard } from "@/entities/board-card";
 import { useParams } from "react-router-dom";
+import { TrelloListShift } from "@/features/trello-list-shift";
 
 interface Props {
   list: IBoardList;
+  idx: number;
   expanded: boolean;
 }
 
-const TrelloList: FC<Props> = ({ list, expanded }) => {
+const TrelloList: FC<Props> = ({ list, idx, expanded }) => {
   const [isEditName, setIsEditName] = useState(false);
   const params = useParams<{ id: string }>();
 
@@ -27,11 +29,7 @@ const TrelloList: FC<Props> = ({ list, expanded }) => {
   );
 
   const cardsByList = useMemo(() => {
-    return (
-      cards
-        ?.filter((card) => card.idList === list.id)
-        .sort((a, b) => a.pos - b.pos) ?? []
-    );
+    return cards?.filter((card) => card.idList === list.id) ?? [];
   }, [list, cards]);
 
   const renameClick = () => {
@@ -58,6 +56,7 @@ const TrelloList: FC<Props> = ({ list, expanded }) => {
         {!isLoading && <TrelloCardAdd list={list} />}
       </ListBody>
       <AccordionActions>
+        <TrelloListShift list={list} idx={idx} />
         <TrelloListToArchive list={list} />
         <Button
           startIcon={<EditIcon />}

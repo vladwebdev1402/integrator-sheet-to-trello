@@ -32,11 +32,11 @@ const TrelloBoardDetailPage = () => {
   } = useGetAllListByBoardIdQuery(params.id || "");
 
   const openLists = useMemo(() => {
-    return lists?.filter((list) => list.closed === false) ?? [];
+    return lists?.filter((list) => !list.closed) ?? [];
   }, [lists]);
 
   const archiveLists = useMemo(() => {
-    return lists?.filter((list) => list.closed === true) ?? [];
+    return lists?.filter((list) => list.closed) ?? [];
   }, [lists]);
 
   const seeBoardClick = () => {
@@ -60,7 +60,12 @@ const TrelloBoardDetailPage = () => {
           <Box marginTop={"16px"}>
             <DetailCategory>your sheets</DetailCategory>
             {openLists.map((list, idx) => (
-              <TrelloList list={list} key={list.id} expanded={idx === 0} />
+              <TrelloList
+                list={list}
+                key={list.id}
+                idx={idx}
+                expanded={idx === 0}
+              />
             ))}
             <TrelloListAdd isUpdating={isFetching} />
           </Box>

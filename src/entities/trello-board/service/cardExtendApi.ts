@@ -44,7 +44,9 @@ const cardExtendApi = TrelloService.injectEndpoints({
           card.idBoard,
           (draft) => {
             const oldCard = draft.filter((arrCard) => arrCard.id === card.id)[0];
+            const oldPos = oldCard.pos;
             Object.assign(oldCard, card);
+            if (oldPos !== card.pos) draft.sort((a, b) => a.pos - b.pos);
           },
         ));
         queryFulfilled.catch(resultPatch.undo) 

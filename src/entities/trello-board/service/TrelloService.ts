@@ -44,6 +44,9 @@ const TrelloService = createApi({
         }
       }),
       providesTags: ["Board-List"],
+      transformResponse(baseQueryReturnValue: IBoardList[], meta, arg) {
+        return baseQueryReturnValue.sort((a, b) => a.pos - b.pos);
+      },
     }),
 
     getAllCardsByBoardId: build.query<IBoardCard[], string>({
@@ -52,6 +55,9 @@ const TrelloService = createApi({
         params: {},
       }),
       providesTags: ["Board-Card"],
+      transformResponse(baseQueryReturnValue: IBoardCard[], meta, arg) {
+        return baseQueryReturnValue.sort((a, b) => a.pos - b.pos);
+      },
     }),
 
     getAllCardsByListId: build.query<IBoardCard[], string>({

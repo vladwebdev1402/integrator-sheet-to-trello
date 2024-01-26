@@ -30,7 +30,9 @@ const listExtendApi = TrelloService.injectEndpoints({
             list.idBoard,
             (draft) => {
                 const oldList = draft.filter((arrList) => arrList.id === list.id)[0];
+                const oldPos = oldList.pos;
                 Object.assign(oldList, list); 
+                if (oldPos !== list.pos) draft.sort((a, b) => a.pos - b.pos);
             },
           ),
         );
