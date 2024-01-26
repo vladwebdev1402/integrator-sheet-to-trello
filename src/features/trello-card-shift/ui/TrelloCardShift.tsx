@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo, useEffect } from "react";
+import React, { FC, useMemo } from "react";
 
 import {
   FormControl,
@@ -10,9 +10,11 @@ import {
 
 import { IBoardCard } from "@/shared/types";
 import {
+  useGetAllCardsByBoardIdQuery,
   useGetAllListByBoardIdQuery,
   useUpdateCardMutation,
 } from "@/entities/trello-board";
+import { getNewPosition } from "@/shared/lib";
 
 interface Props {
   card: IBoardCard;
@@ -20,6 +22,7 @@ interface Props {
 
 const TrelloCardShift: FC<Props> = ({ card }) => {
   const { currentData } = useGetAllListByBoardIdQuery(card.idBoard);
+  const { currentData: cards } = useGetAllCardsByBoardIdQuery(card.idBoard);
   const [updateCard] = useUpdateCardMutation();
 
   const notArchiveLists = useMemo(() => {
@@ -32,29 +35,33 @@ const TrelloCardShift: FC<Props> = ({ card }) => {
       : "";
   }, [card, notArchiveLists]);
 
-  const [currentValue, setCurrentValue] = useState(currentList);
-
   const sheetChange = (e: SelectChangeEvent) => {
-    setCurrentValue(e.target.value);
-  };
-
-  useEffect(() => {
-    if (currentValue !== card.idList) {
-      updateCard({ ...card, idList: currentValue });
+    const newList = e.target.value;
+    if (newList !== card.idList) {
+      const cardsInNewList =
+        cards?.filter((card) => card.idList === newList) ?? [];
+      const newPos = getNewPosition(
+        cardsInNewList,
+        0,
+        cardsInNewList.length - 1
+      );
+      updateCard({ ...card, idList: newList, pos: newPos });
     }
-  }, [currentValue, card, updateCard]);
+  };
 
   return (
     <FormControl sx={{ width: "230px" }}>
       <InputLabel>Sheet</InputLabel>
       <Select
-        value={currentValue}
+        value={currentList}
         label="Sheet"
         onChange={sheetChange}
         maxRows={5}
       >
         {notArchiveLists?.map((list) => (
-          <MenuItem value={list.id}>{list.name}</MenuItem>
+          <MenuItem value={list.id} key={list.id}>
+            {list.name}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>

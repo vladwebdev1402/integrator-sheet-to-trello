@@ -10,10 +10,15 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetAllCardsByBoardIdQuery } from "@/entities/trello-board";
 import { TrelloCardRename } from "@/features/trello-card-rename";
-import { CardDescTitle, CardSheetTitle } from "@/shared/ui";
+import {
+  CardDescTitle,
+  CardSheetTitle,
+  CardShiftInsideTitle,
+} from "@/shared/ui";
 import { TrelloCardEditDesc } from "@/features/trello-card-edit-desc";
 import { TrelloCardDelete } from "@/features/trello-card-delete";
 import { TrelloCardShift } from "@/features/trello-card-shift";
+import { TrelloCardShiftInside } from "@/features/trello-card-shift-inside";
 
 const BoardCardDetail = () => {
   const navigate = useNavigate();
@@ -47,6 +52,10 @@ const BoardCardDetail = () => {
             <Box marginTop="24px">
               <CardSheetTitle />
               <TrelloCardShift card={card} />
+            </Box>
+            <Box marginTop="24px">
+              <CardShiftInsideTitle />
+              <TrelloCardShiftInside card={card} />
             </Box>
           </>
         )}

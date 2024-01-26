@@ -27,7 +27,11 @@ const TrelloList: FC<Props> = ({ list, expanded }) => {
   );
 
   const cardsByList = useMemo(() => {
-    return cards?.filter((card) => card.idList === list.id) ?? [];
+    return (
+      cards
+        ?.filter((card) => card.idList === list.id)
+        .sort((a, b) => a.pos - b.pos) ?? []
+    );
   }, [list, cards]);
 
   const renameClick = () => {

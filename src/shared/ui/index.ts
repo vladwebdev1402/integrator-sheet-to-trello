@@ -21,7 +21,7 @@ import CardAdd from "./CardAdd/CardAdd";
 import CardContainer from "./CardContainer/CardContainer";
 import CardDescTitle from "./title/CardDescTitle";
 import CardSheetTitle from "./title/CardSheetTitle";
-
+import CardShiftInsideTitle from "./title/CardShiftInsideTitle";
 export {
   HeaderLink,
   FooterLink,
@@ -45,6 +45,7 @@ export {
   CardContainer,
   CardDescTitle,
   CardSheetTitle,
+  CardShiftInsideTitle,
 };
 
 export type {
