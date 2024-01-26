@@ -15,7 +15,9 @@ const TrelloCardDelete: FC<Props> = ({ card }) => {
 
   const deleteClick = () => {
     navigate(-1);
-    deleteCard(card);
+    setTimeout(() => {
+      deleteCard(card);
+    }, 50);
   };
 
   return <ButtonDelete onClick={deleteClick}>delete</ButtonDelete>;

@@ -41,10 +41,10 @@ const TrelloCardShiftInside: FC<Props> = ({ card }) => {
 
   return (
     <FormControl sx={{ width: "230px" }}>
-      <InputLabel>Sheet</InputLabel>
+      <InputLabel>Cards</InputLabel>
       <Select
         value={`${currentIdx}`}
-        label="Sheet"
+        label="Cards"
         onChange={cardposChange}
         maxRows={5}
       >

@@ -19,6 +19,7 @@ import { TrelloCardEditDesc } from "@/features/trello-card-edit-desc";
 import { TrelloCardDelete } from "@/features/trello-card-delete";
 import { TrelloCardShift } from "@/features/trello-card-shift";
 import { TrelloCardShiftInside } from "@/features/trello-card-shift-inside";
+import Skeletons from "./Skeletons";
 
 const BoardCardDetail = () => {
   const navigate = useNavigate();
@@ -39,8 +40,10 @@ const BoardCardDetail = () => {
 
   return (
     <Dialog open={true} onClose={handleClose} maxWidth={"md"} fullWidth>
+      {isLoading && <Skeletons />}
       <DialogTitle>
         {currentData && card && <TrelloCardRename card={card} />}
+        {!isLoading && card === undefined && "This card does not exist"}
       </DialogTitle>
       <DialogContent>
         {card && (
@@ -62,14 +65,12 @@ const BoardCardDetail = () => {
       </DialogContent>
 
       <DialogActions>
-        {card && (
-          <>
-            <Button variant="contained" onClick={handleClose}>
-              close
-            </Button>
-            <TrelloCardDelete card={card} />
-          </>
+        {!isLoading && (
+          <Button variant="contained" onClick={handleClose}>
+            close
+          </Button>
         )}
+        {card && <TrelloCardDelete card={card} />}
       </DialogActions>
     </Dialog>
   );
