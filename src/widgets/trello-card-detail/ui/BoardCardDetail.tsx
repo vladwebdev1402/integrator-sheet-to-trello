@@ -6,6 +6,7 @@ import {
   DialogTitle,
   Box,
   Button,
+  Typography,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetAllCardsByBoardIdQuery } from "@/entities/trello-board";
@@ -21,6 +22,7 @@ import { TrelloCardShift } from "@/features/trello-card-shift";
 import { TrelloCardShiftInside } from "@/features/trello-card-shift-inside";
 import Skeletons from "./Skeletons";
 import { BoardCardComments } from "@/entities/board-card-comments";
+import { formateDateDiff } from "@/shared/lib/formateDateDiff";
 
 const BoardCardDetail = () => {
   const navigate = useNavigate();
@@ -40,10 +42,23 @@ const BoardCardDetail = () => {
   };
 
   return (
-    <Dialog open={true} onClose={handleClose} maxWidth={"md"} fullWidth>
+    <Dialog
+      open={true}
+      onClose={handleClose}
+      maxWidth={"sm"}
+      fullWidth
+      scroll="body"
+    >
       {isLoading && <Skeletons />}
       <DialogTitle>
-        {currentData && card && <TrelloCardRename card={card} />}
+        {currentData && card && (
+          <>
+            <Typography variant="body2">
+              Last activity: {formateDateDiff(card.dateLastActivity)}
+            </Typography>
+            <TrelloCardRename card={card} />
+          </>
+        )}
         {!isLoading && card === undefined && "This card does not exist"}
       </DialogTitle>
       <DialogContent>

@@ -1,6 +1,7 @@
 import { FC } from "react";
 
 import { Avatar, Card, CardHeader, CardContent } from "@mui/material";
+import { formateDateDiff } from "@/shared/lib/formateDateDiff";
 
 interface Props {
   name: string;
@@ -15,7 +16,7 @@ const Comment: FC<Props> = ({ name, avatarUrl, children, date }) => {
       <CardHeader
         avatar={<Avatar src={avatarUrl} />}
         title={name}
-        subheader={`${new Date(date).toLocaleString("ru")}`}
+        subheader={`${formateDateDiff(date)}`}
       />
       <CardContent>{children}</CardContent>
     </Card>

@@ -5,4 +5,5 @@ export interface IBoardCard {
     name: string;
     desc: string;
     pos: number;
+    dateLastActivity: string;
 }
