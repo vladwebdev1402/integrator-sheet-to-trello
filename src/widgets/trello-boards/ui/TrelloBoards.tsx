@@ -4,10 +4,12 @@ import { ItemsContainer } from "@/shared/ui";
 import { TrelloCard, useGetAllBoardQuery } from "@/entities/trello-board";
 import { NotAuthTrelloBoards } from "@/features/auth/not-auth-trello-boards";
 import { BoardAdd } from "@/features/board-add";
+import { useAppSelector } from "@/shared/hooks";
 
 const TrelloBoards = () => {
   const [limit, setLimit] = useState(10);
 
+  const { isAuth } = useAppSelector((state) => state.AuthTrelloReducer);
   const { data, isLoading, isError } = useGetAllBoardQuery(null);
 
   const limitBoards = useMemo(() => {
@@ -20,21 +22,30 @@ const TrelloBoards = () => {
 
   return (
     <div>
-      <BoardAdd />
-      <ItemsContainer
-        clickNextLimit={moreClick}
-        isVisibleMore={!!data && data.idBoards.length > limit}
-        isNotFound={!!data && data.idBoards.length === 0}
-        notFoundMessage="The workspace is empty. Create a new board"
-        isLoading={isLoading}
-        isError={!!isError}
-        errorMessage={"Oops, an error has occurred. Please reload the page."}
-      >
-        {limitBoards.map((board) => (
-          <TrelloCard id={board} key={board} />
-        ))}
-      </ItemsContainer>
-      {!data && !isLoading && <NotAuthTrelloBoards />}
+      {isAuth ? (
+        <>
+          <BoardAdd />
+          <ItemsContainer
+            clickNextLimit={moreClick}
+            isVisibleMore={!!data && data.idBoards.length > limit}
+            isNotFound={!!data && data.idBoards.length === 0}
+            notFoundMessage="The workspace is empty. Create a new board"
+            isLoading={isLoading}
+            isError={!!isError}
+            errorMessage={
+              "Oops, an error has occurred. Please reload the page."
+            }
+          >
+            {limitBoards.map((board) => (
+              <TrelloCard id={board} key={board} />
+            ))}
+          </ItemsContainer>
+        </>
+      ) : (
+        <></>
+      )}
+
+      {!isAuth && !isLoading && <NotAuthTrelloBoards />}
     </div>
   );
 };

@@ -55,7 +55,7 @@ const TrelloList: FC<Props> = ({ list, idx, expanded }) => {
         {isLoading && <CardsSkeleton />}
         {!isLoading && <TrelloCardAdd list={list} />}
       </ListBody>
-      <AccordionActions>
+      <AccordionActions sx={{ flexWrap: "wrap" }}>
         <TrelloListShift list={list} idx={idx} />
         <TrelloListToArchive list={list} />
         <Button
