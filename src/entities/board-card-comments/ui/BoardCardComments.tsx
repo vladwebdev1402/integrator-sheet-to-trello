@@ -16,6 +16,7 @@ const BoardCardComments = () => {
       {data &&
         data.map((comment) => (
           <Comment
+            key={comment.id}
             avatarUrl={getTrelloAvatar(
               comment.idMemberCreator,
               comment.memberCreator.avatarHash

@@ -25,6 +25,7 @@ import CardShiftInsideTitle from "./title/CardShiftInsideTitle";
 import CardCommentTitle from "./title/CardCommentTitle";
 import Comment from "./Comment/Comment";
 import CommentSkeleton from "./Comment/CommentSkeleton";
+import CardMembersTitle from "./title/CardMembersTitle";
 
 export {
   HeaderLink,
@@ -53,6 +54,7 @@ export {
   CardCommentTitle,
   Comment,
   CommentSkeleton,
+  CardMembersTitle,
 };
 
 export type { IEditFuatureProps, IEditFuatureObjectProps };

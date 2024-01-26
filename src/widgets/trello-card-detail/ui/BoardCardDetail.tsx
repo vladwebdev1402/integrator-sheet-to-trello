@@ -9,20 +9,22 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetAllCardsByBoardIdQuery } from "@/entities/trello-board";
-import { TrelloCardRename } from "@/features/trello-card-rename";
+
+import { formateDateDiff } from "@/shared/lib/formateDateDiff";
 import {
   CardDescTitle,
   CardSheetTitle,
   CardShiftInsideTitle,
 } from "@/shared/ui";
+import { TrelloCardRename } from "@/features/trello-card-rename";
 import { TrelloCardEditDesc } from "@/features/trello-card-edit-desc";
 import { TrelloCardDelete } from "@/features/trello-card-delete";
 import { TrelloCardShift } from "@/features/trello-card-shift";
 import { TrelloCardShiftInside } from "@/features/trello-card-shift-inside";
-import Skeletons from "./Skeletons";
 import { BoardCardComments } from "@/entities/board-card-comments";
-import { formateDateDiff } from "@/shared/lib/formateDateDiff";
+import { BoardCardMembers } from "@/entities/board-card-members";
+import { useGetAllCardsByBoardIdQuery } from "@/entities/trello-board";
+import Skeletons from "./Skeletons";
 
 const BoardCardDetail = () => {
   const navigate = useNavigate();
@@ -64,6 +66,7 @@ const BoardCardDetail = () => {
       <DialogContent>
         {card && (
           <>
+            <BoardCardMembers />
             <Box>
               <CardDescTitle />
               <TrelloCardEditDesc card={card} />
