@@ -80,7 +80,7 @@ const BoardCardDetail = () => {
               <TrelloCardEditDesc card={card} />
             </Box>
             <Box marginTop="24px">
-              <CardSheetTitle />
+              <CardSheetTitle title="Column" />
               <TrelloCardShift card={card} />
             </Box>
             <Box marginTop="24px">
