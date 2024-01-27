@@ -11,7 +11,7 @@ export const TrelloCardCommentsService = createApi({
             query: (id) => ({
                 url: `/cards/${id}/actions`,
                 params: {
-                    type: "commentCard",
+                    filter: "commentCard",
                 },
             })
         })    
