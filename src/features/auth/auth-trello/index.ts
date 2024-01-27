@@ -1,3 +1,3 @@
 import AuthByTrello from "./ui/AuthByTrello";
-
-export { AuthByTrello };
+import { useTrelloAuth } from "./lib/useTrelloAuth";
+export { AuthByTrello, useTrelloAuth };

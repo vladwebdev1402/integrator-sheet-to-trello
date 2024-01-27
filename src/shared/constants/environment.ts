@@ -4,7 +4,7 @@ export const environment = {
   authQuery: {
     client_id:
       "1015368277863-5neb6t7eq8nm3cs1rfih5dshf8ug0ai0.apps.googleusercontent.com",
-    redirect_uri: "http://localhost:3000/profile",
+    redirect_uri: "http://localhost:3000",
     state: "state_parameter_passthrough_value",
     response_type: "code",
     include_granted_scopes: "true",
@@ -15,7 +15,7 @@ export const environment = {
   clientSecret: "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",
   trelloAuthUrl: "https://trello.com/1/authorize?",
   trelloQuery: {
-    return_url: "http://localhost:3000/profile",
+    return_url: "http://localhost:3000",
     expiration: "never",
     name: `Integrator Sheets to Trello`,
     scope: "read,write,account",

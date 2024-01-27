@@ -1,49 +1,20 @@
-import React, { useEffect } from "react";
 import { LoadingButton } from "@mui/lab";
-import {
-  createSearchParams,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { createSearchParams } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 
-import { authGoogleWithCode } from "@/entities/user-google";
-import { useAppDispatch, useAppSelector } from "@/shared/hooks";
-import { environment, routerPaths } from "@/shared/constants";
+import { useAppSelector } from "@/shared/hooks";
+import { environment } from "@/shared/constants";
+import { useGoogleAuth } from "../lib/useGoogleAuth";
 
 const AuthByGoogle = () => {
-  const { isLoading, isAuth } = useAppSelector(
-    (state) => state.AuthGoogleReducer
-  );
-  const [queryParams] = useSearchParams();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const code = queryParams.get("code");
-  const trelloToken = window.location.hash.split("=").at(-1);
+  const { isLoading } = useAppSelector((state) => state.AuthGoogleReducer);
   const AuthClick = () => {
     window.location.href = `${environment.authUrl}?${createSearchParams(
       environment.authQuery
     ).toString()}`;
   };
 
-  useEffect(() => {
-    if (code !== null) dispatch(authGoogleWithCode(code));
-  }, [code, dispatch]);
-
-  useEffect(() => {
-    queryParams.delete("scope");
-    queryParams.delete("code");
-    queryParams.delete("state");
-    queryParams.delete("prompt");
-    queryParams.delete("authuser");
-    if (trelloToken) queryParams.set("trelloToken", trelloToken);
-    if (isAuth) {
-      navigate({
-        pathname: routerPaths.profile,
-        search: createSearchParams(queryParams).toString(),
-      });
-    }
-  }, [isAuth, dispatch, navigate, queryParams, trelloToken]);
+  useGoogleAuth();
 
   return (
     <LoadingButton

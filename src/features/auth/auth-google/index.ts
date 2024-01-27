@@ -1,3 +1,3 @@
 import AuthByGoogle from "./ui/AuthByGoogle";
-
-export { AuthByGoogle };
+import { useGoogleAuth } from "./lib/useGoogleAuth";
+export { AuthByGoogle, useGoogleAuth };

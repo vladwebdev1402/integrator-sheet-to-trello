@@ -1,6 +1,9 @@
-import React from "react";
+import { useGoogleAuth, useTrelloAuth } from "@/features/auth";
 
 const MainPage = () => {
+  useGoogleAuth();
+  useTrelloAuth();
+
   return <div>MainPage</div>;
 };
 

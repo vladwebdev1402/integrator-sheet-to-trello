@@ -1,7 +1,15 @@
-import { AuthByGoogle } from "./auth-google";
+import { AuthByGoogle, useGoogleAuth } from "./auth-google";
 import { LogoutGoogle } from "./logout-google";
-import { AuthByTrello } from "./auth-trello";
+import { AuthByTrello, useTrelloAuth } from "./auth-trello";
 import { LogoutTrello } from "./logout-trello";
-import NotAuthSheetList from "./not-auth-sheet-list/ui/NotAuthSheetList"; 
+import NotAuthSheetList from "./not-auth-sheet-list/ui/NotAuthSheetList";
 
-export { AuthByGoogle, LogoutGoogle, AuthByTrello, LogoutTrello, NotAuthSheetList };
+export {
+  AuthByGoogle,
+  useGoogleAuth,
+  LogoutGoogle,
+  AuthByTrello,
+  useTrelloAuth,
+  LogoutTrello,
+  NotAuthSheetList,
+};
