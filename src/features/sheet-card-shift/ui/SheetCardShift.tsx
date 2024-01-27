@@ -1,4 +1,4 @@
-import { FC, useState, useMemo, useEffect } from "react";
+import { FC, useMemo } from "react";
 import {
   FormControl,
   InputLabel,
@@ -22,7 +22,6 @@ interface Props {
 
 const SheetCardShift: FC<Props> = ({ card, closeDialog }) => {
   const params = useParams<{ id: string }>();
-  const [currentSheet, setCurrentSheet] = useState(card.sheetId);
 
   const { data } = useGetSpreadSheetByIdQuery(params?.id || "no-id");
   const [deleteCard] = useDeleteCardMutation();
@@ -33,11 +32,8 @@ const SheetCardShift: FC<Props> = ({ card, closeDialog }) => {
   }, [data]);
 
   const changeSelect = (e: SelectChangeEvent) => {
-    setCurrentSheet(Number(e.target.value));
-  };
-
-  useEffect(() => {
-    if (currentSheet !== card.sheetId) {
+    const newSheet = Number(e.target.value);
+    if (newSheet !== card.sheetId) {
       deleteCard({
         idx: card.idx,
         sheetId: card.sheetId,
@@ -45,19 +41,19 @@ const SheetCardShift: FC<Props> = ({ card, closeDialog }) => {
       });
       updateCard({
         card: card,
-        sheetId: currentSheet,
+        sheetId: newSheet,
         spreadsheetId: params?.id || "no-id",
         isShift: true,
       });
       closeDialog();
     }
-  }, [currentSheet, card]);
+  };
 
   return (
     <FormControl size="small" sx={{ width: "270px" }}>
       <InputLabel>Sheets</InputLabel>
       <Select
-        value={currentSheet.toString()}
+        value={card.sheetId.toString()}
         label="Sheets"
         onChange={changeSelect}
         MenuProps={{
