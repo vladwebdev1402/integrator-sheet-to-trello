@@ -1,7 +1,7 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Typography, TypographyProps } from "@mui/material";
 
-const DetailCategory: FC<TypographyProps> = ({ children, sx = {} }) => {
+const DetailCategory: FC<TypographyProps> = ({ children, ...props }) => {
   return (
     <Typography
       variant="overline"
@@ -9,7 +9,8 @@ const DetailCategory: FC<TypographyProps> = ({ children, sx = {} }) => {
       fontWeight={500}
       color="GrayText"
       component={"div"}
-      sx={{ paddingLeft: "12px", ...sx }}
+      {...props}
+      sx={{ paddingLeft: "12px", ...props.sx }}
     >
       {children}
     </Typography>

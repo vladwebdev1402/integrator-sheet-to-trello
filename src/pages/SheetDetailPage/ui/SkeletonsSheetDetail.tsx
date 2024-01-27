@@ -1,4 +1,3 @@
-import React from "react";
 import { Skeleton, Typography, Box } from "@mui/material";
 
 const SkeletonsSheetDetail = () => {

@@ -1,9 +1,7 @@
-import React, { FC } from "react";
-import { Card, CardContent } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
+import { FC } from "react";
 import { useParams } from "react-router-dom";
 import { useAddNewCardMutation } from "@/entities/spreedsheet";
-import AddCardIcon from "@mui/icons-material/AddCard";
+import { CardAdd } from "@/shared/ui";
 interface Props {
   sheetId: number;
   countCards: number;
@@ -13,36 +11,17 @@ const SheetCardAdd: FC<Props> = ({ sheetId, countCards }) => {
   const params = useParams<{ id: string }>();
   const [addCard] = useAddNewCardMutation();
 
-  const addClick = () => {
+  const addClick = (value: string) => {
     if (params.id)
       addCard({
         spreadsheetId: params.id,
         sheetId,
         countCards,
+        name: value,
       });
   };
 
-  return (
-    <Card>
-      <CardContent
-        sx={{
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <LoadingButton
-          onClick={addClick}
-          sx={{ whiteSpace: "nowrap" }}
-          startIcon={<AddCardIcon />}
-          loadingPosition="start"
-        >
-          add new card
-        </LoadingButton>
-      </CardContent>
-    </Card>
-  );
+  return <CardAdd addCallback={addClick} />;
 };
 
 export default SheetCardAdd;

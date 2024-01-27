@@ -46,7 +46,13 @@ const TrelloCardShiftInside: FC<Props> = ({ card }) => {
         value={`${currentIdx}`}
         label="Cards"
         onChange={cardposChange}
-        maxRows={5}
+        MenuProps={{
+          PaperProps: {
+            style: {
+              maxHeight: "225px",
+            },
+          },
+        }}
       >
         {cardsInsideList?.map((arrCard, idx) => (
           <MenuItem value={idx} key={arrCard.id} sx={{ maxWidth: "230px" }}>

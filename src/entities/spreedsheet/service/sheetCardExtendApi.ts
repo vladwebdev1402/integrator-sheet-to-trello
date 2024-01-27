@@ -10,7 +10,7 @@ import { baseSheetUrl } from "./url";
 const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
   endpoints: (build) => ({
     addNewCard: build.mutation<any, IQueryMutationAddCard>({
-      query: ({ sheetId, countCards, spreadsheetId }) => ({
+      query: ({ sheetId, countCards, name, spreadsheetId }) => ({
         url: baseSheetUrl + `/${spreadsheetId}/values:batchUpdateByDataFilter`,
         method: "POST",
         body: {
@@ -22,7 +22,7 @@ const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
                   startRowIndex: countCards,
                 },
               },
-              values: [["New Card"]],
+              values: [[name]],
               majorDimension: "ROWS",
             },
           ],
@@ -31,7 +31,7 @@ const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
       }),
 
       onQueryStarted: async (
-        { sheetId, spreadsheetId },
+        { sheetId, spreadsheetId, name },
         { dispatch, queryFulfilled }
       ) => {
         const patchResult = dispatch(
@@ -39,7 +39,7 @@ const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
             "getSheetById",
             { sheetId, spreadsheetId },
             (draft) => {
-              draft.push(["New Card"]);
+              draft.push([name]);
             }
           )
         );

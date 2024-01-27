@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo, useEffect } from "react";
+import { FC, useState, useMemo, useEffect } from "react";
 import {
   FormControl,
   InputLabel,
@@ -51,7 +51,7 @@ const SheetCardShift: FC<Props> = ({ card, closeDialog }) => {
       });
       closeDialog();
     }
-  }, [currentSheet]);
+  }, [currentSheet, card]);
 
   return (
     <FormControl size="small" sx={{ width: "270px" }}>
@@ -60,6 +60,13 @@ const SheetCardShift: FC<Props> = ({ card, closeDialog }) => {
         value={currentSheet.toString()}
         label="Sheets"
         onChange={changeSelect}
+        MenuProps={{
+          PaperProps: {
+            style: {
+              maxHeight: "225px",
+            },
+          },
+        }}
       >
         {sheets.map((sheet) => (
           <MenuItem

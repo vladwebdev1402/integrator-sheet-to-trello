@@ -56,7 +56,13 @@ const TrelloCardShift: FC<Props> = ({ card }) => {
         value={currentList}
         label="Column"
         onChange={sheetChange}
-        maxRows={5}
+        MenuProps={{
+          PaperProps: {
+            style: {
+              maxHeight: "225px",
+            },
+          },
+        }}
       >
         {notArchiveLists?.map((list) => (
           <MenuItem value={list.id} key={list.id}>

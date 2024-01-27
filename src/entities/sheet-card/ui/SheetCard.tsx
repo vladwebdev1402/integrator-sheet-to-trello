@@ -1,9 +1,5 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import {
-  Card,
-  CardContent,
-  CardActionArea,
-  CardActions,
   Typography,
   Dialog,
   DialogTitle,
@@ -16,7 +12,7 @@ import SegmentIcon from "@mui/icons-material/Segment";
 import DescriptionIcon from "@mui/icons-material/Description";
 
 import { CSheetCard } from "@/shared/types";
-import { IEditFuatureObjectProps } from "@/shared/ui";
+import { CardContainer, IEditFuatureObjectProps } from "@/shared/ui";
 import {
   ICardDeleteProps,
   ICardShiftInsideProps,
@@ -54,28 +50,12 @@ const SheetCard: FC<Props> = ({
 
   return (
     <>
-      <Card
-        sx={{ position: "relative", display: "flex", flexDirection: "column" }}
-      >
-        <CardActionArea
-          onClick={handleOpen}
-          sx={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            left: "0",
-            top: "0",
-          }}
-        ></CardActionArea>
-        <CardContent sx={{ flex: "1 1 100%" }}>
-          <Typography variant="body1" component={"div"}>
-            {card.title}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <CardShiftInside card={card} />
-        </CardActions>
-      </Card>
+      <CardContainer
+        title={card.title}
+        onOpen={handleOpen}
+        actions={<CardShiftInside card={card} />}
+      />
+
       {isOpen && (
         <Dialog open={isOpen} onClose={handleClose} maxWidth={"md"} fullWidth>
           <DialogTitle>

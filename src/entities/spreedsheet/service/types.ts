@@ -43,6 +43,7 @@ export interface IQueryMutationAddCard {
   spreadsheetId: string;
   sheetId: number;
   countCards: number;
+  name: string;
 }
 
 export interface ISheetMutation {

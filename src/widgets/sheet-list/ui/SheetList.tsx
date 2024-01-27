@@ -1,16 +1,9 @@
-import React, { FC, useMemo, useState } from "react";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionActions,
-  Button,
-} from "@mui/material";
+import { FC, useMemo, useState } from "react";
+import { Accordion, AccordionActions, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useParams } from "react-router-dom";
 
-import st from "./SheetList.module.scss";
 import Skeletons from "./Skeletons";
-import ListHead from "./ListHead";
 import { useGetSheetByIdQuery } from "@/entities/spreedsheet";
 import { SheetCard } from "@/entities/sheet-card";
 import { SheetCardAdd } from "@/features/sheet-card-add";
@@ -22,6 +15,8 @@ import { CSheetCard } from "@/shared/types";
 import { SheetCardShift } from "@/features/sheet-card-shift";
 import { SheetCardShiftInside } from "@/features/sheet-card-shift-inside";
 import { SheetListShift } from "@/features/sheet-list-shift";
+import { SheetListRename } from "@/features/sheet-list-rename";
+import { ListBody, ListSummary } from "@/shared/ui";
 
 interface Props {
   sheetId: number;
@@ -52,14 +47,15 @@ const SheetList: FC<Props> = ({
   };
   return (
     <Accordion defaultExpanded={expanded}>
-      <ListHead
-        countCards={countCards}
-        isEdit={isEdit}
-        setIsEdit={setIsEdit}
-        sheetId={sheetId}
-        title={title}
-      />
-      <AccordionDetails className={st.sheet__cards}>
+      <ListSummary badgeContent={countCards} title={title} isEdit={isEdit}>
+        <SheetListRename
+          currentValue={title}
+          isEdit={isEdit}
+          setEdit={setIsEdit}
+          sheetId={sheetId}
+        />
+      </ListSummary>
+      <ListBody>
         {isLoading && <Skeletons />}
         {data &&
           data.map((card, idx) => (
@@ -76,7 +72,7 @@ const SheetList: FC<Props> = ({
         {!isLoading && (
           <SheetCardAdd sheetId={sheetId} countCards={countCards} />
         )}
-      </AccordionDetails>
+      </ListBody>
       {!isLoading && (
         <AccordionActions sx={{ flexWrap: "wrap", rowGap: "8px" }}>
           <SheetListShift sheetId={sheetId} />
