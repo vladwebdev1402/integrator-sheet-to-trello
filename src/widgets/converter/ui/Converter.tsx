@@ -12,25 +12,27 @@ import DisableToChoiceSelect from "./DisableToChoiceSelect";
 import { TServiceChoice } from "@/shared/types";
 
 const Converter = () => {
-  const [service, setService] = useState<TServiceChoice>("document");
+  const [service, setService] = useState<TServiceChoice>("");
   const [fromChoice, setFromChoice] = useState("");
   const [toChoice, setToChoice] = useState("");
 
   const svgColor = useMemo(() => {
-    if (service === "document") return "disabled";
+    if (service === "") return "disabled";
     if (service === "trello") return "info";
     return "secondary";
   }, [service]);
 
   return (
     <ConverterBox>
-      {service === "document" && (
-        <ConverterChoiceService setService={setService} />
+      {service === "" && (
+        <ConverterChoiceService setService={setService} service={service} />
       )}
       {service === "trello" && (
         <ConverterChoiceBoard
           setFromChoice={setFromChoice}
           setToChoice={setToChoice}
+          fromChoice={fromChoice}
+          toChoice={toChoice}
           setService={setService}
           choice={"from"}
         />
@@ -39,6 +41,8 @@ const Converter = () => {
         <ConverterChoiceSpreadsheet
           setFromChoice={setFromChoice}
           setToChoice={setToChoice}
+          fromChoice={fromChoice}
+          toChoice={toChoice}
           setService={setService}
           choice={"from"}
         />
@@ -46,11 +50,13 @@ const Converter = () => {
       <SvgIcon fontSize="large" color={svgColor}>
         <ArrowForwardIcon />
       </SvgIcon>
-      {service === "document" && <DisableToChoiceSelect />}
+      {service === "" && <DisableToChoiceSelect />}
       {service === "trello" && (
         <ConverterChoiceSpreadsheet
           setFromChoice={setFromChoice}
           setToChoice={setToChoice}
+          fromChoice={fromChoice}
+          toChoice={toChoice}
           setService={setService}
           choice={"to"}
         />
@@ -59,6 +65,8 @@ const Converter = () => {
         <ConverterChoiceBoard
           setFromChoice={setFromChoice}
           setToChoice={setToChoice}
+          fromChoice={fromChoice}
+          toChoice={toChoice}
           setService={setService}
           choice={"to"}
         />

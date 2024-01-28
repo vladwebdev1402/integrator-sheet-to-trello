@@ -12,9 +12,10 @@ import { TServiceChoice } from "@/shared/types";
 
 interface Props {
   setService: (value: TServiceChoice) => void;
+  service: TServiceChoice;
 }
 
-const ConverterChoiceService: FC<Props> = ({ setService }) => {
+const ConverterChoiceService: FC<Props> = ({ setService, service }) => {
   const selectChange = (e: SelectChangeEvent) => {
     setService(e.target.value as TServiceChoice);
   };
@@ -27,6 +28,7 @@ const ConverterChoiceService: FC<Props> = ({ setService }) => {
           label="Service"
           onChange={selectChange}
           MenuProps={{ style: { maxHeight: "300px" } }}
+          value={service}
         >
           <MenuItem value="google">Google</MenuItem>
           <MenuItem value="trello">Trello</MenuItem>

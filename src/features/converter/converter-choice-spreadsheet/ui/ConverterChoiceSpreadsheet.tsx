@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import {
   FormControl,
   Select,
@@ -15,6 +15,8 @@ interface Props {
   setService: (value: TServiceChoice) => void;
   setFromChoice: (value: string) => void;
   setToChoice: (value: string) => void;
+  toChoice: string;
+  fromChoice: string;
   choice: "to" | "from";
 }
 
@@ -22,16 +24,23 @@ const ConverterChoiceSpreadsheet: FC<Props> = ({
   setFromChoice,
   setToChoice,
   setService,
+  toChoice,
+  fromChoice,
   choice,
 }) => {
   const { data, isLoading } = useGetAllSheetsQuery({ limit: 150, name: "" });
 
   const selectChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
-    if (value === "document") setService(value);
+    if (value === "return") setService("");
     if (choice === "from") setFromChoice(value);
     else setToChoice(value);
   };
+
+  useEffect(() => {
+    if (choice === "from") setFromChoice("");
+    else setToChoice("");
+  }, [choice, setFromChoice, setToChoice]);
 
   return (
     <ConverterSelectBox
@@ -44,9 +53,10 @@ const ConverterChoiceSpreadsheet: FC<Props> = ({
           label="Spreadsheet"
           onChange={selectChange}
           MenuProps={{ style: { maxHeight: "300px" } }}
+          value={choice === "from" ? fromChoice : toChoice}
         >
           {choice === "from" ? (
-            <MenuItem value="document">Return to services</MenuItem>
+            <MenuItem value="return">Return to services</MenuItem>
           ) : (
             <MenuItem value="create">Create new board</MenuItem>
           )}

@@ -1,1 +1,1 @@
-export type TServiceChoice = "document" | "trello" | "google";
+export type TServiceChoice = "" | "trello" | "google";
