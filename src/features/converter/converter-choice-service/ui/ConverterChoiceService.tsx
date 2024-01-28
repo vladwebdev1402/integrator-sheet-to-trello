@@ -8,14 +8,15 @@ import {
 } from "@mui/material";
 
 import { ConverterSelectBox } from "@/shared/ui";
+import { TServiceChoice } from "@/shared/types";
 
 interface Props {
-  setService: (value: string) => void;
+  setService: (value: TServiceChoice) => void;
 }
 
 const ConverterChoiceService: FC<Props> = ({ setService }) => {
   const selectChange = (e: SelectChangeEvent) => {
-    setService(e.target.value);
+    setService(e.target.value as TServiceChoice);
   };
 
   return (

@@ -1,0 +1,1 @@
+export type TServiceChoice = "document" | "trello" | "google";

@@ -5,26 +5,39 @@ import {
   SelectChangeEvent,
   MenuItem,
   InputLabel,
+  CircularProgress,
 } from "@mui/material";
 import { ConverterSelectBox } from "@/shared/ui";
+import { TServiceChoice } from "@/shared/types";
+import { useGetAllSheetsQuery } from "@/entities/spreedsheet";
 
 interface Props {
-  setService: (value: string) => void;
+  setService: (value: TServiceChoice) => void;
   setFromChoice: (value: string) => void;
+  setToChoice: (value: string) => void;
+  choice: "to" | "from";
 }
 
 const ConverterChoiceSpreadsheet: FC<Props> = ({
   setFromChoice,
+  setToChoice,
   setService,
+  choice,
 }) => {
+  const { data, isLoading } = useGetAllSheetsQuery({ limit: 150, name: "" });
+
   const selectChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
     if (value === "document") setService(value);
-    else setFromChoice(value);
+    if (choice === "from") setFromChoice(value);
+    else setToChoice(value);
   };
 
   return (
-    <ConverterSelectBox type="spredsheet">
+    <ConverterSelectBox
+      type="spredsheet"
+      order={choice === "from" ? "forward" : "reverse"}
+    >
       <FormControl sx={{ width: "230px" }}>
         <InputLabel>Spreadsheet</InputLabel>
         <Select
@@ -32,10 +45,25 @@ const ConverterChoiceSpreadsheet: FC<Props> = ({
           onChange={selectChange}
           MenuProps={{ style: { maxHeight: "300px" } }}
         >
-          <MenuItem value={"document"}>Return to services</MenuItem>
-          <MenuItem value={"spreadsheet1"}>spreadsheet1</MenuItem>
-          <MenuItem value={"spreadsheet2"}>spreadsheet2</MenuItem>
-          <MenuItem value={"spreadsheet3"}>spreadsheet3</MenuItem>
+          {choice === "from" ? (
+            <MenuItem value="document">Return to services</MenuItem>
+          ) : (
+            <MenuItem value="create">Create new board</MenuItem>
+          )}
+          {isLoading && (
+            <MenuItem disabled>
+              <CircularProgress size="24px" sx={{ margin: "0 auto" }} />
+            </MenuItem>
+          )}
+          {data && data.files.length === 0 && (
+            <MenuItem disabled>Spredsheets not found</MenuItem>
+          )}
+          {data &&
+            data.files.map((file) => (
+              <MenuItem key={file.id} value={file.id}>
+                {file.name}
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
     </ConverterSelectBox>

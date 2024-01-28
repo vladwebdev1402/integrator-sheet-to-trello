@@ -6,8 +6,8 @@ import { ISpreedsheet } from "./ISpredsheets";
 import { IBoard } from "./IBoard";
 import { IBoardList } from "./IBoardList";
 import { IBoardCard } from "./IBoardCard";
+import { TServiceChoice } from "./TServiceChoice";
 export { CSheetCard };
-
 export type {
   IAuthSearchParams,
   ILinkProps,
@@ -16,4 +16,5 @@ export type {
   IBoard,
   IBoardList,
   IBoardCard,
+  TServiceChoice,
 };

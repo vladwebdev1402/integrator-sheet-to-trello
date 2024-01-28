@@ -5,24 +5,41 @@ import {
   SelectChangeEvent,
   MenuItem,
   InputLabel,
+  CircularProgress,
 } from "@mui/material";
 
 import { ConverterSelectBox } from "@/shared/ui";
+import { TServiceChoice } from "@/shared/types";
+import { useGetAllBoardQuery } from "@/entities/trello-board";
+import NameBoard from "./NameBoard";
 
 interface Props {
-  setService: (value: string) => void;
+  setService: (value: TServiceChoice) => void;
   setFromChoice: (value: string) => void;
+  setToChoice: (value: string) => void;
+  choice: "to" | "from";
 }
 
-const ConverterChoiceBoard: FC<Props> = ({ setService, setFromChoice }) => {
+const ConverterChoiceBoard: FC<Props> = ({
+  setService,
+  setFromChoice,
+  setToChoice,
+  choice,
+}) => {
+  const { data, isLoading } = useGetAllBoardQuery(null);
+
   const selectChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
     if (value === "document") setService(value);
-    else setFromChoice(value);
+    if (choice === "from") setFromChoice(value);
+    else setToChoice(value);
   };
 
   return (
-    <ConverterSelectBox type="trello">
+    <ConverterSelectBox
+      type="trello"
+      order={choice === "from" ? "forward" : "reverse"}
+    >
       <FormControl sx={{ width: "230px" }}>
         <InputLabel>Board</InputLabel>
         <Select
@@ -30,10 +47,25 @@ const ConverterChoiceBoard: FC<Props> = ({ setService, setFromChoice }) => {
           onChange={selectChange}
           MenuProps={{ style: { maxHeight: "300px" } }}
         >
-          <MenuItem value="document">Return to services</MenuItem>
-          <MenuItem value="board1">board1</MenuItem>
-          <MenuItem value="board2">board2</MenuItem>
-          <MenuItem value="board3">board3</MenuItem>
+          {choice === "from" ? (
+            <MenuItem value="document">Return to services</MenuItem>
+          ) : (
+            <MenuItem value="create">Create new board</MenuItem>
+          )}
+          {isLoading && (
+            <MenuItem disabled>
+              <CircularProgress size="24px" sx={{ margin: "0 auto" }} />
+            </MenuItem>
+          )}
+          {data && data.idBoards.length === 0 && (
+            <MenuItem disabled>Workspace is empty</MenuItem>
+          )}
+          {data &&
+            data.idBoards.map((id) => (
+              <MenuItem value={id}>
+                <NameBoard id={id} />
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
     </ConverterSelectBox>

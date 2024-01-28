@@ -3,17 +3,16 @@ import { SvgIcon } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import {
-  ConverteChoiceToBoard,
   ConverterChoiceBoard,
   ConverterChoiceService,
   ConverterChoiceSpreadsheet,
-  ConverterChoiceToSpreadsheet,
 } from "@/features/converter";
 import { ConverterBox } from "./styled";
 import DisableToChoiceSelect from "./DisableToChoiceSelect";
+import { TServiceChoice } from "@/shared/types";
 
 const Converter = () => {
-  const [service, setService] = useState("document");
+  const [service, setService] = useState<TServiceChoice>("document");
   const [fromChoice, setFromChoice] = useState("");
   const [toChoice, setToChoice] = useState("");
 
@@ -31,13 +30,17 @@ const Converter = () => {
       {service === "trello" && (
         <ConverterChoiceBoard
           setFromChoice={setFromChoice}
+          setToChoice={setToChoice}
           setService={setService}
+          choice={"from"}
         />
       )}
       {service === "google" && (
         <ConverterChoiceSpreadsheet
           setFromChoice={setFromChoice}
+          setToChoice={setToChoice}
           setService={setService}
+          choice={"from"}
         />
       )}
       <SvgIcon fontSize="large" color={svgColor}>
@@ -45,10 +48,20 @@ const Converter = () => {
       </SvgIcon>
       {service === "document" && <DisableToChoiceSelect />}
       {service === "trello" && (
-        <ConverterChoiceToSpreadsheet setToChoice={setToChoice} />
+        <ConverterChoiceSpreadsheet
+          setFromChoice={setFromChoice}
+          setToChoice={setToChoice}
+          setService={setService}
+          choice={"to"}
+        />
       )}
       {service === "google" && (
-        <ConverteChoiceToBoard setToChoice={setToChoice} />
+        <ConverterChoiceBoard
+          setFromChoice={setFromChoice}
+          setToChoice={setToChoice}
+          setService={setService}
+          choice={"to"}
+        />
       )}
     </ConverterBox>
   );
