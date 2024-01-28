@@ -13,39 +13,30 @@ import { useGetAllSheetsQuery } from "@/entities/spreedsheet";
 
 interface Props {
   setService: (value: TServiceChoice) => void;
-  setFromChoice: (value: string) => void;
-  setToChoice: (value: string) => void;
-  toChoice: string;
-  fromChoice: string;
-  choice: "to" | "from";
+  choice: {
+    type: "to" | "from";
+    current: string;
+    setCurrent: (value: string) => void;
+  };
 }
 
-const ConverterChoiceSpreadsheet: FC<Props> = ({
-  setFromChoice,
-  setToChoice,
-  setService,
-  toChoice,
-  fromChoice,
-  choice,
-}) => {
+const ConverterChoiceSpreadsheet: FC<Props> = ({ setService, choice }) => {
   const { data, isLoading } = useGetAllSheetsQuery({ limit: 150, name: "" });
 
   const selectChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
     if (value === "return") setService("");
-    if (choice === "from") setFromChoice(value);
-    else setToChoice(value);
+    else choice.setCurrent(value);
   };
 
   useEffect(() => {
-    if (choice === "from") setFromChoice("");
-    else setToChoice("");
-  }, [choice, setFromChoice, setToChoice]);
+    choice.setCurrent("");
+  }, []);
 
   return (
     <ConverterSelectBox
       type="spredsheet"
-      order={choice === "from" ? "forward" : "reverse"}
+      order={choice.type === "from" ? "forward" : "reverse"}
     >
       <FormControl sx={{ width: "230px" }}>
         <InputLabel>Spreadsheet</InputLabel>
@@ -53,9 +44,9 @@ const ConverterChoiceSpreadsheet: FC<Props> = ({
           label="Spreadsheet"
           onChange={selectChange}
           MenuProps={{ style: { maxHeight: "300px" } }}
-          value={choice === "from" ? fromChoice : toChoice}
+          value={choice.current}
         >
-          {choice === "from" ? (
+          {choice.type === "from" ? (
             <MenuItem value="return">Return to services</MenuItem>
           ) : (
             <MenuItem value="create">Create new board</MenuItem>

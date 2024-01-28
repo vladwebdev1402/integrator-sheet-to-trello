@@ -7,6 +7,9 @@ import {
   useGetAllListByBoardIdQuery,
   useGetAllCardsByListIdQuery,
   useGetAllCardsByBoardIdQuery,
+  useLazyGetBoardByIdQuery,
+  useLazyGetAllCardsByBoardIdQuery,
+  useLazyGetAllListByBoardIdQuery,
 } from "./service/TrelloService";
 import {
   useCreateBoardMutation,
@@ -31,6 +34,9 @@ export {
   useGetBoardByIdQuery,
   useGetAllCardsByListIdQuery,
   useGetAllCardsByBoardIdQuery,
+  useLazyGetBoardByIdQuery,
+  useLazyGetAllCardsByBoardIdQuery,
+  useLazyGetAllListByBoardIdQuery,
   useCreateBoardMutation,
   useUpdateBoardMutation,
   useDeleteBoardMutation,

@@ -7,7 +7,7 @@ import {
   ConverterChoiceService,
   ConverterChoiceSpreadsheet,
 } from "@/features/converter";
-import { ConverterBox } from "./styled";
+import { ConverterBody, ConverterContainer } from "./styled";
 import DisableToChoiceSelect from "./DisableToChoiceSelect";
 import { TServiceChoice } from "@/shared/types";
 
@@ -23,55 +23,57 @@ const Converter = () => {
   }, [service]);
 
   return (
-    <ConverterBox>
-      {service === "" && (
-        <ConverterChoiceService setService={setService} service={service} />
-      )}
-      {service === "trello" && (
-        <ConverterChoiceBoard
-          setFromChoice={setFromChoice}
-          setToChoice={setToChoice}
-          fromChoice={fromChoice}
-          toChoice={toChoice}
-          setService={setService}
-          choice={"from"}
-        />
-      )}
-      {service === "google" && (
-        <ConverterChoiceSpreadsheet
-          setFromChoice={setFromChoice}
-          setToChoice={setToChoice}
-          fromChoice={fromChoice}
-          toChoice={toChoice}
-          setService={setService}
-          choice={"from"}
-        />
-      )}
-      <SvgIcon fontSize="large" color={svgColor}>
-        <ArrowForwardIcon />
-      </SvgIcon>
-      {service === "" && <DisableToChoiceSelect />}
-      {service === "trello" && (
-        <ConverterChoiceSpreadsheet
-          setFromChoice={setFromChoice}
-          setToChoice={setToChoice}
-          fromChoice={fromChoice}
-          toChoice={toChoice}
-          setService={setService}
-          choice={"to"}
-        />
-      )}
-      {service === "google" && (
-        <ConverterChoiceBoard
-          setFromChoice={setFromChoice}
-          setToChoice={setToChoice}
-          fromChoice={fromChoice}
-          toChoice={toChoice}
-          setService={setService}
-          choice={"to"}
-        />
-      )}
-    </ConverterBox>
+    <ConverterContainer>
+      <ConverterBody>
+        {service === "" && (
+          <ConverterChoiceService setService={setService} service={service} />
+        )}
+        {service === "trello" && (
+          <ConverterChoiceBoard
+            setService={setService}
+            choice={{
+              type: "from",
+              current: fromChoice,
+              setCurrent: setFromChoice,
+            }}
+          />
+        )}
+        {service === "google" && (
+          <ConverterChoiceSpreadsheet
+            setService={setService}
+            choice={{
+              type: "from",
+              current: fromChoice,
+              setCurrent: setFromChoice,
+            }}
+          />
+        )}
+        <SvgIcon fontSize="large" color={svgColor}>
+          <ArrowForwardIcon />
+        </SvgIcon>
+        {service === "" && <DisableToChoiceSelect />}
+        {service === "trello" && (
+          <ConverterChoiceSpreadsheet
+            setService={setService}
+            choice={{
+              type: "to",
+              current: toChoice,
+              setCurrent: setToChoice,
+            }}
+          />
+        )}
+        {service === "google" && (
+          <ConverterChoiceBoard
+            setService={setService}
+            choice={{
+              type: "to",
+              current: toChoice,
+              setCurrent: setToChoice,
+            }}
+          />
+        )}
+      </ConverterBody>
+    </ConverterContainer>
   );
 };
 

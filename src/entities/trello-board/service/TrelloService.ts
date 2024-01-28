@@ -78,4 +78,7 @@ export const {
   useGetBoardByIdQuery,
   useGetBoardsMembersByIdQuery,
   useGetAllListByBoardIdQuery,
+  useLazyGetBoardByIdQuery,
+  useLazyGetAllCardsByBoardIdQuery,
+  useLazyGetAllListByBoardIdQuery
 } = TrelloService;
