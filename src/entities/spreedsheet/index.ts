@@ -26,6 +26,8 @@ import {
   useShiftCardInsideMutation,
 } from "./service/sheetCardExtendApi";
 
+import { useGetAllSpreadsheetInfo } from "./lib/useGetAllSpreadsheetInfo";
+
 export {
   Spreadsheet,
   SpreadSheetService,
@@ -42,4 +44,5 @@ export {
   useEditCardMutation,
   useDeleteCardMutation,
   useShiftCardInsideMutation,
+  useGetAllSpreadsheetInfo,
 };

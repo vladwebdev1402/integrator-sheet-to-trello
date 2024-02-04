@@ -28,6 +28,8 @@ import {
   useDeleteCardMutation,
 } from "./service/cardExtendApi";
 
+import { useGetAllBoardInfo } from "./lib/useGetAllBoardInfo";
+
 export {
   useGetAllBoardQuery,
   useGetAllListByBoardIdQuery,
@@ -47,4 +49,5 @@ export {
   useDeleteCardMutation,
   TrelloService,
   TrelloCard,
+  useGetAllBoardInfo,
 };

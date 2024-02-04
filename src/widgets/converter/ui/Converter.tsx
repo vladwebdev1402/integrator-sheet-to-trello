@@ -3,11 +3,12 @@ import { SvgIcon } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import {
+  ConvertTrelloToSheet,
   ConverterChoiceBoard,
   ConverterChoiceService,
   ConverterChoiceSpreadsheet,
 } from "@/features/converter";
-import { ConverterBody, ConverterContainer } from "./styled";
+import { ConverterBody, ConverterContainer, ConverterFooter } from "./styled";
 import DisableToChoiceSelect from "./DisableToChoiceSelect";
 import { TServiceChoice } from "@/shared/types";
 
@@ -73,6 +74,11 @@ const Converter = () => {
           />
         )}
       </ConverterBody>
+      <ConverterFooter>
+        {service === "trello" && (
+          <ConvertTrelloToSheet fromChoice={fromChoice} toChoice={toChoice} />
+        )}
+      </ConverterFooter>
     </ConverterContainer>
   );
 };
