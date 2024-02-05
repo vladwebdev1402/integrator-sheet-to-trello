@@ -3,6 +3,7 @@ import { SvgIcon } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import {
+  ConvertSheetToTrello,
   ConvertTrelloToSheet,
   ConverterChoiceBoard,
   ConverterChoiceService,
@@ -77,6 +78,9 @@ const Converter = () => {
       <ConverterFooter>
         {service === "trello" && (
           <ConvertTrelloToSheet fromChoice={fromChoice} toChoice={toChoice} />
+        )}
+        {service === "google" && (
+          <ConvertSheetToTrello fromChoice={fromChoice} toChoice={toChoice} />
         )}
       </ConverterFooter>
     </ConverterContainer>

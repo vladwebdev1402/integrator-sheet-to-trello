@@ -39,7 +39,6 @@ const ConvertTrelloToSheet: FC<Props> = ({ fromChoice, toChoice }) => {
     if (!board || !cards || !lists) return;
     setMessage("Getting spreadsheet");
     const { spreadsheet, cards: sheetCards } = await getSpreadsheet(board.name);
-    console.log(spreadsheet);
     if (!board || !cards || !lists || !spreadsheet) return;
     setMessage("Formating data");
     const allBoardInfo = formateTrello(board!, lists!, cards!);
