@@ -1,6 +1,6 @@
 export interface ICreateBoard {
     name: string;
-    desc: string;
+    desc?: string;
     prefs_background: string;
     defaultLists?: boolean;
 }

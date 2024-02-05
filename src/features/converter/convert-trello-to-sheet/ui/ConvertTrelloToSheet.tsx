@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { formateTrello, useGetAllBoardInfo } from "@/entities/trello-board";
@@ -8,6 +8,8 @@ import {
   useGetAllSpreadsheetInfo,
   useTrelloToSpreadsheet,
 } from "@/entities/spreedsheet";
+import { useNavigate } from "react-router-dom";
+import { routerPaths } from "@/shared/constants";
 
 interface Props {
   toChoice: string;
@@ -16,6 +18,9 @@ interface Props {
 
 const ConvertTrelloToSheet: FC<Props> = ({ fromChoice, toChoice }) => {
   const [message, setMessage] = useState("");
+  const [idSpreadsheet, setIdSpreadsheet] = useState("");
+  const navigate = useNavigate();
+
   const { getAllBoardInfo, isFetching: boardLoading } =
     useGetAllBoardInfo(fromChoice);
   const { getAllSpreadsheetInfo, isFetching: spreadsheetLoading } =
@@ -34,12 +39,17 @@ const ConvertTrelloToSheet: FC<Props> = ({ fromChoice, toChoice }) => {
   };
 
   const convertClick = async () => {
+    if (idSpreadsheet) {
+      navigate(routerPaths.navigateSheetDetail(idSpreadsheet));
+      return;
+    }
     setMessage("Getting trello board");
     const { board, cards, lists } = await getAllBoardInfo();
     if (!board || !cards || !lists) return;
     setMessage("Getting spreadsheet");
     const { spreadsheet, cards: sheetCards } = await getSpreadsheet(board.name);
-    if (!board || !cards || !lists || !spreadsheet) return;
+    if (!spreadsheet || !cards) return;
+    setIdSpreadsheet(spreadsheet.spreadsheetId);
     setMessage("Formating data");
     const allBoardInfo = formateTrello(board!, lists!, cards!);
     const allSpreadsheetInfo = formateSpreadsheet(spreadsheet, sheetCards);
@@ -47,6 +57,10 @@ const ConvertTrelloToSheet: FC<Props> = ({ fromChoice, toChoice }) => {
     await trelloToSpreadsheet(allBoardInfo, allSpreadsheetInfo);
     setMessage("");
   };
+
+  useEffect(() => {
+    setIdSpreadsheet("");
+  }, []);
 
   return (
     <Box>
@@ -62,7 +76,10 @@ const ConvertTrelloToSheet: FC<Props> = ({ fromChoice, toChoice }) => {
         {fromChoice === "" || toChoice === ""
           ? "Choice trello board and spreadsheet"
           : ""}
-        {fromChoice !== "" && toChoice !== "" ? "convert" : ""}
+        {fromChoice !== "" && toChoice !== "" && !idSpreadsheet
+          ? "convert"
+          : ""}
+        {idSpreadsheet && "Go to spreadsheet"}
       </LoadingButton>
       <Typography variant="body1" textAlign="center" marginTop="16px">
         {message}
