@@ -1,5 +1,7 @@
 export interface IFormatedCard {
   id?: string;
+  idList: string;
+  nameList: string;
   name: string;
   description?: string;
 }
@@ -7,7 +9,6 @@ export interface IFormatedCard {
 export interface IFormatedList {
   id: string;
   name: string;
-  cards: IFormatedCard[];
 }
 
 export interface IFormatedBoard {
@@ -15,4 +16,5 @@ export interface IFormatedBoard {
   name: string;
   description?: string;
   lists: IFormatedList[];
+  cards: IFormatedCard[];
 }

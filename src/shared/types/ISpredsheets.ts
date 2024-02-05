@@ -1,4 +1,4 @@
-export interface ISpreedsheet {
+export interface ISpreadsheet {
     spreadsheetId: string;
     properties: {
       title: string;

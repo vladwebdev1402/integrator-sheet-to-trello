@@ -1,8 +1,7 @@
 import { baseGoogleQuery } from "@/shared/rtk";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { IResponseGetSheetById } from "./types";
-import { ISpreedsheet } from "@/shared/types";
-
+import { ISpreadsheet } from "@/shared/types";
+import {SheetByIdResponse} from "./types";
 const baseUrl = "https://sheets.googleapis.com/v4/spreadsheets";
 
 export const SpreadSheetService = createApi({
@@ -15,7 +14,7 @@ export const SpreadSheetService = createApi({
     "Sheet-Card",
   ],
   endpoints: (build) => ({
-    getSpreadSheetById: build.query<ISpreedsheet, string>({
+    getSpreadSheetById: build.query<ISpreadsheet, string>({
       query: (id: string) => ({
         url: baseUrl + `/${id}`,
       }),
@@ -40,7 +39,7 @@ export const SpreadSheetService = createApi({
         },
       }),
       transformResponse(
-        baseQueryReturnValue: IResponseGetSheetById,
+        baseQueryReturnValue: SheetByIdResponse,
         meta,
         arg
       ) {

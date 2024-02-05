@@ -1,6 +1,6 @@
 import { CSheetCard, ISheet } from "@/shared/types";
 
-export interface IResponseGetSheetById {
+export interface SheetByIdResponse {
   valueRanges: [
     {
       valueRange: {
@@ -10,25 +10,13 @@ export interface IResponseGetSheetById {
   ];
 }
 
-export interface IBatchRequest {
-  requests: [
-    {
-      addSheet?: {
-        properties: {
-          title: string;
-        };
-      },
-      deleteSheet?: {
-        sheetId: number;
-      }
-    }
-  ];
-}
-export interface IQueryMutationAddCard {
+export interface AddCardRequest {
   spreadsheetId: string;
   sheetId: number;
   countCards: number;
   name: string;
+  description?: string;
+  cards?: string[][];
 }
 
 export interface ISheetMutation {
@@ -36,14 +24,14 @@ export interface ISheetMutation {
   sheetId: number;
 }
 
-export interface ISheetUpdateMutaion {
+export interface SheetUpdateRequest {
   spreadsheetId: string;
   newSheet: ISheet;
   isMoveUp?: boolean;
   isMoveDown?: boolean;
 }
 
-export interface IResponseGetAllSheets {
+export interface GetAllSheetsResponse {
   nextPageToken?: string;
   files: {
       id: string;
@@ -52,19 +40,34 @@ export interface IResponseGetAllSheets {
   }[];
 }
 
-export interface ICardEditMutaion extends ISheetMutation {
+export interface CardEditRequest extends ISheetMutation {
   card: CSheetCard;
   isShift?: boolean;
 }
 
-export interface ICardDeleteMutauin extends ISheetMutation {
+export interface CardDeleteRequest extends ISheetMutation {
   idx: number;
 }
 
-export interface ICardShiftInside extends ISheetMutation {
+export interface CardShiftInsideRequest extends ISheetMutation {
   newSheet: string[][];
   newIdx: number;
   oldIdx: number;
+}
+
+export interface addNewListResponse {
+  spreadsheetId: string;
+  replies: [
+    {
+      addSheet: {
+        properties: {
+          sheetId: number,
+          title: string,
+          index: number,
+        }
+      }
+    }
+  ]
 }
 
 export const sheetMimeType = "application/vnd.google-apps.spreadsheet";

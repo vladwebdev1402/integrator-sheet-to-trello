@@ -1,10 +1,10 @@
 import { SpreadSheetService } from "./service";
-import { ISheetMutation, ISheetUpdateMutaion } from "./types";
+import { ISheetMutation, SheetUpdateRequest, addNewListResponse } from "./types";
 import { baseSheetUrl } from "./url";
 
 const sheetListExtendApi = SpreadSheetService.injectEndpoints({
   endpoints: (build) => ({
-    addNewList: build.mutation<any, { spreadsheetId: string; name: string }>({
+    addNewList: build.mutation<addNewListResponse, { spreadsheetId: string; name: string }>({
       query: ({ spreadsheetId, name }) => ({
         url: baseSheetUrl + `/${spreadsheetId}:batchUpdate`,
         method: "POST",
@@ -13,7 +13,7 @@ const sheetListExtendApi = SpreadSheetService.injectEndpoints({
             {
               addSheet: {
                 properties: {
-                  // title: `New List ${name}`,
+                  title: name,
                 },
               },
             },
@@ -58,7 +58,7 @@ const sheetListExtendApi = SpreadSheetService.injectEndpoints({
       },
     }),
 
-    updateList: build.mutation<any, ISheetUpdateMutaion>({
+    updateList: build.mutation<any, SheetUpdateRequest>({
       query: ({
         newSheet,
         spreadsheetId,

@@ -1,16 +1,16 @@
 import { SpreadSheetService } from "./service";
 import {
-  ICardDeleteMutauin,
-  ICardEditMutaion,
-  ICardShiftInside,
-  IQueryMutationAddCard,
+  AddCardRequest,
+  CardDeleteRequest,
+  CardEditRequest,
+  CardShiftInsideRequest,
 } from "./types";
 import { baseSheetUrl } from "./url";
 
 const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
   endpoints: (build) => ({
-    addNewCard: build.mutation<any, IQueryMutationAddCard>({
-      query: ({ sheetId, countCards, name, spreadsheetId }) => ({
+    addNewCard: build.mutation<any, AddCardRequest>({
+      query: ({ sheetId, countCards, name, description, spreadsheetId, cards }) => ({
         url: baseSheetUrl + `/${spreadsheetId}/values:batchUpdateByDataFilter`,
         method: "POST",
         body: {
@@ -22,7 +22,7 @@ const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
                   startRowIndex: countCards,
                 },
               },
-              values: [[name]],
+              values: cards ? cards : [[name, description ?? ""]],
               majorDimension: "ROWS",
             },
           ],
@@ -31,7 +31,7 @@ const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
       }),
 
       onQueryStarted: async (
-        { sheetId, spreadsheetId, name },
+        { sheetId, spreadsheetId, name, description, cards },
         { dispatch, queryFulfilled }
       ) => {
         const patchResult = dispatch(
@@ -39,7 +39,8 @@ const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
             "getSheetById",
             { sheetId, spreadsheetId },
             (draft) => {
-              draft.push([name]);
+              if (cards) draft.push(...cards)
+              else draft.push([name, description || ""]);
             }
           )
         );
@@ -48,7 +49,7 @@ const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
       },
     }),
 
-    editCard: build.mutation<any, ICardEditMutaion>({
+    editCard: build.mutation<any, CardEditRequest>({
       query: ({ card, sheetId, spreadsheetId }) => ({
         url: baseSheetUrl + `/${spreadsheetId}/values:batchUpdateByDataFilter`,
         method: "POST",
@@ -89,7 +90,7 @@ const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
       },
     }),
 
-    deleteCard: build.mutation<any, ICardDeleteMutauin>({
+    deleteCard: build.mutation<any, CardDeleteRequest>({
       query: ({ idx, sheetId, spreadsheetId }) => ({
         url: baseSheetUrl + `/${spreadsheetId}:batchUpdate`,
         method: "POST",
@@ -125,8 +126,8 @@ const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
       },
     }),
 
-    shiftCardInside: build.mutation<any, ICardShiftInside>({
-      query: ({  newSheet, sheetId, spreadsheetId }) => ({
+    shiftCardInside: build.mutation<any, CardShiftInsideRequest>({
+      query: ({ newSheet, sheetId, spreadsheetId }) => ({
         url: baseSheetUrl + `/${spreadsheetId}/values:batchUpdateByDataFilter`,
         method: "POST",
         body: {
@@ -140,21 +141,26 @@ const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
                   startRowIndex: 0,
                 },
               },
-              values: [
-                ...newSheet
-              ],
+              values: [...newSheet],
             },
           ],
         },
       }),
-      onQueryStarted: async ({newIdx, oldIdx, sheetId, spreadsheetId}, {dispatch, queryFulfilled,}) => {
+      onQueryStarted: async (
+        { newIdx, oldIdx, sheetId, spreadsheetId },
+        { dispatch, queryFulfilled }
+      ) => {
         const resultPatch = dispatch(
-          SpreadSheetService.util.updateQueryData("getSheetById", {spreadsheetId, sheetId}, (draft) => {
-            const oldObj = draft[newIdx];
-            draft[newIdx] = draft[oldIdx];
-            draft[oldIdx] = oldObj;
-          })
-        )
+          SpreadSheetService.util.updateQueryData(
+            "getSheetById",
+            { spreadsheetId, sheetId },
+            (draft) => {
+              const oldObj = draft[newIdx];
+              draft[newIdx] = draft[oldIdx];
+              draft[oldIdx] = oldObj;
+            }
+          )
+        );
         queryFulfilled.catch(resultPatch.undo);
       },
     }),

@@ -1,17 +1,15 @@
+import { ISpreadsheet } from "@/shared/types";
 import { SpreadSheetService } from "./service";
-import {
-  IResponseGetAllSheets,
-  IResponseGetSpreadsheet,
-  sheetMimeType,
-} from "./types";
+import { GetAllSheetsResponse, sheetMimeType } from "./types";
 import { baseDriveUrl, baseSheetUrl } from "./url";
 
 const spreadsheetExtendApi = SpreadSheetService.injectEndpoints({
   endpoints: (build) => ({
-
-    
-    getAllSheets: build.query<IResponseGetAllSheets, {limit: number, name: string}>({
-      query: ({limit, name}) => {
+    getAllSheets: build.query<
+      GetAllSheetsResponse,
+      { limit: number; name: string }
+    >({
+      query: ({ limit, name }) => {
         return {
           url: baseDriveUrl + `/files`,
           params: {
@@ -23,7 +21,6 @@ const spreadsheetExtendApi = SpreadSheetService.injectEndpoints({
       providesTags: ["List of Spreadsheet"],
     }),
 
-
     deleteSpreadSheet: build.mutation<any, { id: string }>({
       query: ({ id }) => ({
         url: baseDriveUrl + `/files/${id}`,
@@ -32,15 +29,16 @@ const spreadsheetExtendApi = SpreadSheetService.injectEndpoints({
       invalidatesTags: ["List of Spreadsheet"],
     }),
 
-
-    createNewSpreadSheet: build.mutation<IResponseGetSpreadsheet, any>({
-      query: () => ({
+    createNewSpreadSheet: build.mutation<ISpreadsheet, string | undefined>({
+      query: (name="") => ({
         url: baseSheetUrl,
         method: "POST",
+        body: {
+          properties: { title: name },
+        },
       }),
       invalidatesTags: ["List of Spreadsheet"],
     }),
-
 
     renameSpreadSheet: build.mutation<any, { id: string; name: string }>({
       query: ({ id, name }) => ({

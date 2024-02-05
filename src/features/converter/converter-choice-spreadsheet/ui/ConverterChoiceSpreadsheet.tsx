@@ -49,7 +49,7 @@ const ConverterChoiceSpreadsheet: FC<Props> = ({ setService, choice }) => {
           {choice.type === "from" ? (
             <MenuItem value="return">Return to services</MenuItem>
           ) : (
-            <MenuItem value="create">Create new board</MenuItem>
+            <MenuItem value="create">Create new spreadsheet</MenuItem>
           )}
           {isLoading && (
             <MenuItem disabled>
