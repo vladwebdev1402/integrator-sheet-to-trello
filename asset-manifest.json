@@ -1,20 +1,22 @@
 {
   "files": {
-    "main.css": "/integrator-sheet-to-trello/static/css/main.f9b3d61f.css",
-    "main.js": "/integrator-sheet-to-trello/static/js/main.0f5f74b7.js",
+    "main.css": "/integrator-sheet-to-trello/static/css/main.fb32d054.css",
+    "main.js": "/integrator-sheet-to-trello/static/js/main.e1ef8861.js",
     "static/media/Roboto-Medium.ttf": "/integrator-sheet-to-trello/static/media/Roboto-Medium.7c8d04cd831df3033c8a.ttf",
     "static/media/Roboto-Regular.ttf": "/integrator-sheet-to-trello/static/media/Roboto-Regular.fc2b5060f7accec5cf74.ttf",
     "static/media/Roboto-Bold.ttf": "/integrator-sheet-to-trello/static/media/Roboto-Bold.f80816a5455d171f948d.ttf",
     "static/media/Roboto-Light.ttf": "/integrator-sheet-to-trello/static/media/Roboto-Light.333da16a3f3cc391d087.ttf",
     "static/media/logo.svg": "/integrator-sheet-to-trello/static/media/logo.3adc673dc6b12cd5ea7d176b14544026.svg",
+    "static/media/big-sheet.svg": "/integrator-sheet-to-trello/static/media/big-sheet.1316c55da2b11b4f99daacc1bf7b6fd7.svg",
     "static/media/sheet.svg": "/integrator-sheet-to-trello/static/media/sheet.d56ef70aa24b28a81c314b2d99bf5ab1.svg",
     "static/media/trello.svg": "/integrator-sheet-to-trello/static/media/trello.1efd3728d2eab5d226056bff80f537a5.svg",
     "index.html": "/integrator-sheet-to-trello/index.html",
-    "main.f9b3d61f.css.map": "/integrator-sheet-to-trello/static/css/main.f9b3d61f.css.map",
-    "main.0f5f74b7.js.map": "/integrator-sheet-to-trello/static/js/main.0f5f74b7.js.map"
+    "static/media/document.svg": "/integrator-sheet-to-trello/static/media/document.bee0df02c6bce5b60e167bab77aae3a7.svg",
+    "main.fb32d054.css.map": "/integrator-sheet-to-trello/static/css/main.fb32d054.css.map",
+    "main.e1ef8861.js.map": "/integrator-sheet-to-trello/static/js/main.e1ef8861.js.map"
   },
   "entrypoints": [
-    "static/css/main.f9b3d61f.css",
-    "static/js/main.0f5f74b7.js"
+    "static/css/main.fb32d054.css",
+    "static/js/main.e1ef8861.js"
   ]
 }
