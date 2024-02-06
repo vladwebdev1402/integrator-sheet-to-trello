@@ -1,7 +1,7 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 import {
@@ -19,9 +19,14 @@ import { routerPaths } from "@/shared/constants";
 interface Props {
   fromChoice: string;
   toChoice: string;
+  clearChoice: () => void;
 }
 
-const ConvertSheetToTrello: FC<Props> = ({ fromChoice, toChoice }) => {
+const ConvertSheetToTrello: FC<Props> = ({
+  fromChoice,
+  toChoice,
+  clearChoice,
+}) => {
   const [message, setMessage] = useState("");
   const [idBoard, setIdBoard] = useState("");
   const navigate = useNavigate();
@@ -34,6 +39,12 @@ const ConvertSheetToTrello: FC<Props> = ({ fromChoice, toChoice }) => {
     useSheetToTrello();
 
   const [createBoard, { isLoading: createLoading }] = useCreateBoardMutation();
+
+  const isLoading = useMemo(
+    () =>
+      boardLoading || spreadsheetLoading || convertFetching || createLoading,
+    [createLoading, convertFetching, boardLoading, spreadsheetLoading]
+  );
 
   const getBoard = async (name?: string) => {
     if (toChoice === "create") {
@@ -48,11 +59,12 @@ const ConvertSheetToTrello: FC<Props> = ({ fromChoice, toChoice }) => {
     return await getAllBoardInfo();
   };
 
+  const goBoardClick = () => {
+    navigate(routerPaths.navigateTrelloDetail(idBoard));
+  };
+
   const convertClick = async () => {
-    if (idBoard) {
-      navigate(routerPaths.navigateTrelloDetail(idBoard));
-      return;
-    }
+    setIdBoard("");
     setMessage("Getting spreadsheet");
     const { spreadsheet, cards: sheetCards } = await getAllSpreadsheetInfo();
     if (!spreadsheet || !sheetCards) return;
@@ -63,18 +75,14 @@ const ConvertSheetToTrello: FC<Props> = ({ fromChoice, toChoice }) => {
       lists: boardLists,
     } = await getBoard(spreadsheet.properties.title);
     if (!board || !boardCards || !boardLists) return;
-    setIdBoard(board.id);
     setMessage("Fomating data");
     const allBoardInfo = formateTrello(board!, boardLists!, boardCards!);
     const allSpreadsheetInfo = formateSpreadsheet(spreadsheet, sheetCards);
     setMessage("Converting spreadsheet to trello board");
     await spreadsheetToTrello(allBoardInfo, allSpreadsheetInfo);
     setMessage("");
+    setIdBoard(board.id);
   };
-
-  useEffect(() => {
-    setIdBoard("");
-  }, []);
 
   return (
     <Box>
@@ -83,17 +91,36 @@ const ConvertSheetToTrello: FC<Props> = ({ fromChoice, toChoice }) => {
         fullWidth
         variant="contained"
         onClick={convertClick}
-        loading={
-          boardLoading || spreadsheetLoading || convertFetching || createLoading
-        }
+        loading={isLoading}
         disabled={fromChoice === "" || toChoice === ""}
       >
         {fromChoice === "" || toChoice === ""
           ? "Choice trello board and spreadsheet"
           : ""}
-        {fromChoice !== "" && toChoice !== "" && !idBoard ? "convert" : ""}
-        {idBoard && "Go to board"}
+        {fromChoice !== "" && toChoice !== "" ? "convert" : ""}
       </LoadingButton>
+      <Box display="flex" gap="16px" marginTop="16px">
+        {idBoard && (
+          <Button
+            color="secondary"
+            fullWidth
+            variant="contained"
+            onClick={goBoardClick}
+          >
+            Go board
+          </Button>
+        )}
+        <Button
+          color="error"
+          fullWidth
+          variant="contained"
+          disabled={isLoading}
+          onClick={clearChoice}
+        >
+          clear choice
+        </Button>
+      </Box>
+
       <Typography variant="body1" marginTop="16px" textAlign="center">
         {message}
       </Typography>

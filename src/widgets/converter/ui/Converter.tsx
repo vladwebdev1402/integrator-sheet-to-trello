@@ -24,6 +24,12 @@ const Converter = () => {
     return "secondary";
   }, [service]);
 
+  const clearChoice = () => {
+    setService("");
+    setFromChoice("");
+    setToChoice("");
+  };
+
   return (
     <ConverterContainer>
       <ConverterBody>
@@ -77,10 +83,18 @@ const Converter = () => {
       </ConverterBody>
       <ConverterFooter>
         {service === "trello" && (
-          <ConvertTrelloToSheet fromChoice={fromChoice} toChoice={toChoice} />
+          <ConvertTrelloToSheet
+            fromChoice={fromChoice}
+            toChoice={toChoice}
+            clearChoice={clearChoice}
+          />
         )}
         {service === "google" && (
-          <ConvertSheetToTrello fromChoice={fromChoice} toChoice={toChoice} />
+          <ConvertSheetToTrello
+            fromChoice={fromChoice}
+            toChoice={toChoice}
+            clearChoice={clearChoice}
+          />
         )}
       </ConverterFooter>
     </ConverterContainer>
