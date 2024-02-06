@@ -1,7 +1,7 @@
-import { IBoardCard, IFormatedBoard, IFormatedCard, IFormatedList } from "@/shared/types";
+import { IBoardCard, IFormatedBoard, IFormatedList } from "@/shared/types";
 import { useCreateListMutation } from "../service/listExtendApi";
 import { useAddCardMutation, useDeleteCardMutation } from "../service/cardExtendApi";
-import { searchMissingCards, searchMissingLists } from "@/shared/lib";
+import { searchMissingLists } from "@/shared/lib";
 
 export const useSheetToTrello = () => {
   const [addNewList, { isLoading: isListLoading }] = useCreateListMutation();
@@ -24,23 +24,24 @@ export const useSheetToTrello = () => {
     }
   };
 
-  const addMisingCards = async (
+  const addSpreadsheetCards = async (
     board: IFormatedBoard,
-    missingCards: IFormatedCard[]
+    spreadsheet: IFormatedBoard
   ) => {
-    for (let card of missingCards) {
+    for (let card of spreadsheet.cards) {
 
       const idListInTrello = board.lists.find((list) => list.name === card.nameList)?.id || "None";
 
       await addNewCard({
         idList: idListInTrello,
         name: card.name,
+        desc: card.description,
       });
     }
   };
 
-  const deleteCards = async (board: IFormatedBoard, cards: IFormatedCard[]) => {
-    for (let card of cards) {
+  const deleteAllCards = async (board: IFormatedBoard) => {
+    for (let card of board.cards) {
     await deteleCard({...card, idBoard: board.id} as unknown as IBoardCard);
     }
   } 
@@ -50,11 +51,9 @@ export const useSheetToTrello = () => {
     spreadsheet: IFormatedBoard
   ) => {
     const missingLists = searchMissingLists(spreadsheet, board);
-    const missingCards = searchMissingCards(spreadsheet, board);
-    const extraCards = searchMissingCards(board, spreadsheet);
     await addMissingList(board, missingLists);
-    await addMisingCards(board, missingCards);
-    await deleteCards(board, extraCards);
+    await deleteAllCards(board);
+    await addSpreadsheetCards(board, spreadsheet);
   };
 
   return { spreadsheetToTrello, isFetching: isListLoading || isCardLoading || isDeleteLoading };

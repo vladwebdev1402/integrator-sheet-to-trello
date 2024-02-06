@@ -13,4 +13,5 @@ export interface ICreateList {
 export interface ICreateCard {
     name: string;
     idList: string;
+    desc?: string;
 }

@@ -70,4 +70,9 @@ export interface addNewListResponse {
   ]
 }
 
+export interface deleteAllCardRequest {
+  spreadsheetId: string;
+  sheetId: number;
+}
+
 export const sheetMimeType = "application/vnd.google-apps.spreadsheet";

@@ -4,6 +4,7 @@ import {
   CardDeleteRequest,
   CardEditRequest,
   CardShiftInsideRequest,
+  deleteAllCardRequest,
 } from "./types";
 import { baseSheetUrl } from "./url";
 
@@ -126,6 +127,42 @@ const sheetCardExtendApi = SpreadSheetService.injectEndpoints({
       },
     }),
 
+    deleteAllCard: build.mutation<any, deleteAllCardRequest>({
+      query: ({ sheetId, spreadsheetId }) => ({
+        url: baseSheetUrl + `/${spreadsheetId}:batchUpdate`,
+        method: "POST",
+        body: {
+          requests: [
+            {
+              deleteDimension: {
+                range: {
+                  dimension: "ROWS",
+                  sheetId: sheetId,
+                  startIndex: 0,
+                  endIndex: 100,
+                },
+              },
+            },
+          ],
+        },
+      }),
+      async onQueryStarted(
+        { sheetId, spreadsheetId },
+        { dispatch, queryFulfilled }
+      ) {
+        const resultPatch = dispatch(
+          SpreadSheetService.util.updateQueryData(
+            "getSheetById",
+            { sheetId, spreadsheetId },
+            (draft) => {
+              draft.splice(0);
+            }
+          )
+        );
+        queryFulfilled.catch(resultPatch.undo);
+      },
+    }),
+
     shiftCardInside: build.mutation<any, CardShiftInsideRequest>({
       query: ({ newSheet, sheetId, spreadsheetId }) => ({
         url: baseSheetUrl + `/${spreadsheetId}/values:batchUpdateByDataFilter`,
@@ -172,4 +209,5 @@ export const {
   useDeleteCardMutation,
   useEditCardMutation,
   useShiftCardInsideMutation,
+  useDeleteAllCardMutation,
 } = sheetCardExtendApi;

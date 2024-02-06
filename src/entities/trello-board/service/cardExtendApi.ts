@@ -5,10 +5,10 @@ import { IBoardCard } from "@/shared/types";
 const cardExtendApi = TrelloService.injectEndpoints({
   endpoints: (build) => ({
     addCard: build.mutation<IBoardCard, ICreateCard>({
-      query: ({ name, idList }) => ({
+      query: ({ name, idList, desc="" }) => ({
         url: `/cards`,
         method: "POST",
-        params: { name, idList, pos: "bottom" },
+        params: { name, idList, desc, pos: "bottom" },
       }),
       onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
         try {

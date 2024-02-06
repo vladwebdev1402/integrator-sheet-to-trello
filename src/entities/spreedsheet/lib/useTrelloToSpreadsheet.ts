@@ -1,16 +1,21 @@
-import { IFormatedBoard, IFormatedCard, IFormatedList } from "@/shared/types";
-import { useAddNewListMutation, useDeleteListMutation } from "../service/sheetListExtendApi";
+import { IFormatedBoard, IFormatedList } from "@/shared/types";
+import {
+  useAddNewListMutation,
+  useDeleteListMutation,
+} from "../service/sheetListExtendApi";
 import {
   useAddNewCardMutation,
-  useDeleteCardMutation,
+  useDeleteAllCardMutation,
 } from "../service/sheetCardExtendApi";
-import { searchMissingCards, searchMissingLists } from "@/shared/lib";
+import { searchMissingLists } from "@/shared/lib";
 
 export const useTrelloToSpreadsheet = () => {
   const [addNewList, { isLoading: isListLoading }] = useAddNewListMutation();
   const [addNewCard, { isLoading: isCardLoading }] = useAddNewCardMutation();
-  const [deleteCard, { isLoading: isDeleteLoading }] = useDeleteCardMutation();
-  const [deleteList, {isLoading: isDeleteListLoading}] = useDeleteListMutation();
+  const [deleteCards, { isLoading: isDeleteLoading }] =
+    useDeleteAllCardMutation();
+  const [deleteList, { isLoading: isDeleteListLoading }] =
+    useDeleteListMutation();
 
   const addMissingList = async (
     spreadsheet: IFormatedBoard,
@@ -29,11 +34,11 @@ export const useTrelloToSpreadsheet = () => {
     }
   };
 
-  const addMisingCards = async (
-    spreadsheet: IFormatedBoard,
-    missingCards: IFormatedCard[]
+  const addAllCards = async (
+    board: IFormatedBoard,
+    spreadsheet: IFormatedBoard
   ) => {
-    for (let card of missingCards) {
+    for (let card of board.cards) {
       const idListInSpreadsheet =
         spreadsheet.lists.find((list) => list.name === card.nameList)?.id ||
         "None";
@@ -50,51 +55,40 @@ export const useTrelloToSpreadsheet = () => {
     }
   };
 
-  const deleteExtraCards = async (
-    spreadsheet: IFormatedBoard,
-    cards: IFormatedCard[]
-  ) => {
-    for (let card of cards) {
-      const listCards = spreadsheet.cards.filter(
-        (arrCard) => arrCard.nameList === card.nameList
-      );
-      const idx = listCards.findIndex((arrCard) => arrCard.name === card.name);
-
-      await deleteCard({
-        spreadsheetId: spreadsheet.id,
-        sheetId: +card.idList,
-        idx,
-      });
-
-      spreadsheet.cards.filter((arrCard) => arrCard.name !== card.name && arrCard.nameList === card.name);
-    }
-  };
-
   const deleleCreatedList = async (spreadsheet: IFormatedBoard) => {
-    if (spreadsheet.cards.filter((card) => card.idList === '0').length === 0) {
+    if (spreadsheet.cards.filter((card) => card.idList === "0").length === 0) {
       await deleteList({
         sheetId: 0,
         spreadsheetId: spreadsheet.id,
-      })
+      });
     }
-  }
+  };
+
+  const deleteAllCards = async (spreadsheet: IFormatedBoard) => {
+    for (let list of spreadsheet.lists) {
+      await deleteCards({
+        spreadsheetId: spreadsheet.id,
+        sheetId: +list.id,
+      });
+    }
+    spreadsheet.cards = [];
+  };
 
   const trelloToSpreadsheet = async (
     board: IFormatedBoard,
     spreadsheet: IFormatedBoard,
-    isCreate=false,
+    isCreate = false
   ) => {
     const missingLists = searchMissingLists(board, spreadsheet);
-    const missingCards = searchMissingCards(board, spreadsheet);
-    const extraCards = searchMissingCards(spreadsheet, board);
     await addMissingList(spreadsheet, missingLists);
-    await addMisingCards(spreadsheet, missingCards);
-    await deleteExtraCards(spreadsheet, extraCards);
+    await deleteAllCards(spreadsheet);
+    await addAllCards(board, spreadsheet);
     if (isCreate) await deleleCreatedList(spreadsheet);
   };
 
   return {
     trelloToSpreadsheet,
-    isFetching: isListLoading || isCardLoading || isDeleteLoading || isDeleteListLoading,
+    isFetching:
+      isListLoading || isCardLoading || isDeleteLoading || isDeleteListLoading,
   };
 };
