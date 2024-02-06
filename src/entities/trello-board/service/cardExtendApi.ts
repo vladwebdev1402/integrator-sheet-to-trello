@@ -60,6 +60,7 @@ const cardExtendApi = TrelloService.injectEndpoints({
         method: "DELETE",
       }),
       onQueryStarted(card, {dispatch, queryFulfilled}) {
+
         const resultPatch = dispatch(TrelloService.util.updateQueryData(
           "getAllCardsByBoardId",
           card.idBoard,

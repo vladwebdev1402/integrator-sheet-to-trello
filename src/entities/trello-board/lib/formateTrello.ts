@@ -10,6 +10,7 @@ export const formateTrello = (board: IBoard, lists: IBoardList[], cards: IBoardC
             name: list.name,
         })),
         cards: cards.map((card) => ({
+            id: card.id,
             name: card.name,
             description: card.desc,
             idList: card.idList,
