@@ -9,12 +9,11 @@ import {
 } from "@mui/material";
 
 import { ConverterSelectBox } from "@/shared/ui";
-import { TServiceChoice } from "@/shared/types";
 import { useGetAllBoardQuery } from "@/entities/trello-board";
 import NameBoard from "./NameBoard";
 
 interface Props {
-  setService: (value: TServiceChoice) => void;
+  clearChoice: () => void;
   choice: {
     type: "to" | "from";
     current: string;
@@ -22,18 +21,18 @@ interface Props {
   };
 }
 
-const ConverterChoiceBoard: FC<Props> = ({ setService, choice }) => {
+const ConverterChoiceBoard: FC<Props> = ({ clearChoice, choice }) => {
   const { data, isLoading } = useGetAllBoardQuery(null);
 
   const selectChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
-    if (value === "return") setService("");
+    if (value === "return") clearChoice();
     else choice.setCurrent(value);
   };
 
-  useEffect(() => {
-    choice.setCurrent("");
-  }, []);
+  // useEffect(() => {
+  //   choice.setCurrent("");
+  // }, []);
 
   return (
     <ConverterSelectBox

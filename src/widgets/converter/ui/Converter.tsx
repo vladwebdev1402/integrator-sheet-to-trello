@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
-import { SvgIcon } from "@mui/material";
+import { SvgIcon, IconButton } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-
 import {
   ConvertSheetToTrello,
   ConvertTrelloToSheet,
@@ -30,6 +29,13 @@ const Converter = () => {
     setToChoice("");
   };
 
+  const onFlip = () => {
+    setService(service === "google" ? "trello" : "google");
+    const fromCopy = fromChoice;
+    setFromChoice(toChoice);
+    setToChoice(fromCopy);
+  };
+
   return (
     <ConverterContainer>
       <ConverterBody>
@@ -38,7 +44,7 @@ const Converter = () => {
         )}
         {service === "trello" && (
           <ConverterChoiceBoard
-            setService={setService}
+            clearChoice={clearChoice}
             choice={{
               type: "from",
               current: fromChoice,
@@ -48,7 +54,7 @@ const Converter = () => {
         )}
         {service === "google" && (
           <ConverterChoiceSpreadsheet
-            setService={setService}
+            clearChoice={clearChoice}
             choice={{
               type: "from",
               current: fromChoice,
@@ -56,13 +62,13 @@ const Converter = () => {
             }}
           />
         )}
-        <SvgIcon fontSize="large" color={svgColor}>
-          <ArrowForwardIcon />
-        </SvgIcon>
+        <IconButton disabled={service === ""} onClick={onFlip}>
+          <ArrowForwardIcon fontSize="large" color={svgColor} />
+        </IconButton>
         {service === "" && <DisableToChoiceSelect />}
         {service === "trello" && (
           <ConverterChoiceSpreadsheet
-            setService={setService}
+            clearChoice={clearChoice}
             choice={{
               type: "to",
               current: toChoice,
@@ -72,7 +78,7 @@ const Converter = () => {
         )}
         {service === "google" && (
           <ConverterChoiceBoard
-            setService={setService}
+            clearChoice={clearChoice}
             choice={{
               type: "to",
               current: toChoice,

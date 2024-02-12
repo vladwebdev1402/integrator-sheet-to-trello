@@ -8,11 +8,10 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { ConverterSelectBox } from "@/shared/ui";
-import { TServiceChoice } from "@/shared/types";
 import { useGetAllSheetsQuery } from "@/entities/spreedsheet";
 
 interface Props {
-  setService: (value: TServiceChoice) => void;
+  clearChoice: () => void;
   choice: {
     type: "to" | "from";
     current: string;
@@ -20,18 +19,18 @@ interface Props {
   };
 }
 
-const ConverterChoiceSpreadsheet: FC<Props> = ({ setService, choice }) => {
+const ConverterChoiceSpreadsheet: FC<Props> = ({ clearChoice, choice }) => {
   const { data, isLoading } = useGetAllSheetsQuery({ limit: 150, name: "" });
 
   const selectChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
-    if (value === "return") setService("");
+    if (value === "return") clearChoice();
     else choice.setCurrent(value);
   };
 
-  useEffect(() => {
-    choice.setCurrent("");
-  }, []);
+  // useEffect(() => {
+  //   choice.setCurrent("");
+  // }, []);
 
   return (
     <ConverterSelectBox
